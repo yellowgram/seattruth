@@ -1,16 +1,16 @@
 # Minimum support checklist (v3)
 
-**DR#3.** This is v3. DR#1 shipped v1. DR#2 shipped v2. The v1→v2 log is section 8. The v2→v3 log is section 9. The attack write-up is [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md).
+**Checklist v3, unchanged.** DR#1 shipped v1. DR#2 shipped v2. DR#3 shipped this v3 text. The v1→v2 log is section 8. The v2→v3 log is section 9. The 4th DR does not publish a v4. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 
 **Absent, and this pull request does not add them:** a versioned zip, its SHA-256, and `POLAR_DELIVERABLES`. Do not treat a missing file as "coming in this PR." The Polar listing stays dark until those three are real. Listing go-live is a founder (via CoS) decision after that, and it is not requested here.
 
-LaunchGate has not been requested. Ready for the 4th DR means the pack is fit to review. It is not an approval. See section 10 and [STATUS.md](STATUS.md).
+LaunchGate has not approved the 4th DR. Section 10 is the input list. The ask itself is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). See [STATUS.md](STATUS.md).
 
 What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this scaffold. Items left open wait for the implement PR, or for the zip.
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence: DR#1 is pull request #1. DR#2 is pull request #2. This file's PR is DR#3. Next is the 4th design review with LaunchGate APPROVE before any implement PR, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder.
+Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. This branch is the 4th DR. LaunchGate APPROVE is still required before any implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder.
 
 ## 1. Happy path
 
@@ -159,7 +159,7 @@ v3 is this DR#3 pass. Three experts ran in order inside this PR. Their full atta
 
 ## 10. What the 4th DR should see
 
-This is the input list for LaunchGate. Checking these boxes here does not approve the design.
+This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Checking these boxes here does not approve the design. This section is not a new checklist version.
 
 - Two detect cases only: `paid_locked_out` and `canceled_still_entitled`.
 - Active rules: P6, P7, P11, P17–P24, P25–P30. Superseded text stays in [MVP_SCOPE.md](MVP_SCOPE.md).
@@ -169,8 +169,8 @@ This is the input list for LaunchGate. Checking these boxes here does not approv
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 - Detector not implemented.
 
-**Ready for the 4th DR: yes**, as input. The cases are still decidable without a write or a guessed schema. This PR does not contact LaunchGate.
+The 4th DR packet submits this list. The cases are still decidable without a write or a guessed schema. Approval is the ask in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md), and it has not been given.
 
 ## Done means
 
-The DR#3 scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming the 4th DR, CR×3, the 4th CR, or a LaunchGate approval happened here.
+The scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming CR×3, the 4th CR, or a LaunchGate approval happened here.

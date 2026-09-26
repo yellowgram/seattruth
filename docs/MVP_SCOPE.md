@@ -1,13 +1,13 @@
 # MVP scope
 
-**DR#3.** Final design pass before the 4th DR. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). This PR does not ask LaunchGate to approve anything. The next gate is the 4th DR, which is the LaunchGate review, and it has not started. See [STATUS.md](STATUS.md) and [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md).
+**Rules frozen at DR#3.** This branch is the 4th DR. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). No rule id in this file changed for that packet. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). DR#3 is [pull request #3](https://github.com/yellowgram/seattruth/pull/3). See [STATUS.md](STATUS.md).
 
 ## Cadence
 
 Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th gate.
 
-1. **DR×3.** Three separate design PRs. DR#1 and DR#2 are done. This PR is DR#3.
-2. **4th DR → LaunchGate APPROVE** before any implement PR. Next, and not requested here.
+1. **DR×3.** Done. DR#1, DR#2, and DR#3 are separate pull requests. This file's rules are the DR#3 text.
+2. **4th DR → LaunchGate APPROVE** before any implement PR. The packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Approval has not happened.
 3. **Implement PR.** Detector code. Not started.
 4. **CR×3.** Three code reviews of that implement work.
 5. **4th CR → LaunchGate APPROVE** before squash-merge.
@@ -203,7 +203,7 @@ Hard outs for the life of this positioning:
 
 ## Later
 
-Parked. Not promised. A later item moves into scope only in the 4th DR, not by slipping it into this revision. Chargebee, Autumn, or auto-fix is not one of those ordinary edits.
+Parked. Not promised. The 4th DR packet does not move these into scope. A later implement PR must not slip them in either. Chargebee, Autumn, or auto-fix is not one of those ordinary edits.
 
 - Seat quantity inequality as its own finding.
 - A CSV of findings for the operator's own finance notes.
@@ -225,11 +225,11 @@ These stay in the design on purpose. They are not silent.
 - The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. The listing stays dark.
 - The exact price and the refund window are unset. Those are founder (via CoS) decisions and do not block the 4th DR.
 
-## Ready for the 4th DR
+## 4th DR packet
 
-**Yes.** The two cases are still decidable without a write, a fuzzy match, or a new processor. DR#3 closed the leftover contradictions it found: a trial no longer paints every day red, a Polar refund is not treated as a cancel, "latest charge" is not a guessed refund test, and a short provider page is not a wave of missing subscriptions. The limits above are written down for LaunchGate to accept or reject.
+The ask, the limits, and the kill-criteria reading are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This section does not add a rule.
 
-This PR does not contact LaunchGate and does not count as approval. The next pull request is the 4th DR. An implement PR waits for LaunchGate APPROVE on that review.
+DR#3 left the two cases decidable without a write, a fuzzy match, or a new processor. The limits above are what LaunchGate accepts or rejects. This file does not count as approval. An implement PR waits for LaunchGate APPROVE on the 4th DR.
 
 ## Scaffold behavior (current)
 

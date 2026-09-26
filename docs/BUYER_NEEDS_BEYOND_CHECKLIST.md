@@ -1,6 +1,6 @@
 # Buyer needs beyond the checklist (v3)
 
-**DR#3.** Revision of the v2 list. Operators will ask for these. The v3 checklist does not promise them. Each line is **decided**, **deferred**, or **refuse**. Workflows that only work if the kit writes `is_pro`, names a price, or hides a finding are refused here, not studied.
+**v3, unchanged in the 4th DR.** Revision of the v2 list from DR#3. Operators will ask for these. The v3 checklist does not promise them. Each line is **decided**, **deferred**, or **refuse**. The LaunchGate packet does not reopen a refusal. See [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Workflows that only work if the kit writes `is_pro`, names a price, or hides a finding stay refused here.
 
 Contact for the ones that are just questions: hello@yellowgram.dev. Prefer [www.yellowgram.dev](https://www.yellowgram.dev).
 
@@ -21,7 +21,7 @@ These are real needs, and the answer is already a rule. The kit meets them by re
 
 ## Deferred
 
-Real needs. Not in this revision. They move only by an edit to [MVP_SCOPE.md](MVP_SCOPE.md) in the 4th DR. This file does not slip them in.
+Real needs. Not in this revision. The 4th DR packet left them deferred. They move only by a later edit to [MVP_SCOPE.md](MVP_SCOPE.md). This file does not slip them in.
 
 | Need | Why it waits |
 | --- | --- |

@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**DR#3** on this branch. DR#1 is pull request #1. DR#2 is pull request #2. Next is the 4th design review, which needs LaunchGate APPROVE before any implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. The detector is not implemented. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. [docs/STATUS.md](docs/STATUS.md).
+**4th DR** on this branch. DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3. This pull request is the LaunchGate gate packet. An implement PR waits for LaunchGate APPROVE. Then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. The detector is not implemented. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

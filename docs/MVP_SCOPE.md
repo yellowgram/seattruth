@@ -99,14 +99,29 @@ Stop the product, or refuse the request, when any of these is true:
 2. The buyer being served wants a qualification call, an executive PDF, or pricing aimed at large subscription counts. That is a different business. Decline.
 3. The implementation cannot keep the smoke test's ban on charge, write, and fix exports.
 4. Most support demand is "change my webhook" or "fix this row." The kit does not do that work. If that is the demand, the product is the wrong shape.
-5. DriftExact or ProdVerdict ships a maintained Polar read path at a similar self-serve price before SeatTruth has an operator. Reconsider. Do not answer by adding audit features.
+5. A named entitlement reconciler (DriftExact, ProdVerdict, Venwai, or EntitleGuard) ships a maintained Polar read against a product database, at a self-serve price near this band, before SeatTruth has an operator. Reconsider. Do not answer by adding audit features or auto-fix. RevReclaim already names Polar for billing-leak scans and markets auto-fix. That product does not close this gap.
 6. The founder halt says stop.
 
 ## Differentiation
 
-DriftExact's public pages describe Stripe-only, qualification-gated monitoring at a much higher monthly price, and they do not mention Polar. ProdVerdict's public README describes Stripe and Paddle, a scheduled access check, and a low cloud price, and it does not mention Polar. SeatTruth's wedge is a Polar rail next to Stripe, two detect cases, no fix advice, and an indie self-serve price, shipped before those public materials show Polar.
+Public skim **2026-09-26**. Sources, prices, and unknowns: [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md). This is the DR#1 seed. It is not a later design review.
 
-That is a gap in what they have published. It is not a claim about their roadmap, their revenue, or their accuracy. Sources and unknowns: [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md).
+The **Polar ↔ product-database entitlement reconciler** gap is open among the named peers:
+
+- **DriftExact, Venwai, and EntitleGuard** are Stripe-only on the pages reviewed.
+- **ProdVerdict** is Stripe and Paddle. The public README does not mention Polar.
+- **RevReclaim** does name Polar. It is a different product: billing-leak hygiene, and paid plans market auto-fix.
+
+**SeatTruth's public wedge** is **$49–99/mo**, **Stripe and Polar**, read-only, **no auto-fix**.
+
+Closest shapes, from those same pages:
+
+- **DriftExact** is the closest mid-market peer. Read-only, no auto-fix, published **£399–£1,500+/mo**, best-fit copy around **500+** active Stripe subscriptions. Qualification-gated. That buyer is kill criterion 2.
+- **ProdVerdict** is the closest indie peer. Access contract, GitHub Actions, Slack, no write-back described. Pro Cloud is about **$39/project/mo** in the changelog. prodverdict.com returned **503** (deployment paused) during the skim, so that price was not re-checked on a live pricing page.
+
+Venwai ($29/mo after beta, up to 500 subscriptions) and EntitleGuard (monitoring beta $79/mo) sit in the same indie price neighborhood. Neither shows Polar.
+
+This is a gap in published materials. It is not a claim about roadmaps, revenue, customer counts, or accuracy.
 
 ## Out
 

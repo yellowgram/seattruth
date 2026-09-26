@@ -8,7 +8,7 @@
 | [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) | Support checklist v1. Later design PRs may revise it. Not a v3 final. |
 | [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) | Buyer needs v1: what the first kit will not absorb. |
 | [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) | DR#1 skim: DriftExact, ProdVerdict, Venwai, EntitleGuard, RevReclaim. Sources kept. No invented metrics. |
-| [STATUS.md](STATUS.md) | DR#1 status. Next: DR#2, then DR#3, then founder halt, then implement PR, then CR×3. |
+| [STATUS.md](STATUS.md) | DR#1 status. Next: DR×3, 4th DR with LaunchGate APPROVE, implement PR, CR×3, 4th CR with LaunchGate APPROVE before squash-merge. |
 
 Front door for an operator: [../BUYER_START_HERE.md](../BUYER_START_HERE.md).
 

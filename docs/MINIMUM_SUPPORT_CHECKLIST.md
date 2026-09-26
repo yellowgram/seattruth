@@ -6,7 +6,7 @@ What "supported" means for SeatTruth once an operator has the kit. The founder s
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when this file was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Next steps, each its own PR: DR#2, then DR#3, then a founder halt, then an implement PR, then CR×3 before that implement PR merges. See [STATUS.md](STATUS.md).
+Cadence, with later reviews in their own PRs: DR×3 (this file is part of DR#1 only), then a 4th design review with LaunchGate APPROVE before any implement PR, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. See [STATUS.md](STATUS.md).
 
 ## 1. Happy path
 
@@ -64,7 +64,7 @@ An operator should not need a call to learn the boundary.
 Distribution matches the private-kit pattern: this private GitHub repo now, a zip later.
 
 - [x] `package.json` is `private` and version `0.0.0`.
-- [ ] A zip of a tagged source tree is built only after the founder halt and a real detector.
+- [ ] A zip of a tagged source tree is built with the real detector, after LaunchGate approves the 4th design review. Polar listing go-live stays a founder (via CoS) decision.
 - [ ] SHA-256 of that zip is recorded.
 - [ ] `POLAR_DELIVERABLES` lists the zip name, the SHA-256, and the tag. The file does not exist yet.
 - [ ] Polar listing stays dark until those three are real. No Checkout URL in the repo, the README, or the CLI help.
@@ -98,4 +98,4 @@ When DR#2 opens, it gets its own PR and may edit this checklist. DR#3 does the s
 
 ## Done means
 
-The DR#1 scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs still match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming DR#2, DR#3, or CR×3 happened here.
+The DR#1 scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs still match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming DR#2, DR#3, the 4th DR, CR×3, the 4th CR, or a LaunchGate approval happened here.

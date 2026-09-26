@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**DR#1 only** (scaffold and design-pack seed). DR#2 and DR#3 are not done here. Next is a separate DR#2 design PR, then a separate DR#3 design PR, then a founder halt, then an implement PR, then CR×3 before that implement PR merges. [docs/STATUS.md](docs/STATUS.md).
+**DR#1 only** (scaffold and design-pack seed). Later design reviews are separate PRs. Cadence: DR×3, then a 4th design review with LaunchGate APPROVE before any implement PR, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

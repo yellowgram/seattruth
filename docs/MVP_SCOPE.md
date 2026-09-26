@@ -1,14 +1,18 @@
 # MVP scope
 
-**DR#1 seed.** This file is the first design pass, written with the scaffold. It is not DR#2 and it is not DR#3. Those are later pull requests. See [STATUS.md](STATUS.md).
+**DR#1 seed.** This file is the first design pass, written with the scaffold. It is not DR#2, DR#3, or the 4th design review. Those are later pull requests. See [STATUS.md](STATUS.md).
 
-## Next steps
+## Cadence
 
-1. **DR#2** — a separate design PR. Not this one.
-2. **DR#3** — a separate design PR after DR#2. Not this one.
-3. **Founder halt.** Stop until there is an explicit go-ahead to implement.
-4. **Implement PR.** Detector code. Not started.
-5. **CR×3** before that implement PR merges.
+Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th gate.
+
+1. **DR×3.** Three separate design PRs. This PR is DR#1 only. DR#2 and DR#3 are not this PR.
+2. **4th DR → LaunchGate APPROVE** before any implement PR. The 4th design review is its own PR.
+3. **Implement PR.** Detector code. Not started.
+4. **CR×3.** Three code reviews of that implement work.
+5. **4th CR → LaunchGate APPROVE** before squash-merge.
+
+Founder (via CoS) decides only: price, refund window, Polar listing go-live, Soft-WTP, spending money, or scope that becomes Chargebee, Autumn, or auto-fix. Polar stays dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are real.
 
 Do not treat the rules below as a finished design, and do not implement them from this PR.
 
@@ -25,7 +29,7 @@ SeatTruth compares Stripe and Polar, read-only, with one product database. The p
 - GitHub Actions: daily cron (`0 6 * * *`) plus `workflow_dispatch`. The workflow in this repo dry-runs and has no live secrets.
 - Slack incoming webhook on the operator's channel when a real run has a finding or cannot complete a classification.
 - English docs and English alerts.
-- Self-serve price band **$49–99 per month** once a versioned zip exists. The number inside the band is chosen at the founder halt. There is no checkout in this repo.
+- Self-serve price band **$49–99 per month** once a versioned zip exists. The exact number is a founder (via CoS) decision. Design reviews do not wait on it. There is no checkout in this repo.
 
 ## Detect cases
 
@@ -38,7 +42,7 @@ A **finding** is one of these. Both are operator review items. Neither is an ins
 
 ### Provisional rules
 
-These are DR#1 decisions. DR#2, then DR#3, each in its own PR, may supersede a rule. This PR does not apply those revisions. A superseded rule stays in the text, marked superseded, with the new rule id beside it. Code does not get to widen these rules quietly, and code does not land in this PR.
+These are DR#1 decisions. DR#2, DR#3, and the 4th DR, each in its own PR, may supersede a rule. This PR does not apply those revisions. A superseded rule stays in the text, marked superseded, with the new rule id beside it. Code does not get to widen these rules quietly, and code does not land in this PR. The 4th DR still needs LaunchGate APPROVE before an implement PR.
 
 | Id | Rule |
 | --- | --- |
@@ -89,18 +93,18 @@ Cadence is daily. Hourly monitoring is a different product.
 
 $49–99 per month, self-serve, one organization, when the zip and checksum exist. Global English buyers. No sales call.
 
-Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, pay-what-you-want, and cold invoices. Choosing the number inside the band is a founder decision with the cost of support in view, done at the halt, not a survey.
+Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, pay-what-you-want, and cold invoices. The exact number inside the band, and the refund window, are founder (via CoS) decisions. They are not a survey, and they are not a LaunchGate substitute. Design reviews do not wait on them.
 
 ## Kill criteria
 
 Stop the product, or refuse the request, when any of these is true:
 
-1. DR#2 or DR#3 shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case in that later PR. Do not widen the product to save it.
+1. DR#2, DR#3, or the 4th DR shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case in that later PR. Do not widen the product to save it.
 2. The buyer being served wants a qualification call, an executive PDF, or pricing aimed at large subscription counts. That is a different business. Decline.
 3. The implementation cannot keep the smoke test's ban on charge, write, and fix exports.
 4. Most support demand is "change my webhook" or "fix this row." The kit does not do that work. If that is the demand, the product is the wrong shape.
 5. A named entitlement reconciler (DriftExact, ProdVerdict, Venwai, or EntitleGuard) ships a maintained Polar read against a product database, at a self-serve price near this band, before SeatTruth has an operator. Reconsider. Do not answer by adding audit features or auto-fix. RevReclaim already names Polar for billing-leak scans and markets auto-fix. That product does not close this gap.
-6. The founder halt says stop.
+6. LaunchGate does not approve the 4th DR or the 4th CR. Separately, the founder (via CoS) refuses a reserved decision: price, refund window, Polar listing go-live, Soft-WTP, spending money, or scope that becomes Chargebee, Autumn, or auto-fix.
 
 ## Differentiation
 
@@ -146,7 +150,7 @@ Hard outs for v1 and for the life of this positioning:
 
 ## Later
 
-Parked. Not promised. A later item moves into scope only by an edit in the DR#2 PR or the DR#3 PR, not by slipping it into this seed.
+Parked. Not promised. A later item moves into scope only by an edit in a later design PR (DR#2, DR#3, or the 4th DR), not by slipping it into this seed. Chargebee, Autumn, or auto-fix is not one of those ordinary edits. That scope change waits on the founder (via CoS).
 
 - Seat quantity inequality as its own finding.
 - Deduped alerts that do not become an entitlement store.

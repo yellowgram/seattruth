@@ -1,6 +1,6 @@
 # Competitive skim
 
-**DR#1.** Public pages only, fetched **2026-09-26**. No sales calls. This skim is part of the design-pack seed. It is not DR#2 or DR#3.
+**DR#1 skim, carried into DR#2 unchanged.** Public pages only, fetched **2026-09-26**. No sales calls. DR#2 did not re-fetch these homepages and did not add prices, customer counts, or accuracy figures. The Polar entitlement gap below is still only as good as that date. Polar's own subscription status enum was read on the same date for rule P12 in [MVP_SCOPE.md](MVP_SCOPE.md). That enum is Polar's API, not a competitor shipping this reconcile. RevReclaim's Polar support remains a different product.
 
 ARR, logos, accuracy rates, and customer counts are omitted. Where a page was down or two pages disagree, that disagreement stays in the text. Prices below are the figures those pages published. They are not a live quote from yellowgram, and they are not a currency conversion.
 

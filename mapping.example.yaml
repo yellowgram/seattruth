@@ -10,6 +10,9 @@ version: 1
 
 product:
   engine: postgres
+  # Required. One identifier. The SELECT is "schema"."relation" after validation.
+  # There is no search_path fallback. See docs/MVP_SCOPE.md rule P18.
+  schema: billing
   # Table or view. The database role needs SELECT on this relation only.
   relation: billing_access
   columns:

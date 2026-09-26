@@ -23,7 +23,7 @@ export const CONTRACT = Object.freeze({
   autoFixes: false,
 });
 
-/** What this build actually does. DR#1 does not touch the network. */
+/** What this build actually does. DR#2 still does not touch the network. */
 export const BUILD = Object.freeze({
   detectorImplemented: false,
   performsNetworkReads: false,
@@ -40,7 +40,7 @@ export type ProviderSubscriptionSnapshot = {
   customerId: string;
   subscriptionId: string | null;
   classification: PaidClassification;
-  /** Alert context. Seat inequality is not a detect case in v1. */
+  /** Alert context. Seat inequality is not a detect case. */
   quantity: number | null;
 };
 
@@ -78,6 +78,11 @@ export type CompareResult = {
   allClear: boolean;
   mode: "dry-run" | "live";
   findings: Finding[];
+  /**
+   * Users with no case finding because a value or rail was unclassified.
+   * DR#2 rule P14. A non-zero count forces allClear false and is not a run error.
+   */
+  unclassifiedUsers: number;
   errors: string[];
 };
 
@@ -87,5 +92,8 @@ export function assertStubResult(result: CompareResult): void {
   }
   if (result.findings.length !== 0) {
     throw new Error("Stub compare must not invent findings.");
+  }
+  if (result.unclassifiedUsers !== 0) {
+    throw new Error("Stub compare must not invent unclassified users.");
   }
 }

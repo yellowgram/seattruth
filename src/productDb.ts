@@ -5,14 +5,17 @@ import type { ProductRow } from "./invariants.js";
  * Read-only product database.
  *
  * Invariants:
- * - One SELECT of the mapped columns on one Postgres relation.
- * - Identifiers in the mapping file must match /^[A-Za-z_][A-Za-z0-9_]*$/.
- * - The mapping file is not SQL. No statement text from the operator.
+ * - One SELECT of the mapped columns on one Postgres schema and relation.
+ * - schema, relation, and column names match /^[A-Za-z_][A-Za-z0-9_]*$/
+ *   and are 1–63 characters. Quote each identifier after validation.
+ *   Never paste the raw YAML into SQL. Do not trust search_path (P18).
+ * - One mapping file is one tenant and one database (P19).
+ * - SQL NULL seats stay null. Do not coerce NULL to 0 (P11, P20).
  * - Never UPDATE, INSERT, DELETE, or change is_pro / seats.
  * - The connection string must be a SELECT-only role. The tool does not
  *   escalate privileges and does not open a second connection for writes.
- * - TODO(implement): not in DR#1. Wait for DR×3, then a 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
- *   Rules: docs/MVP_SCOPE.md (P1, P5, P8).
+ * - TODO(implement): not in DR#2. Wait for DR#3, then a 4th DR with LaunchGate APPROVE.
+ *   Rules: docs/MVP_SCOPE.md (P11, P17, P18, P20).
  */
 
 /** Mirrors mapping.example.yaml. The loader is not implemented. */
@@ -20,6 +23,8 @@ export type MappingDocument = {
   version: 1;
   product: {
     engine: "postgres";
+    /** Required. One unquoted identifier. Missing schema is a run error (P18). */
+    schema: string;
     relation: string;
     columns: {
       user_id: string;

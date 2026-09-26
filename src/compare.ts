@@ -12,8 +12,8 @@ import type { CompareResult } from "./invariants.js";
  * - Never charge. Never write providers. Never mutate is_pro or seats.
  * - Never auto-fix, and never describe a fix.
  * - A dry-run or a failed read is not an all-clear.
- * - TODO(implement): not in DR#1. Wait for DR×3, then a 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
- *   DR#1 rules P1–P10 live in docs/MVP_SCOPE.md. Later design PRs may supersede them.
+ * - TODO(implement): not in DR#2. Wait for DR#3, then a 4th DR with LaunchGate APPROVE.
+ *   Active rules are P6, P7, and P11–P24 in docs/MVP_SCOPE.md.
  *   Do not add plan drift, orphan rows, or seat inequality as findings.
  */
 
@@ -23,6 +23,7 @@ export async function compareReadOnly(): Promise<CompareResult> {
     allClear: false,
     mode: "dry-run",
     findings: [],
+    unclassifiedUsers: 0,
     errors: ["detector_not_implemented"],
   };
   assertStubResult(result);

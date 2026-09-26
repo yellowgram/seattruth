@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**DR#1 only** (scaffold and design-pack seed). Later design reviews are separate PRs. Cadence: DR×3, then a 4th design review with LaunchGate APPROVE before any implement PR, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. [docs/STATUS.md](docs/STATUS.md).
+**DR#2** on this branch. DR#1 is pull request #1. DR#3 is next. LaunchGate is the 4th design review after DR#3, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. The detector is not implemented. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

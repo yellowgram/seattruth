@@ -1,12 +1,12 @@
-# Minimum support checklist (v1)
+# Minimum support checklist (v2)
 
-**DR#1.** This is a solid first checklist, not a final v3. DR#2 and DR#3 are separate design PRs, and each one may revise this file. Those revisions are not in this PR. Do not read the checked boxes as a sign-off from later reviews.
+**DR#2.** This is v2 of the DR#1 checklist, not a v3 final. DR#3 has not revised it. LaunchGate has not been requested. The delta log from v1 is section 8. The attack write-up is [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md).
 
-What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this scaffold. Items left open wait for later design PRs, the implement PR, or the zip.
+What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this scaffold. Items left open wait for DR#3, the implement PR, or the zip.
 
-HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when this file was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
+HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence, with later reviews in their own PRs: DR×3 (this file is part of DR#1 only), then a 4th design review with LaunchGate APPROVE before any implement PR, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. See [STATUS.md](STATUS.md).
+Cadence: DR#1 is pull request #1. This file's PR is DR#2. Next is a separate DR#3, then a 4th design review with LaunchGate APPROVE before any implement PR, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. See [STATUS.md](STATUS.md).
 
 ## 1. Happy path
 
@@ -33,8 +33,8 @@ The path an operator can finish from the docs, when the detector exists. Today, 
 - [x] `.env.example` and `mapping.example.yaml` contain placeholders, not live ids.
 - [x] `mapping.yaml` and `.env` are gitignored.
 - [ ] Missing credential on an enabled rail is a run error (rule P7). Specified, not implemented.
-- [ ] Unknown provider statuses stay unclassified (rule P2). Specified, not implemented.
-- [ ] `NULL` `is_pro` is unclassified, not a guessed boolean (rule P1).
+- [ ] Unknown provider statuses stay unclassified (rule P12). Specified, not implemented.
+- [ ] `NULL` `is_pro` is unclassified, not a guessed boolean (rule P11).
 - [ ] Slack omits email, name, and card data (rule P6).
 - [ ] No ignore list ships with the kit.
 
@@ -44,7 +44,7 @@ An operator should not need a call to learn the boundary.
 
 - [x] [../README.md](../README.md) states what the product is, the price band, the hard outs, and the contact.
 - [x] [../BUYER_START_HERE.md](../BUYER_START_HERE.md) is the front door.
-- [x] [MVP_SCOPE.md](MVP_SCOPE.md) is the rule list, including provisional rules P1–P10.
+- [x] [MVP_SCOPE.md](MVP_SCOPE.md) is the rule list. DR#2 marks superseded P-rules and adds P11–P24. Active rules are called out in that file.
 - [x] [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) records public claims and leaves unknowns unmarked as facts.
 - [x] [../.env.example](../.env.example) names each secret and the read-only constraint.
 - [x] [../mapping.example.yaml](../mapping.example.yaml) is the whole mapping surface.
@@ -56,7 +56,7 @@ An operator should not need a call to learn the boundary.
 - [x] [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs `npm test` on push and pull request.
 - [x] The smoke test imports the stubs and fails if an export name looks like a charge, write, or fix API.
 - [x] The smoke test fails if dry-run sets `allClear`, if live Slack copy is invented, or if README drops the hard outs.
-- [ ] After implementation, tests cover P1–P10 with fixtures. Fixtures are invented rows in the test file, not live customers.
+- [ ] After implementation, tests cover the active rules (P6, P7, P11–P24) with fixtures. Fixtures are invented rows in the test file, not live customers. Superseded rule text is not reimplemented.
 - [ ] CI still has no Stripe, Polar, database, or Slack secrets. Live reads stay in the operator's scheduled workflow.
 
 ## 5. Versioned zip
@@ -65,8 +65,9 @@ Distribution matches the private-kit pattern: this private GitHub repo now, a zi
 
 - [x] `package.json` is `private` and version `0.0.0`.
 - [ ] A zip of a tagged source tree is built with the real detector, after LaunchGate approves the 4th design review. Polar listing go-live stays a founder (via CoS) decision.
-- [ ] SHA-256 of that zip is recorded.
-- [ ] `POLAR_DELIVERABLES` lists the zip name, the SHA-256, and the tag. The file does not exist yet.
+- [ ] SHA-256 of that zip is recorded as lowercase hex of the file bytes.
+- [ ] The zip does not contain `.env`, `mapping.yaml`, or `node_modules`.
+- [ ] `POLAR_DELIVERABLES` lists the zip name, the SHA-256, and the tag. The file does not exist yet. DR#2 does not add a placeholder.
 - [ ] Polar listing stays dark until those three are real. No Checkout URL in the repo, the README, or the CLI help.
 
 ## 6. Support and money boundary
@@ -75,7 +76,8 @@ Distribution matches the private-kit pattern: this private GitHub repo now, a zi
 - [x] Support language is English.
 - [x] The license refuses a warranty that comparisons are correct.
 - [ ] Email support, when a kit has been sold, covers: how to run the documented path, how to read a finding, and defects where the kit breaks its own rules.
-- [ ] Email support does not cover: changing the operator's webhook, editing `is_pro`, interpreting a partial refund, writing a custom SQL join, or joining the operator's Slack.
+- [x] Support channel is email to hello@yellowgram.dev. GitHub Issues on a private buyer repo are not a channel yellowgram can read, and they are not a place to paste keys or production rows (DR#2).
+- [ ] Email support does not cover: changing the operator's webhook, editing `is_pro`, interpreting a partial refund, writing a custom SQL join, sending an `UPDATE` "for convenience", or joining the operator's Slack.
 - [ ] The only invoice yellowgram sends is for SeatTruth itself, to an organization that bought it. No cold invoices. No invoices for the operator's end customers.
 - [ ] The kit never creates a charge, a refund, or a Checkout session.
 - [ ] Price, when a listing exists, is a published number in the $49–99 band. No pay-what-you-want. No "reply with what you'd pay."
@@ -86,16 +88,43 @@ Distribution matches the private-kit pattern: this private GitHub repo now, a zi
 - [x] Manual dispatch exists for a dry-run.
 - [x] Workflow permissions are `contents: read`.
 - [ ] The operator owns the Slack app and the webhook. yellowgram is not in that workspace.
-- [ ] A finding alert and a run-error alert are different first lines, so a channel can be skimmed. Copy is written at implementation under P6 and P10, then reviewed.
-- [ ] Key rotation is the operator's job: replace the GitHub secret, expire the old Polar token in the Polar UI, roll the Stripe restricted key in the Stripe dashboard.
-- [ ] A missed cron (Actions outage) is visible because the operator notices the channel went quiet. The kit does not promise a second pager.
+- [ ] A finding alert, an unclassified-count line, and a run-error alert are different first lines, so a channel can be skimmed. Copy is written at implementation under P6, P14, and P24.
+- [x] Dry-run versus live is specified (P16). This scaffold still refuses `--live`. A green dry-run is not an entitlement pass. When live exists, the daily cron is live, and `workflow_dispatch` stays dry unless the operator sets a live input. Dry-run does not call providers, the database, or Slack.
+- [x] Key rotation order is specified, and not automated. Create the new restricted key first. Update the GitHub Actions secret. After the detector exists, run one live dispatch. Then revoke the old key in the Stripe or Polar UI. Do not put the new key in git, Issues, or Slack. If a key lands in a log, rotate it. The kit must not log credential values (P23).
+- [ ] A missed cron (Actions outage) is visible because the operator notices the channel went quiet. The kit does not promise a second pager. A repeated finding is shown again the next day. Snooze is refused.
 
-## 8. Later revisions of this checklist
+## 8. Delta log, v1 → v2
 
-DR#2 and DR#3 have not been run. This section does not record their findings. Running those reviews inside DR#1 would collapse them into one pass.
+v1 shipped in DR#1 (pull request #1) with no expert deltas. v2 is this DR#2 pass. Three experts ran in order inside this PR. Their full attacks are in [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md). This log is not DR#3 and not a v3 checklist.
 
-When DR#2 opens, it gets its own PR and may edit this checklist. DR#3 does the same after DR#2, in another PR. Until those PRs exist, v1 above is the support promise of the seed. It is not a v3 final.
+### Expert A — billing state
+
+- Superseded P1 with P11. No boolean coercion. Null seats are not zero. Seats still do not decide the case.
+- Superseded P2 and P3 with P12. A written Stripe and Polar status map. `cancel_at_period_end` is not a cancel. Active plus a full refund, and any partial refund, are unclassified. `past_due` and `unpaid` stay unclassified. No invented Polar refund field.
+- Added P13. No subscription is not a cancel. A null customer id skips that rail for that row.
+- Superseded P4 with P14 and P15. Unclassified users are a count, not a failed read. No primary rail.
+- Superseded P9 with P16. `allClear` is false while unclassified users remain. A green dry-run is not a pass.
+
+### Expert B — mapping
+
+- Superseded P8 with P18. Schema is required. Identifiers are validated and quoted. No `search_path` fallback.
+- Added P19. One mapping file is one tenant.
+- Added P20. NULL seats versus a missing column.
+- Added P21 and P22. Empty string is not "rail off." Zero rails is a run error.
+- Superseded P5 with P17. Duplicate ids exclude those users only.
+
+### Expert C — support and temptation
+
+- Superseded P10 with P24. Suggested SQL and refund advice are fix instructions.
+- Added P23. Do not log secrets. Rotation order is in section 7.
+- Support is email only. Private-repo Issues are not a channel.
+- Zip rules gained the checksum shape and the ban on bundling secrets. `POLAR_DELIVERABLES` stays absent.
+- Snooze, percent-of-savings pricing, Chargebee, and Autumn are refused. They are not a v2 feature.
+
+### Not in this delta
+
+DR#3 has not edited this checklist. LaunchGate has not been asked to approve the 4th DR.
 
 ## Done means
 
-The DR#1 scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs still match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming DR#2, DR#3, the 4th DR, CR×3, the 4th CR, or a LaunchGate approval happened here.
+The DR#2 scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming DR#3, the 4th DR, CR×3, the 4th CR, or a LaunchGate approval happened here.

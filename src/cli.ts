@@ -11,7 +11,7 @@ import { buildSlackAlert } from "./slack.js";
  * The stub does not read environment variables and does not open the network.
  *
  * Invariants: read-only; never charge; never mutate entitlements.
- * TODO(implement): not in DR#1. Wait for DR×3, then a 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
+ * TODO(implement): not in DR#2. Wait for DR#3, then a 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
  */
 
 export const HELP = `SeatTruth compare (scaffold)

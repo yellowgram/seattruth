@@ -1,33 +1,31 @@
 # Status
 
-Updated 2026-09-26. **This pull request is DR#1 only.**
+Updated 2026-09-26. **This pull request is DR#2.**
 
-DR#1 is the scaffold plus the design-pack seed: [MVP_SCOPE.md](MVP_SCOPE.md), [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) v1, [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) v1, [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md), and this file.
-
-DR#2, DR#3, the 4th design review, and every code review are not done. This PR does not contain them.
+DR#1 is done: https://github.com/yellowgram/seattruth/pull/1 (scaffold and design-pack seed). This PR does not reopen it and does not implement the detector.
 
 | Item | State |
 | --- | --- |
-| Design review | DR#1 only. Seed, not a finished design. |
-| DR#2 | Not started. Separate design PR. |
-| DR#3 | Not started. Separate design PR after DR#2. |
-| 4th DR | Not started. LaunchGate APPROVE required before any implement PR. |
+| DR#1 | Done. Pull request #1. |
+| Design review | **DR#2**, this PR. Adversarial pass on the DR#1 rules. Not DR#3. |
+| DR#3 | Not started. Next design PR after this one. |
+| 4th DR | Not started. LaunchGate APPROVE is required before any implement PR. Not requested. |
 | Detector | Not started. Stubs throw rather than pretend to compare. |
 | CR×3 and 4th CR | Not started. 4th CR needs LaunchGate APPROVE before squash-merge. |
-| `npm test` | Smoke test on the stub surface. |
-| GitHub Action `compare` | Cron and manual dispatch, dry-run only. No live secrets. |
+| `npm test` | Smoke test on the stub surface, including `unclassifiedUsers` and a required mapping schema. |
+| GitHub Action `compare` | Cron and manual dispatch, dry-run only. No live secrets. A green run is not an entitlement pass. |
 | Polar listing | Dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` exist. Listing go-live is a founder decision on top of that. |
-| Versioned zip, SHA-256, `POLAR_DELIVERABLES` | Absent. Do not create a listing that implies Checkout. |
+| Versioned zip, SHA-256, `POLAR_DELIVERABLES` | Absent. This PR does not add them. |
 | Package version | `0.0.0`, private. Not a release. |
 | Exact price inside $49–99 | Unset. Founder (via CoS) sets it. Setting it before a zip exists would be a fake door. |
-| Refund window | Unset. Founder (via CoS) sets it. |
+| Refund window | Unset. Founder (via CoS) sets it. The kit does not recommend end-customer refunds. |
 
 ## Cadence
 
 Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th gate, twice: once before implementation, once before squash-merge.
 
-1. **DR×3.** Three separate design PRs. This PR is DR#1 only. DR#2 and DR#3 each get their own PR. They are not started here.
-2. **4th DR → LaunchGate APPROVE** before any implement PR. The 4th design review is its own PR. It is not started here.
+1. **DR×3.** Three separate design PRs. DR#1 is pull request #1. This PR is DR#2. DR#3 is next and is not started here.
+2. **4th DR → LaunchGate APPROVE** before any implement PR. Not requested in DR#2.
 3. **Implement PR.** The detector. Not this PR.
 4. **CR×3.** Three code reviews of that implement work. Not started.
 5. **4th CR → LaunchGate APPROVE** before squash-merge. Not started.
@@ -46,6 +44,12 @@ The founder is not in the ordinary DR or CR path. Founder (via CoS) decides only
 - scope that becomes Chargebee, Autumn, or auto-fix
 
 Polar stays dark until the zip, the SHA-256, and `POLAR_DELIVERABLES` are real. Go-live still needs the founder after those files exist.
+
+## Where the DR#2 deltas live
+
+- Rules: [MVP_SCOPE.md](MVP_SCOPE.md). Superseded ids stay in the table.
+- Attack log: [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md).
+- Checklist v2 delta from v1: [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md).
 
 ## Contact
 

@@ -78,6 +78,7 @@ test("dry-run compare is not an all-clear and Slack text does not prescribe a fi
   assert.equal(result.allClear, false);
   assert.equal(result.mode, "dry-run");
   assert.deepEqual(result.findings, []);
+  assert.equal(result.unclassifiedUsers, 0);
   assert.ok(result.errors.includes("detector_not_implemented"));
 
   const alert = slack.buildSlackAlert(result);
@@ -93,6 +94,7 @@ test("dry-run compare is not an all-clear and Slack text does not prescribe a fi
         allClear: false,
         mode: "live",
         findings: [],
+        unclassifiedUsers: 0,
         errors: [],
       }),
     (error: unknown) => error instanceof NotImplementedError
@@ -126,6 +128,7 @@ test("committed examples contain placeholders and no live secrets", () => {
 
   const mapping = readFileSync(path.join(root, "mapping.example.yaml"), "utf8");
   assert.match(mapping, /engine:\s*postgres/);
+  assert.match(mapping, /schema:\s*billing/);
   assert.match(mapping, /field:\s*is_pro/);
   assert.match(mapping, /seats:/);
   assert.doesNotMatch(mapping, /\bUPDATE\b/);

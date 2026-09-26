@@ -1,6 +1,6 @@
 # Buyer start here
 
-SeatTruth is not for sale from this repository. The detector is not built. The Polar listing is dark. This page is the front door you will use once a versioned zip exists, and it is the outline of what an operator has to prepare.
+SeatTruth is not for sale from this repository. The detector can run a read-only compare when you supply your own keys. The Polar listing is dark. This page is the front door you will use once a versioned zip exists, and it is the outline of what an operator has to prepare.
 
 Contact: hello@yellowgram.dev · prefer [www.yellowgram.dev](https://www.yellowgram.dev)
 
@@ -12,7 +12,7 @@ You run the kit inside your own GitHub repository and your own database. yellowg
 
 - Read [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) and decide whether the two detect cases match a real argument you have had with your database.
 - Copy [.env.example](.env.example) and [mapping.example.yaml](mapping.example.yaml) and see whether your schema can fill them in without a custom join.
-- Run `npm test` and `npm run compare -- --dry-run`. Both succeed without keys. The dry-run text says the detector is not implemented. That success is not evidence your entitlements match.
+- Run `npm test` and `npm run compare -- --dry-run`. Both succeed without keys. The dry-run text says it is not an all-clear. That success is not evidence your entitlements match.
 
 ## What you will need when the detector exists
 

@@ -1,18 +1,17 @@
 # Scheduled read-only compare.
-# The detector is not implemented. This workflow always dry-runs.
-# It does not receive Stripe keys, Polar tokens, a database URL, or a Slack webhook.
-# A green dry-run is not an all-clear. See docs/MVP_SCOPE.md and docs/STATUS.md.
+# The daily cron is live. workflow_dispatch stays dry-run unless dry_run is false.
+# Secrets are not written into this file. A green dry-run is not an all-clear.
+# See docs/MVP_SCOPE.md and docs/STATUS.md.
 
 name: compare
 
 on:
   schedule:
-    # Daily, after a quiet hour. Indie cadence. Not an enterprise monitor.
     - cron: "0 6 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Must stay true until the detector is implemented"
+        description: "true skips provider, database, and Slack calls"
         required: true
         type: boolean
         default: true
@@ -24,12 +23,6 @@ jobs:
   compare:
     runs-on: ubuntu-latest
     steps:
-      - name: Refuse live mode
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == false }}
-        run: |
-          echo "Live compare is not implemented. Refusing to run."
-          exit 1
-
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -40,4 +33,26 @@ jobs:
       - run: npm ci
 
       - name: Dry-run compare
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run != false
         run: npm run compare -- --dry-run
+
+      - name: Write mapping for live compare
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        env:
+          SEATTRUTH_MAPPING_YAML: ${{ secrets.SEATTRUTH_MAPPING_YAML }}
+        run: |
+          if [ -z "$SEATTRUTH_MAPPING_YAML" ]; then
+            echo "Missing SEATTRUTH_MAPPING_YAML secret."
+            exit 1
+          fi
+          printf '%s\n' "$SEATTRUTH_MAPPING_YAML" > mapping.yaml
+
+      - name: Live compare
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        env:
+          STRIPE_RESTRICTED_KEY: ${{ secrets.STRIPE_RESTRICTED_KEY }}
+          POLAR_RESTRICTED_TOKEN: ${{ secrets.POLAR_RESTRICTED_TOKEN }}
+          PRODUCT_DATABASE_URL: ${{ secrets.PRODUCT_DATABASE_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SEATTRUTH_MAPPING_PATH: ./mapping.yaml
+        run: npm run compare -- --live

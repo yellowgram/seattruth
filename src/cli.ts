@@ -1,50 +1,113 @@
+import { readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
-import { compareReadOnly } from "./compare.js";
-import { assertStubResult } from "./invariants.js";
-import { buildSlackAlert } from "./slack.js";
+import { compareReadOnly, runLiveCompare } from "./compare.js";
+import { assertDryRunResult } from "./invariants.js";
+import { buildSlackAlert, deliverSlackAlert, slackNeeded } from "./slack.js";
 
 /**
  * SeatTruth CLI.
  *
- * Default is dry-run. --live is refused until the detector exists.
- * The stub does not read environment variables and does not open the network.
- *
- * Invariants: read-only; never charge; never mutate entitlements.
- * TODO(implement): not in DR#3. Next is the 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
+ * Default is dry-run. Dry-run does not read environment secrets and does not
+ * open the network. --live uses restricted credentials and posts to Slack
+ * only for a finding, an ambiguous count, or a run error.
  */
 
-export const HELP = `SeatTruth compare (scaffold)
+export const HELP = `SeatTruth compare
 
-The detector is not implemented. A dry-run is not an all-clear.
+A dry-run is not an all-clear. Live mode reads Stripe, Polar, and Postgres and does not change them.
 
 Usage:
-  seattruth --dry-run     Print the stub result and exit 0 (default)
+  seattruth --dry-run     Print a local notice and exit 0 (default)
   seattruth --help        Show this text
-  seattruth --live        Refused. Exit 2. No provider, database, or Slack calls.
+  seattruth --live        Read-only compare. Exit 0, 2, or 1 per docs/MVP_SCOPE.md rule P30.
 
 Docs: docs/MVP_SCOPE.md
 Contact: hello@yellowgram.dev
 `;
 
-const LIVE_REFUSAL =
-  "Live compare is not implemented. SeatTruth will not read providers, will not query the product database, and will not post to Slack.";
+function loadEnvFile(): void {
+  let text: string;
+  try {
+    text = readFileSync(".env", "utf8");
+  } catch {
+    return;
+  }
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (trimmed === "" || trimmed.startsWith("#")) {
+      continue;
+    }
+    const eq = trimmed.indexOf("=");
+    if (eq <= 0) {
+      continue;
+    }
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (process.env[key] === undefined) {
+      process.env[key] = value;
+    }
+  }
+}
+
+function exitCode(allClear: boolean, errors: readonly string[]): number {
+  if (errors.length > 0) {
+    return 1;
+  }
+  return allClear ? 0 : 2;
+}
 
 export async function runCli(argv: readonly string[]): Promise<number> {
   if (argv.includes("--help") || argv.includes("-h")) {
     console.log(HELP);
     return 0;
   }
-  if (argv.includes("--live")) {
-    console.error(LIVE_REFUSAL);
-    return 2;
+  if (argv.includes("--live") && argv.includes("--dry-run")) {
+    console.error("Pass only one of --live or --dry-run.");
+    return 1;
   }
-  const result = await compareReadOnly();
-  assertStubResult(result);
+  if (!argv.includes("--live")) {
+    const result = await compareReadOnly();
+    assertDryRunResult(result);
+    console.log(buildSlackAlert(result).text);
+    return 0;
+  }
+
+  loadEnvFile();
+  const result = await runLiveCompare({
+    stripeKey: process.env.STRIPE_RESTRICTED_KEY ?? "",
+    polarToken: process.env.POLAR_RESTRICTED_TOKEN ?? "",
+    databaseUrl: process.env.PRODUCT_DATABASE_URL ?? "",
+    mappingPath: process.env.SEATTRUTH_MAPPING_PATH ?? "",
+  });
   const alert = buildSlackAlert(result);
-  console.log(alert.text);
-  console.log(`errors=${result.errors.join(",")}`);
-  return 0;
+  if (alert.text !== "") {
+    console.log(alert.text);
+  } else if (result.allClear) {
+    console.log("SeatTruth live run finished all-clear. Slack was not posted.");
+  }
+
+  if (slackNeeded(result)) {
+    const webhook = process.env.SLACK_WEBHOOK_URL ?? "";
+    if (webhook.trim() === "") {
+      console.error("missing_slack_webhook");
+      return 1;
+    }
+    try {
+      await deliverSlackAlert(alert, webhook);
+    } catch (error) {
+      const code = error instanceof Error ? error.message : "slack_http_0";
+      console.error(code.startsWith("slack_") || code === "missing_slack_webhook" ? code : "slack_http_0");
+      return 1;
+    }
+  }
+  return exitCode(result.allClear, result.errors);
 }
 
 function isDirectRun(): boolean {
@@ -60,9 +123,8 @@ if (isDirectRun()) {
     (code) => {
       process.exit(code);
     },
-    (error: unknown) => {
-      const message = error instanceof Error ? error.message : String(error);
-      console.error(message);
+    () => {
+      console.error("compare_failed");
       process.exit(1);
     }
   );

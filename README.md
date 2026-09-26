@@ -2,7 +2,7 @@
 
 SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It is being designed to report two disagreements. The operator decides what to do about them.
 
-This repository is a design pack and a thin scaffold. The detector is not built. A dry-run is not a clean bill of health.
+This repository is the read-only detector and its design pack. A dry-run is not a clean bill of health. There is still nothing to buy here: no zip, and the Polar listing is dark.
 
 ## What it is
 
@@ -38,7 +38,7 @@ hello@yellowgram.dev
 
 Prefer [www.yellowgram.dev](https://www.yellowgram.dev).
 
-## Run the scaffold
+## Run
 
 Node.js 20 or newer.
 
@@ -48,9 +48,9 @@ npm test
 npm run compare -- --dry-run
 ```
 
-`npm test` compiles TypeScript and runs the smoke test. The test imports the stubs and fails if a charge, write, or fix API is exported. It also fails if a dry-run result claims all-clear.
+`npm test` compiles TypeScript and runs the tests. The smoke test fails if a charge, write, or fix API is exported. It also fails if a dry-run result claims all-clear.
 
-`--live` exits 2. It does not read keys and does not call Stripe, Polar, Slack, or the database.
+`--dry-run` does not read keys and does not call Stripe, Polar, Slack, or the database. `--live` does those reads when the environment variables in `.env.example` are set. It still does not charge, write, or change `is_pro`. Exit `0` is an all-clear, exit `2` is a finished run that is not all-clear, and exit `1` is a run error.
 
 ## Docs
 
@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**4th DR** on this branch. DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3. This pull request is the LaunchGate gate packet. An implement PR waits for LaunchGate APPROVE. Then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. The detector is not implemented. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. [docs/STATUS.md](docs/STATUS.md).
+**Implement PR** on this branch. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. Next is CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder. The detector is implemented and read-only. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent, so the Polar listing stays dark. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

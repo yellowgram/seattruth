@@ -22,11 +22,11 @@ SeatTruth compares Stripe and Polar, read-only, with one product database. The p
 
 - Two detect cases, defined below, and nothing else presented as a finding.
 - Stripe, via a restricted key (`rk_`), read permissions only.
-- Polar, via one Organization Access Token, read scopes only. Token overview: https://polar.sh/docs/integrate/oat. Scope names are confirmed in the Polar token UI at implementation time. This doc does not invent scope strings.
+- Polar, via one Organization Access Token with scope `subscriptions:read` only. The list endpoint names that scope: https://polar.sh/docs/api-reference/subscriptions/list. The token UI is Settings → Developers → New Token (https://polar.sh/docs/integrate/oat), which says to select scopes and does not list the strings. Confirm the checkbox matches `subscriptions:read`. Do not grant `subscriptions:write`.
 - One mapping file. Shape: [../mapping.example.yaml](../mapping.example.yaml). `schema` is required (P18).
 - One Postgres schema and one relation, and one `SELECT` of the mapped columns.
 - A database role that can read that relation and cannot write.
-- GitHub Actions: daily cron (`0 6 * * *`) plus `workflow_dispatch`. The workflow in this repo dry-runs and has no live secrets. A green dry-run is not an entitlement pass (P30).
+- GitHub Actions: daily cron (`0 6 * * *`) runs live. `workflow_dispatch` stays dry-run unless the operator sets the live input. Secrets stay in GitHub Actions, not in the workflow file. A green dry-run is not an entitlement pass (P30).
 - Slack incoming webhook on the operator's channel when a real run has a finding, a non-zero unclassified count, or a run error.
 - English docs and English alerts.
 - Self-serve price band **$49–99 per month** once a versioned zip exists. The exact number is a founder (via CoS) decision. Design reviews do not wait on it. There is no checkout in this repo.
@@ -227,10 +227,18 @@ These stay in the design on purpose. They are not silent.
 
 ## 4th DR packet
 
-The ask, the limits, and the kill-criteria reading are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This section does not add a rule.
+LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This implement branch does not add a rule id. The next gates are CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge.
 
-DR#3 left the two cases decidable without a write, a fuzzy match, or a new processor. The limits above are what LaunchGate accepts or rejects. This file does not count as approval. An implement PR waits for LaunchGate APPROVE on the 4th DR.
+## Read path
 
-## Scaffold behavior (current)
+These are the P2 notes from [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md). They do not add a detect case.
 
-`compareReadOnly` returns `implemented: false`, `allClear: false`, `unclassifiedUsers: 0`, `deliberateSkipUsers: 0`, and the error `detector_not_implemented`. Provider, database, and Slack functions throw `NotImplementedError` and do not open the network. `runCli(["--live"])` returns 2. The smoke test locks the export surface. `MappingDocument` requires `schema`. None of that is a live compare.
+- **Polar scope.** `subscriptions:read` only, cited above. Order and refund endpoints are not called.
+- **Stripe refunds.** For `active` subscriptions, paginate `GET /v1/invoices?subscription={id}&expand[]=data.charge` until `has_more` is false. Any charge with `amount_refunded > 0` or `refunded: true` makes that subscription ambiguous. If a paid invoice has no readable charge, the subscription is ambiguous, not paid. Sources: [list invoices](https://docs.stripe.com/api/invoices/list), [expanding objects](https://docs.stripe.com/api/expanding_objects), [charge object](https://docs.stripe.com/api/charges/object).
+- **P27 Stripe.** `GET /v1/subscriptions?status=all&limit=100`, following `has_more` and `starting_after`. A truncated page is `stripe_incomplete_read` or `stripe_http_*`, and those ids are not compared.
+- **P27 Polar.** `GET /v1/subscriptions?limit=100&page={n}` with no status filter. Complete means pages `1..pagination.max_page` and the item count equals `pagination.total_count`.
+- **P28 fixtures.** The cross-rail table in the acceptance notes is what `tests/rules.test.ts` locks.
+
+## Runtime behavior
+
+Dry-run (`compareReadOnly`, the CLI default) returns `implemented: true`, `allClear: false`, and does not read providers, Postgres, or Slack. `--live` follows the P30 exit table: `0` when `allClear` is true, `2` when the run finished with findings or ambiguous users, `1` on a run error. The earlier scaffold refusal of `--live` with exit 2 is retired. Slack is posted only for a finding, a non-zero ambiguous count, or a run error. The smoke test still locks the export surface against charge, write, and fix names. `MappingDocument` requires `schema`. The zip, its SHA-256, and `POLAR_DELIVERABLES` are still absent.

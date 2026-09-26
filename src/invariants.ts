@@ -23,30 +23,26 @@ export const CONTRACT = Object.freeze({
   autoFixes: false,
 });
 
-/** What this build actually does. DR#3 still does not touch the network. */
+/** What this build actually does. Live mode can read and post. Dry-run does neither. */
 export const BUILD = Object.freeze({
-  detectorImplemented: false,
-  performsNetworkReads: false,
-  postsToSlack: false,
+  detectorImplemented: true,
+  performsNetworkReads: true,
+  postsToSlack: true,
 });
 
 export type ProviderId = "stripe" | "polar";
 
 /**
- * Closed subscription buckets used by the stub types.
- * Deliberate skips (trialing, incomplete) are not a fourth string here.
- * P25 and P26 in docs/MVP_SCOPE.md decide which statuses are paid,
- * canceled, a deliberate skip, or ambiguous. Do not guess a new bucket.
+ * One subscription after P26. Deliberate skip is not "paid" and not "canceled".
+ * Ambiguous is not a finding.
  */
-export type PaidClassification = "paid" | "canceled_or_refunded" | "unclassified";
+export type SubscriptionBucket = "paid" | "canceled" | "deliberate_skip" | "ambiguous";
 
 export type ProviderSubscriptionSnapshot = {
   provider: ProviderId;
   customerId: string;
-  subscriptionId: string | null;
-  classification: PaidClassification;
-  /** Alert context. Seat inequality is not a detect case. */
-  quantity: number | null;
+  subscriptionId: string;
+  bucket: SubscriptionBucket;
 };
 
 export type ProductRow = {
@@ -74,7 +70,7 @@ export type Finding = {
 };
 
 export type CompareResult = {
-  /** False until the detector exists. False is never an all-clear. */
+  /** True once the detector exists. A dry-run is still not an all-clear. */
   implemented: boolean;
   /**
    * True only on a live implemented run with zero findings, zero errors,
@@ -96,17 +92,14 @@ export type CompareResult = {
   errors: string[];
 };
 
-export function assertStubResult(result: CompareResult): void {
-  if (result.implemented || result.allClear || result.mode !== "dry-run") {
-    throw new Error("Stub compare violated the dry-run contract.");
+export function assertDryRunResult(result: CompareResult): void {
+  if (!result.implemented || result.allClear || result.mode !== "dry-run") {
+    throw new Error("Dry-run compare violated the contract.");
   }
-  if (result.findings.length !== 0) {
-    throw new Error("Stub compare must not invent findings.");
+  if (result.findings.length !== 0 || result.unclassifiedUsers !== 0 || result.deliberateSkipUsers !== 0) {
+    throw new Error("Dry-run compare must not invent a live result.");
   }
-  if (result.unclassifiedUsers !== 0) {
-    throw new Error("Stub compare must not invent unclassified users.");
-  }
-  if (result.deliberateSkipUsers !== 0) {
-    throw new Error("Stub compare must not invent skipped users.");
+  if (result.errors.length !== 0) {
+    throw new Error("Dry-run compare must not invent errors.");
   }
 }

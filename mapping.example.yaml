@@ -4,7 +4,7 @@
 # SeatTruth may read only these columns. It does not change rows.
 #
 # Canonical rules: docs/MVP_SCOPE.md
-# The detector is not implemented. This file does not check entitlements.
+# Copy this file before a live run. The example itself is not your database.
 
 version: 1
 

@@ -1,41 +1,90 @@
-import { NotImplementedError } from "./invariants.js";
-import type { CompareResult } from "./invariants.js";
+import type { FetchLike } from "./http.js";
+import type { CompareResult, Finding } from "./invariants.js";
 
 /**
- * Slack alert builder.
- *
- * Invariants:
- * - Posts, when implemented, go only to the operator's incoming webhook.
- * - Alert text names the disagreement. It does not say to change is_pro or seats.
- * - No email, no customer name, no card data.
- * - The stub never POSTs.
- * - TODO(implement): not in DR#3. Next is the 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
- *   Rule P6 and P10 in docs/MVP_SCOPE.md.
+ * Slack text names the disagreement (P6, P24).
+ * It does not say to change is_pro, and it does not include secrets (P23).
+ * Dry-run text is printed locally. It is not posted.
+ * A live all-clear is not posted.
  */
 
 export type SlackAlert = {
   text: string;
 };
 
+const FIX_LANGUAGE = /should have access|should lose access|set is_pro|UPDATE\b|refund the|cancel the subscription/i;
+
+function seatsText(seats: number | null): string {
+  return seats === null ? "null" : String(seats);
+}
+
+function findingLine(finding: Finding): string {
+  const subscription = finding.providerSubscriptionId ?? "none";
+  const isPro = finding.productIsPro === null ? "null" : String(finding.productIsPro);
+  return [
+    `SeatTruth ${finding.detectCase}`,
+    `user=${finding.productUserId}`,
+    `provider=${finding.provider}`,
+    `customer=${finding.providerCustomerId}`,
+    `subscription=${subscription}`,
+    `is_pro=${isPro}`,
+    `seats=${seatsText(finding.productSeats)}`,
+  ].join(" ");
+}
+
 export function buildSlackAlert(result: CompareResult): SlackAlert {
-  if (result.implemented || result.mode !== "dry-run") {
-    throw new NotImplementedError(
-      "Live Slack copy is not written. Refusing to invent finding text."
-    );
+  if (result.mode === "dry-run") {
+    return {
+      text: "SeatTruth dry-run: detector is implemented. This is not an all-clear. No charges. No entitlement changes.",
+    };
   }
-  return {
-    text: "SeatTruth dry-run: detector not implemented. This is not an all-clear. No charges. No entitlement changes.",
-  };
+  const lines: string[] = [];
+  for (const finding of result.findings) {
+    lines.push(findingLine(finding));
+  }
+  if (result.unclassifiedUsers > 0) {
+    lines.push(`SeatTruth ambiguous_users=${result.unclassifiedUsers}`);
+  }
+  for (const error of result.errors) {
+    lines.push(`SeatTruth run_error=${error}`);
+  }
+  if (lines.length === 0) {
+    return { text: "" };
+  }
+  const text = lines.join("\n");
+  if (FIX_LANGUAGE.test(text)) {
+    throw new Error("slack_copy_refused");
+  }
+  return { text };
+}
+
+export function slackNeeded(result: CompareResult): boolean {
+  return result.mode === "live" && (result.findings.length > 0 || result.unclassifiedUsers > 0 || result.errors.length > 0);
 }
 
 export async function deliverSlackAlert(
-  _alert: SlackAlert,
-  webhookUrl: string
+  alert: SlackAlert,
+  webhookUrl: string,
+  fetchImpl?: FetchLike
 ): Promise<void> {
   if (webhookUrl.trim() === "") {
-    throw new Error("Missing Slack webhook. Refusing to post.");
+    throw new Error("missing_slack_webhook");
   }
-  throw new NotImplementedError(
-    "Slack delivery is not implemented. Refusing to post."
-  );
+  if (alert.text.trim() === "") {
+    return;
+  }
+  let response: { ok: boolean; status: number };
+  try {
+    const fetchFn = fetchImpl ?? fetch;
+    response = await fetchFn(webhookUrl, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ text: alert.text }),
+    });
+  } catch {
+    throw new Error("slack_http_0");
+  }
+  if (!response.ok) {
+    throw new Error(`slack_http_${response.status}`);
+  }
 }

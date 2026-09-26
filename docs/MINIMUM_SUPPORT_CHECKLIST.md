@@ -4,22 +4,22 @@
 
 **Absent, and this pull request does not add them:** a versioned zip, its SHA-256, and `POLAR_DELIVERABLES`. Do not treat a missing file as "coming in this PR." The Polar listing stays dark until those three are real. Listing go-live is a founder (via CoS) decision after that, and it is not requested here.
 
-LaunchGate has not approved the 4th DR. Section 10 is the input list. The ask itself is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). See [STATUS.md](STATUS.md).
+LaunchGate approved the 4th DR. This branch is the implement PR. Section 10 was the input list for that gate. See [STATUS.md](STATUS.md).
 
-What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this scaffold. Items left open wait for the implement PR, or for the zip.
+What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this implement branch. Items left open wait for an operator's own keys, or for the zip.
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. This branch is the 4th DR. LaunchGate APPROVE is still required before any implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder.
+Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. This branch is the implement PR. Next is CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder.
 
 ## 1. Happy path
 
-The path an operator can finish from the docs, when the detector exists. Today, only the dry-run prefix works.
+The path an operator can finish from the docs. The dry-run prefix works without keys. A live run needs the operator's own secrets.
 
-- [x] Docs say the detector is not implemented and a dry-run is not an all-clear.
-- [x] `npm test` passes on the stub without keys.
+- [x] Docs say a dry-run is not an all-clear.
+- [x] `npm test` passes without keys.
 - [x] `npm run compare -- --dry-run` exits 0 and prints that this is not an all-clear.
-- [x] `npm run compare -- --live` exits 2 and does not call Stripe, Polar, Slack, or Postgres.
+- [x] `npm run compare -- --live` without credentials exits 1. It does not report an all-clear.
 - [ ] Operator copies `.env.example` to `.env` and `mapping.example.yaml` to `mapping.yaml`.
 - [ ] Operator creates a Stripe restricted key (read only) and a Polar Organization Access Token (read scopes only), or disables a rail with `customer_id: null`.
 - [ ] Operator creates a Postgres role with `SELECT` on the mapped relation only.
@@ -29,19 +29,19 @@ The path an operator can finish from the docs, when the detector exists. Today, 
 
 ## 2. Safe defaults
 
-- [x] CLI defaults to dry-run. Live mode is opt-in and, until implementation, refused.
-- [x] The compare workflow does not reference live secrets.
-- [x] Dispatch with dry-run turned off fails the job.
-- [x] Stub reads throw `NotImplementedError` instead of returning an empty "all clear."
+- [x] CLI defaults to dry-run. Live mode is opt-in.
+- [x] The compare workflow file does not contain secret values. The live steps read GitHub Actions secrets.
+- [x] Dispatch stays dry-run unless the operator sets the live input. A missing live secret fails the job.
+- [x] A missing credential or a Stripe secret key is refused. A failed read is not an all-clear.
 - [x] A Stripe secret key (`sk_`) is refused.
 - [x] `.env.example` and `mapping.example.yaml` contain placeholders, not live ids.
 - [x] `mapping.yaml` and `.env` are gitignored.
-- [ ] Missing credential on an enabled rail is a run error (rule P7). Specified, not implemented.
-- [ ] Status buckets follow P26. `past_due`, `paused`, and `unpaid` stay ambiguous. `trialing`, `incomplete`, and `incomplete_expired` are a deliberate skip (P25). Specified, not implemented.
-- [ ] `NULL` `is_pro` is ambiguous, not a guessed boolean (rule P11, P25).
-- [ ] Slack omits email, name, and card data (rule P6).
-- [ ] A truncated provider page is a run error, not "no subscription" (P27).
-- [ ] No ignore list ships with the kit.
+- [x] Missing credential on an enabled rail is a run error (rule P7).
+- [x] Status buckets follow P26. `past_due`, `paused`, and `unpaid` stay ambiguous. `trialing`, `incomplete`, and `incomplete_expired` are a deliberate skip (P25).
+- [x] `NULL` `is_pro` is ambiguous, not a guessed boolean (rule P11, P25).
+- [x] Slack omits email, name, and card data (rule P6).
+- [x] A truncated provider page is a run error, not "no subscription" (P27).
+- [x] No ignore list ships with the kit.
 
 ## 3. Docs that replace the founder
 
@@ -61,8 +61,8 @@ An operator should not need a call to learn the boundary.
 - [x] [../.github/workflows/ci.yml](../.github/workflows/ci.yml) runs `npm test` on push and pull request.
 - [x] The smoke test imports the stubs and fails if an export name looks like a charge, write, or fix API.
 - [x] The smoke test fails if dry-run sets `allClear`, if live Slack copy is invented, or if README drops the hard outs.
-- [ ] After implementation, tests cover the active rules (P6, P7, P11, P17–P24, P25–P30) with fixtures. Fixtures are invented rows in the test file, not live customers. Superseded rule text is not reimplemented.
-- [ ] CI still has no Stripe, Polar, database, or Slack secrets. Live reads stay in the operator's scheduled workflow.
+- [x] Tests cover the active rules with invented fixtures, including the P28 table, Stripe refund ambiguity, and truncated pages. Superseded rule text is not reimplemented.
+- [x] CI still has no Stripe, Polar, database, or Slack secrets. Live reads stay in the operator's scheduled workflow.
 
 ## 5. Versioned zip
 
@@ -95,8 +95,8 @@ The zip, the SHA-256, and `POLAR_DELIVERABLES` **stay absent**. This checklist d
 - [x] Manual dispatch exists for a dry-run.
 - [x] Workflow permissions are `contents: read`.
 - [ ] The operator owns the Slack app and the webhook. yellowgram is not in that workspace.
-- [ ] A finding alert, an ambiguous-count line, and a run-error alert are different first lines, so a channel can be skimmed. Copy is written at implementation under P6, P24, and P25. Deliberate skips are not listed per user.
-- [x] Dry-run versus live is specified (P30, which supersedes P16). This scaffold still refuses `--live`. A green dry-run is not an entitlement pass. When live exists, the daily cron is live, and `workflow_dispatch` stays dry unless the operator sets a live input. Dry-run does not call providers, the database, or Slack.
+- [x] A finding alert, an ambiguous-count line, and a run-error alert are different first lines, so a channel can be skimmed. Copy follows P6, P24, and P25. Deliberate skips are not listed per user.
+- [x] Dry-run versus live follows P30. A green dry-run is not an entitlement pass. The daily cron is live, and `workflow_dispatch` stays dry unless the operator sets a live input. Dry-run does not call providers, the database, or Slack.
 - [x] Slack webhook URLs are GitHub Actions secrets. They are rotated in the same order as provider keys: create the new webhook, update the GitHub secret, run one live dispatch after the detector exists, then revoke the old webhook. Never write the URL into the workflow file, a log, an Issue, or a Slack message body (P23).
 - [x] Key rotation order is specified, and not automated. Create the new restricted key first. Update the GitHub Actions secret. After the detector exists, run one live dispatch. Then revoke the old key in the Stripe or Polar UI. Do not put the new key in git, Issues, or Slack. If a key lands in a log, rotate it. The kit must not log credential values (P23).
 - [x] Cron failure visibility is a red GitHub Actions check when the job exits non-zero, plus whatever failure mail the operator already gets from GitHub. A quiet Slack channel is not proof the cron ran, and it is not proof entitlements match. The kit does not send a daily all-clear Slack message (P24, P30). It does not add a second pager. A repeated finding is shown again the next day. Snooze is refused.
@@ -167,7 +167,7 @@ This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR
 - Hard locks: no auto-fix, no Soft-WTP, no Chargebee, no Autumn, Polar listing dark.
 - Zip, SHA-256, and `POLAR_DELIVERABLES` absent.
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
-- Detector not implemented.
+- Detector implemented on this branch. Squash-merge still waits on the 4th code review.
 
 The 4th DR packet submits this list. The cases are still decidable without a write or a guessed schema. Approval is the ask in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md), and it has not been given.
 

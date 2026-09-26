@@ -1,13 +1,13 @@
 # MVP scope
 
-**DR#2.** This revision supersedes DR#1 rules where the table says so. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). This is not DR#3, and it is not the 4th design review. LaunchGate has not been asked to approve anything. See [STATUS.md](STATUS.md) and [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md).
+**DR#3.** Final design pass before the 4th DR. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). This PR does not ask LaunchGate to approve anything. The next gate is the 4th DR, which is the LaunchGate review, and it has not started. See [STATUS.md](STATUS.md) and [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md).
 
 ## Cadence
 
 Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th gate.
 
-1. **DR×3.** Three separate design PRs. DR#1 is done. This PR is DR#2. DR#3 is not this PR.
-2. **4th DR → LaunchGate APPROVE** before any implement PR. Not requested here.
+1. **DR×3.** Three separate design PRs. DR#1 and DR#2 are done. This PR is DR#3.
+2. **4th DR → LaunchGate APPROVE** before any implement PR. Next, and not requested here.
 3. **Implement PR.** Detector code. Not started.
 4. **CR×3.** Three code reviews of that implement work.
 5. **4th CR → LaunchGate APPROVE** before squash-merge.
@@ -26,7 +26,7 @@ SeatTruth compares Stripe and Polar, read-only, with one product database. The p
 - One mapping file. Shape: [../mapping.example.yaml](../mapping.example.yaml). `schema` is required (P18).
 - One Postgres schema and one relation, and one `SELECT` of the mapped columns.
 - A database role that can read that relation and cannot write.
-- GitHub Actions: daily cron (`0 6 * * *`) plus `workflow_dispatch`. The workflow in this repo dry-runs and has no live secrets. A green dry-run is not an entitlement pass (P16).
+- GitHub Actions: daily cron (`0 6 * * *`) plus `workflow_dispatch`. The workflow in this repo dry-runs and has no live secrets. A green dry-run is not an entitlement pass (P30).
 - Slack incoming webhook on the operator's channel when a real run has a finding, a non-zero unclassified count, or a run error.
 - English docs and English alerts.
 - Self-serve price band **$49–99 per month** once a versioned zip exists. The exact number is a founder (via CoS) decision. Design reviews do not wait on it. There is no checkout in this repo.
@@ -51,19 +51,25 @@ DR#1 text that failed review stays in the table, marked superseded. Active rules
 | P6 | — | Slack field allow-list. Stands. |
 | P7 | — | When a rail is enabled. Tightened by P21 and P22, not replaced. |
 | P11 | P1 | Booleans and null seats. |
-| P12 | P2, P3 | Status map and refunds. |
-| P13 | — | Several subscriptions on one rail. Null customer id skips that rail. |
-| P14 | P4 | Unclassified users are not a failed read. |
-| P15 | P4 | No primary rail. |
-| P16 | P9 | `allClear` and exit codes. |
-| P17 | P5 | Duplicate customer ids. |
+| P12 | P2, P3 | **Superseded by P26 (DR#3).** |
+| P13 | — | **Superseded by P28 (DR#3).** |
+| P14 | P4 | **Superseded by P25 (DR#3).** |
+| P15 | P4 | **Superseded by P28 (DR#3).** No primary rail, restated there. |
+| P16 | P9 | **Superseded by P30 (DR#3).** |
+| P17 | P5 | Duplicate customer ids. Stands. |
 | P18 | P8 | Schema, identifier grammar, quoting. |
 | P19 | — | One mapping file is one tenant. |
 | P20 | — | NULL seats versus a missing column. |
 | P21 | — | An empty string does not disable a rail. |
 | P22 | — | At least one rail enabled. |
 | P23 | — | Do not log secrets. |
-| P24 | P10 | No fix, refund, or SQL advice. |
+| P24 | P10 | No fix, refund, or SQL advice. Stands. |
+| P25 | P14 | Ambiguous users versus deliberate skips. |
+| P26 | P12 | Status map. Polar refunds do not end a subscription. |
+| P27 | — | A partial provider read is a run error. |
+| P28 | P13 | Roll up subscriptions after the P25 split. |
+| P29 | — | No price, product, or quantity filter. Known limit. |
+| P30 | P16 | `allClear` ignores deliberate skips and nothing else. |
 
 | Id | Rule |
 | --- | --- |
@@ -78,11 +84,11 @@ DR#1 text that failed review stays in the table, marked superseded. Active rules
 | P9 | **Superseded by P16 (DR#2).** `allClear` may be true only on a live run that read every enabled rail and the product relation, with zero findings and zero errors. Dry-run, stub, and failed runs set `allClear` false. Empty findings alone are not a clean bill. |
 | P10 | **Superseded by P24 (DR#2).** Alert text and CLI text name the disagreement. They do not tell the operator to set `is_pro`, change seats, cancel, refund, or charge. |
 | P11 | Entitlement bit remains boolean `is_pro` only. `true` means entitled. `false` means locked out. `NULL`, strings, and numbers are unclassified. Do not coerce `"true"`, `"t"`, `1`, or `0` into a boolean. `seats` never decides the case. SQL `NULL` seats are not `0`, and the implementation must not `COALESCE` them to `0`. `is_pro` false with `seats` greater than 0 is still case 1 when the rail rules say so: seats do not suppress a lockout, and they do not create a finding of their own. |
-| P12 | Written status map. Do not guess from a similar word. `cancel_at_period_end` (Stripe and Polar) does not change the bucket while status is still `active`. Sources for Polar: [subscription status enum](https://polar.sh/docs/api-reference/subscriptions/list) and [subscription behavior](https://polar.sh/docs/features/subscriptions/introduction), read 2026-09-26. Stripe's `cancel_at_period_end` flag is the same shape: [subscription object](https://docs.stripe.com/api/subscriptions/object). **Paid:** Stripe or Polar status `active`, and the refund row below is not "disagree". **Canceled or refunded:** status `canceled`. **Unclassified:** `trialing`, `past_due`, `incomplete`, `incomplete_expired`, `paused`, `unpaid`, any status not in this list, a partial refund, and status `active` together with a full refund of the latest paid Stripe charge. A Polar refund while status is still `active` is unclassified. DR#2 does not cite a Polar order-refund field, so it does not invent one. `past_due` is not canceled on either rail. Polar benefit grants are not `is_pro`. |
-| P13 | On one rail, for one product user: if any subscription is `paid`, the rail is `paid`. Otherwise if any subscription is `unclassified`, or the customer id is set and the provider returns no subscription, the rail is `unclassified`. Otherwise if there is at least one subscription and all are `canceled_or_refunded`, the rail is `canceled_or_refunded`. A null customer-id cell means that rail does not apply to that user. It is not a cancel, and it is not a finding. A user with no applicable rail is skipped. Skipped users do not, by themselves, set `allClear` false. The kit does not grow an "entitled but no billing id" finding. |
-| P14 | An unclassified user produces no case finding and increments `unclassifiedUsers`. That is not a run error, and it does not abort the rest of the run. `allClear` is false while the count is above zero. Slack gets one summary line with the count, not one message per unclassified user, and that line does not tell anyone to change access. A read failure, a bad mapping, a missing credential, or zero enabled rails is a run error (P16). |
-| P15 | There is no primary rail. Case findings for a user require every applicable rail to be `paid` or `canceled_or_refunded`. If any applicable rail is `unclassified`, P14 applies and neither case fires. Case 1 emits one finding per applicable rail that is `paid`. Case 2 emits one finding per applicable rail. The way to ignore a stale second billing id is to disable that rail in the mapping, or to use a product view that does not select those rows. The kit does not pick the "real" subscription. |
-| P16 | `allClear` is true only on a live, implemented run that read every enabled rail and the product relation, with zero findings, zero errors, and `unclassifiedUsers` of 0. An empty relation that was read successfully can be `allClear`. That does not prove the operator's view is the right population. Future live exit codes: `0` only when `allClear` is true; `2` when the run finished and `allClear` is false because of findings or unclassified users; `1` when a run error occurred. Dry-run exits `0`, sets `allClear` false, and says it is not an all-clear. The scaffold's `--live` exit `2` is still the not-implemented refusal. A green dry-run workflow is not a required check that entitlements passed. |
+| P12 | **Superseded by P26 (DR#3).** Written status map. Do not guess from a similar word. `cancel_at_period_end` (Stripe and Polar) does not change the bucket while status is still `active`. Sources for Polar: [subscription status enum](https://polar.sh/docs/api-reference/subscriptions/list) and [subscription behavior](https://polar.sh/docs/features/subscriptions/introduction), read 2026-09-26. Stripe's `cancel_at_period_end` flag is the same shape: [subscription object](https://docs.stripe.com/api/subscriptions/object). **Paid:** Stripe or Polar status `active`, and the refund row below is not "disagree". **Canceled or refunded:** status `canceled`. **Unclassified:** `trialing`, `past_due`, `incomplete`, `incomplete_expired`, `paused`, `unpaid`, any status not in this list, a partial refund, and status `active` together with a full refund of the latest paid Stripe charge. A Polar refund while status is still `active` is unclassified. DR#2 does not cite a Polar order-refund field, so it does not invent one. `past_due` is not canceled on either rail. Polar benefit grants are not `is_pro`. |
+| P13 | **Superseded by P28 (DR#3).** On one rail, for one product user: if any subscription is `paid`, the rail is `paid`. Otherwise if any subscription is `unclassified`, or the customer id is set and the provider returns no subscription, the rail is `unclassified`. Otherwise if there is at least one subscription and all are `canceled_or_refunded`, the rail is `canceled_or_refunded`. A null customer-id cell means that rail does not apply to that user. It is not a cancel, and it is not a finding. A user with no applicable rail is skipped. Skipped users do not, by themselves, set `allClear` false. The kit does not grow an "entitled but no billing id" finding. |
+| P14 | **Superseded by P25 (DR#3).** An unclassified user produces no case finding and increments `unclassifiedUsers`. That is not a run error, and it does not abort the rest of the run. `allClear` is false while the count is above zero. Slack gets one summary line with the count, not one message per unclassified user, and that line does not tell anyone to change access. A read failure, a bad mapping, a missing credential, or zero enabled rails is a run error (P16). |
+| P15 | **Superseded by P28 (DR#3).** There is no primary rail. Case findings for a user require every applicable rail to be `paid` or `canceled_or_refunded`. If any applicable rail is `unclassified`, P14 applies and neither case fires. Case 1 emits one finding per applicable rail that is `paid`. Case 2 emits one finding per applicable rail. The way to ignore a stale second billing id is to disable that rail in the mapping, or to use a product view that does not select those rows. The kit does not pick the "real" subscription. |
+| P16 | **Superseded by P30 (DR#3).** `allClear` is true only on a live, implemented run that read every enabled rail and the product relation, with zero findings, zero errors, and `unclassifiedUsers` of 0. An empty relation that was read successfully can be `allClear`. That does not prove the operator's view is the right population. Future live exit codes: `0` only when `allClear` is true; `2` when the run finished and `allClear` is false because of findings or unclassified users; `1` when a run error occurred. Dry-run exits `0`, sets `allClear` false, and says it is not an all-clear. The scaffold's `--live` exit `2` is still the not-implemented refusal. A green dry-run workflow is not a required check that entitlements passed. |
 | P17 | The same provider customer id on two product users excludes those users, records a run error, and sets `allClear` false. Other users are still compared. The run does not pick a row and does not stop before that. |
 | P18 | `product.schema` is required. Schema, relation, and every column name match `^[A-Za-z_][A-Za-z0-9_]*$` and are 1 to 63 characters. After that check, each identifier is double-quoted in the `SELECT`. The mapping value is never interpolated raw. No dots, no spaces, no quote characters, and no `search_path` fallback. A missing schema is a run error. |
 | P19 | One mapping file is one database URL, one schema, and one relation: one tenant. The kit does not take a tenant list or a second database in the same run. Another tenant is another workflow and another secret set. This is not a hosted multi-tenant service. |
@@ -90,20 +96,27 @@ DR#1 text that failed review stays in the table, marked superseded. Active rules
 | P21 | Only a YAML null disables a rail. An empty string is a config error, not "disabled" and not a column name. |
 | P22 | A run with zero enabled rails is a run error. `allClear` is false. |
 | P23 | Logs and Slack must not contain restricted keys, organization tokens, database URLs, or webhook URLs. Rotation steps live in the support checklist. They are not a detect case. |
-| P24 | Alert text and CLI text name the disagreement and the ids. They do not say to set `is_pro`, change seats, cancel, charge, or refund the end customer. They do not include an `UPDATE`, a suggested query, "should have access", or "should lose access". A hint that is not executed is still a fix instruction. |
+| P24 | Alert text and CLI text name the disagreement and the ids. They do not say to set `is_pro`, change seats, cancel, charge, or refund the end customer. They do not include an `UPDATE`, a suggested query, "should have access", or "should lose access". A hint that is not executed is still a fix instruction. A daily "all clear" Slack message is not added to make a quiet channel feel safe. |
+| P25 | Two non-finding buckets. **Ambiguous** increments `unclassifiedUsers`, produces no case finding, and forces `allClear` false: `past_due`, `paused`, `unpaid`, any status string not in P26, a missing status, a webhook event name used as a status (`subscription.revoked` is an event, not a status), non-boolean `is_pro`, a customer id with no subscription after a complete read, and a Stripe `active` subscription whose refund state is anything but "no refund." **Deliberate skip** increments `deliberateSkipUsers`, produces no case finding, and does not by itself force `allClear` false: `trialing`, `incomplete`, and `incomplete_expired`. Slack still gets one ambiguous-count line when that count is above zero, with no per-user dump and no access instruction. Deliberate skips are not listed per user. |
+| P26 | Status map, restated so P12 is not applied beside it. Do not guess from a similar word. `cancel_at_period_end` on Stripe and Polar does not change the bucket while status is `active`. Polar sources, read 2026-09-26: [subscription status enum](https://polar.sh/docs/api-reference/subscriptions/list), [subscription behavior](https://polar.sh/docs/features/subscriptions/introduction), [refunds](https://polar.sh/docs/features/refunds). Stripe flag: [subscription object](https://docs.stripe.com/api/subscriptions/object). **Paid:** status `active`, and for Stripe only, no refund on that subscription. **Canceled or refunded:** status `canceled` only. **Deliberate skip:** `trialing`, `incomplete`, `incomplete_expired`. **Ambiguous:** every other status, including `past_due`, `paused`, and `unpaid`. Polar order status (`paid`, `refunded`, `partially_refunded`, and the rest of the order enum) is not a subscription status. Polar's refund doc says refunding an order tied to a subscription returns the money and does not end the subscription. The kit does not read Polar order or refund objects to classify access. A Polar refund is not case 2. Stripe no longer uses "the latest paid charge." Any refund, partial or full, on an `active` subscription makes that subscription ambiguous. If the implementation cannot tell whether a refund exists, the subscription is ambiguous, not paid. |
+| P27 | A provider read is complete or it is a run error. HTTP errors, auth errors, and truncated pagination fail the rail. Ids missing from a partial page are not "no subscription" and are not canceled. Per-customer absence counts only after a complete list. |
+| P28 | Roll up one rail for one user after a complete read. If any subscription is paid, the rail is paid. Otherwise if any subscription is ambiguous, or the customer id is set and there are zero subscriptions, the rail is ambiguous. Otherwise if the rail has both a deliberate skip and a canceled subscription, the rail is ambiguous. Otherwise if every subscription is a deliberate skip, the rail is a deliberate skip. Otherwise if every subscription is canceled, the rail is canceled. A null customer-id cell means the rail does not apply. A user with no applicable rail is skipped and is not a finding. Case 1 does not require a deliberate-skip rail to be paid or canceled: a paid rail still produces `paid_locked_out` when `is_pro` is false and no applicable rail is ambiguous. Case 2 requires every applicable rail to be canceled. A deliberate skip blocks case 2. One paid rail and one canceled rail is case 1 only when `is_pro` is false. There is still no primary rail. P15's "every rail first" test is not applied. |
+| P29 | Price id, product id, and quantity do not change the bucket. Any `active` subscription counts as paid, including an add-on. A price allow-list is plan-drift scope and is out. Quantity `0` on an `active` subscription is still paid. This is a known limit for the 4th DR, not a third finding. |
+| P30 | `allClear` is true only on a live, implemented run that fully read every enabled rail and the product relation, with zero findings, zero errors, and `unclassifiedUsers` of 0. `deliberateSkipUsers` may be above zero. An empty relation that was read successfully can be `allClear`, and that still does not prove the view is the right population. Live exit codes: `0` only when `allClear` is true; `2` when the run finished and `allClear` is false because of findings or ambiguous users; `1` on a run error. Dry-run exits `0`, sets `allClear` false, and says it is not an all-clear. The scaffold's `--live` exit `2` remains the not-implemented refusal. A green dry-run is not an entitlement pass. The live job does not post a daily all-clear Slack message. |
 
 ### How the two rails combine
 
-Under P13, P14, and P15:
+Under P28:
 
-- **Paid and locked out.** At least one applicable rail is `paid`, every applicable rail is classified, and `is_pro` is `false`. One finding per paid rail.
-- **Still entitled after cancel.** Every applicable rail is `canceled_or_refunded`, and `is_pro` is `true`. One finding per applicable rail.
-- **Mixed classified rails.** One `paid` and another `canceled_or_refunded`, with `is_pro` true: no case 2, because a rail is still paid. With `is_pro` false: case 1 on the paid rail only.
-- **Any applicable rail unclassified.** No case finding for that user. Count them (P14). Do not invent a primary rail to rescue the finding.
+- **Paid and locked out.** At least one applicable rail is `paid`, no applicable rail is ambiguous, and `is_pro` is `false`. A deliberate-skip rail does not block this. One finding per paid rail.
+- **Still entitled after cancel.** Every applicable rail is `canceled`, and `is_pro` is `true`. One finding per applicable rail. A trial or `incomplete` rail blocks case 2.
+- **Mixed paid and canceled.** `is_pro` true: no case 2. `is_pro` false: case 1 on the paid rail only.
+- **Any applicable rail ambiguous.** No case finding. Count the user in `unclassifiedUsers` (P25). Do not invent a primary rail.
+- **Deliberate skip only.** No case finding. Count `deliberateSkipUsers`. This does not, by itself, force `allClear` false (P30).
 - **Disabled rail.** The mapping column is null. Ignored for every row.
-- **Null customer id on an enabled rail.** That rail does not apply to that row. A comp with `is_pro` true and null billing ids is skipped, not case 2. To see comps, the operator puts them in or out of the view. The kit does not store an exception list.
+- **Null customer id on an enabled rail.** That rail does not apply to that row. A comp with `is_pro` true and null billing ids is skipped, not case 2.
 
-Staff comps and "we know this row is wrong" are not an ignore list. An ignore list, including a 30-day snooze, becomes a second entitlement store. DR#2 refuses it. See buyer needs.
+Staff comps and "we know this row is wrong" are not an ignore list. An ignore list, including a 30-day snooze, stays refused. See buyer needs.
 
 ## Mapping file
 
@@ -118,9 +131,9 @@ The shape of a run, once the detector exists:
 1. Load the mapping file. Reject unknown `entitlement.field` values. The active rules accept `is_pro` only. Reject a missing schema, an empty-string rail, and zero enabled rails (P18, P21, P22).
 2. Read enabled rails with restricted credentials. Do not log the credentials (P23).
 3. `SELECT` the mapped columns from `"schema"."relation"`.
-4. Apply the active rules. P1 through P5 and P8 through P10 are historical.
-5. Post to Slack for findings, a non-zero unclassified count, or a run error (P6, P14, P16, P24).
-6. Exit with the P16 codes. Exit non-zero whenever `allClear` is false.
+4. Apply the active rules. Superseded ids are historical.
+5. Post to Slack for findings, a non-zero ambiguous count, or a run error (P6, P24, P25, P30). Do not post a daily all-clear.
+6. Exit with the P30 codes. Exit non-zero whenever `allClear` is false. A non-zero exit fails the GitHub Actions check. That red check is the cron-failure signal. The kit does not add a second pager.
 
 Until that exists, [../.github/workflows/compare.yml](../.github/workflows/compare.yml) checks out the repo and runs `npm run compare -- --dry-run`. Dispatch with `dry_run` set false fails the job before the CLI. The workflow does not declare provider, database, or Slack secrets. Its green check is not an entitlement pass.
 
@@ -138,7 +151,7 @@ Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, p
 
 Stop the product, or refuse the request, when any of these is true:
 
-1. DR#3 or the 4th DR shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case in that later PR. Do not widen the product to save it. DR#2 did not drop a case.
+1. The 4th DR shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case in that review. Do not widen the product to save it. DR#2 and DR#3 did not drop a case.
 2. The buyer being served wants a qualification call, an executive PDF, or pricing aimed at large subscription counts. That is a different business. Decline.
 3. The implementation cannot keep the smoke test's ban on charge, write, and fix exports.
 4. Most support demand is "change my webhook" or "fix this row." The kit does not do that work. If that is the demand, the product is the wrong shape.
@@ -147,7 +160,7 @@ Stop the product, or refuse the request, when any of these is true:
 
 ## Differentiation
 
-Public skim **2026-09-26**. Sources, prices, and unknowns: [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md). DR#2 did not re-price those pages and did not add metrics. The Polar entitlement gap stands as published there.
+Public skim **2026-09-26**. Sources, prices, and unknowns: [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md). DR#2 and DR#3 did not re-price those pages and did not add metrics. The Polar entitlement gap stands as published there. Polar's refund doc was read for P26. That is Polar's own API behavior, not a competitor closing the gap.
 
 The **Polar ↔ product-database entitlement reconciler** gap is open among the named peers:
 
@@ -175,7 +188,7 @@ Hard outs for the life of this positioning:
 - Auto-fix, suggested SQL, and "set `is_pro`" copy (P24).
 - Soft-WTP and cold invoices.
 - Plan-name drift, duplicate-customer findings as a product feature, orphan customers, seat-count inequality.
-- Treating `past_due`, trials, `unpaid`, disputes, partial refunds, or `cancel_at_period_end` as case 1 or case 2. They stay unclassified (P12).
+- Treating `past_due`, trials, `unpaid`, disputes, refunds, or `cancel_at_period_end` as case 1 or case 2. Trials are a deliberate skip. The others stay ambiguous (P26).
 - Paddle, Chargebee, Autumn, or any processor besides Stripe and Polar. Adding one is a founder (via CoS) scope change, and DR#2's answer is no.
 - A webhook receiver, or intercepting the buyer's webhooks.
 - Hosting buyer customer rows on yellowgram infrastructure.
@@ -190,17 +203,34 @@ Hard outs for the life of this positioning:
 
 ## Later
 
-Parked. Not promised. A later item moves into scope only by an edit in DR#3 or the 4th DR, not by slipping it into this revision. Chargebee, Autumn, or auto-fix is not one of those ordinary edits.
+Parked. Not promised. A later item moves into scope only in the 4th DR, not by slipping it into this revision. Chargebee, Autumn, or auto-fix is not one of those ordinary edits.
 
 - Seat quantity inequality as its own finding.
 - A CSV of findings for the operator's own finance notes.
 - A second database engine.
 - An explicit id-pair list when the ids are not columns on the user relation.
 - More than one product relation.
-- A cited Polar refund-object map, if a later review can point at the field. DR#2 refused to invent it.
+- A cited Polar refund-object map, if a later review can point at the field. DR#2 refused to invent it. DR#3 still refuses: the cited refund doc says a refund does not end the subscription, and P26 does not read order objects.
 
 Deduped or snoozed alerts are not parked. They are refused. A repeated finding stays visible.
 
+## Accepted limits for the 4th DR
+
+These stay in the design on purpose. They are not silent.
+
+- Any `active` subscription counts as paid. Price, product, and quantity are not filters (P29).
+- `trialing`, `incomplete`, and `incomplete_expired` do not block `allClear` (P25, P30). `past_due`, `paused`, and `unpaid` do.
+- There is no primary rail (P28). P15 is superseded.
+- A Polar refund does not classify the subscription. Status `canceled` does (P26).
+- The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. The listing stays dark.
+- The exact price and the refund window are unset. Those are founder (via CoS) decisions and do not block the 4th DR.
+
+## Ready for the 4th DR
+
+**Yes.** The two cases are still decidable without a write, a fuzzy match, or a new processor. DR#3 closed the leftover contradictions it found: a trial no longer paints every day red, a Polar refund is not treated as a cancel, "latest charge" is not a guessed refund test, and a short provider page is not a wave of missing subscriptions. The limits above are written down for LaunchGate to accept or reject.
+
+This PR does not contact LaunchGate and does not count as approval. The next pull request is the 4th DR. An implement PR waits for LaunchGate APPROVE on that review.
+
 ## Scaffold behavior (current)
 
-`compareReadOnly` returns `implemented: false`, `allClear: false`, `unclassifiedUsers: 0`, and the error `detector_not_implemented`. Provider, database, and Slack functions throw `NotImplementedError` and do not open the network. `runCli(["--live"])` returns 2. The smoke test locks the export surface. `MappingDocument` requires `schema`. None of that is a live compare.
+`compareReadOnly` returns `implemented: false`, `allClear: false`, `unclassifiedUsers: 0`, `deliberateSkipUsers: 0`, and the error `detector_not_implemented`. Provider, database, and Slack functions throw `NotImplementedError` and do not open the network. `runCli(["--live"])` returns 2. The smoke test locks the export surface. `MappingDocument` requires `schema`. None of that is a live compare.

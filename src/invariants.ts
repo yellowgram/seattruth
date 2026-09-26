@@ -23,7 +23,7 @@ export const CONTRACT = Object.freeze({
   autoFixes: false,
 });
 
-/** What this build actually does. DR#2 still does not touch the network. */
+/** What this build actually does. DR#3 still does not touch the network. */
 export const BUILD = Object.freeze({
   detectorImplemented: false,
   performsNetworkReads: false,
@@ -32,7 +32,12 @@ export const BUILD = Object.freeze({
 
 export type ProviderId = "stripe" | "polar";
 
-/** Closed classification. Anything else stays unclassified. No guessing. */
+/**
+ * Closed subscription buckets used by the stub types.
+ * Deliberate skips (trialing, incomplete) are not a fourth string here.
+ * P25 and P26 in docs/MVP_SCOPE.md decide which statuses are paid,
+ * canceled, a deliberate skip, or ambiguous. Do not guess a new bucket.
+ */
 export type PaidClassification = "paid" | "canceled_or_refunded" | "unclassified";
 
 export type ProviderSubscriptionSnapshot = {
@@ -72,17 +77,22 @@ export type CompareResult = {
   /** False until the detector exists. False is never an all-clear. */
   implemented: boolean;
   /**
-   * True only after every enabled rail and the product relation were read,
-   * with zero findings and zero errors.
+   * True only on a live implemented run with zero findings, zero errors,
+   * and unclassifiedUsers of 0. deliberateSkipUsers may be above zero (P30).
    */
   allClear: boolean;
   mode: "dry-run" | "live";
   findings: Finding[];
   /**
-   * Users with no case finding because a value or rail was unclassified.
-   * DR#2 rule P14. A non-zero count forces allClear false and is not a run error.
+   * Ambiguous users. No case finding. A non-zero count forces allClear false.
+   * DR#3 rule P25. Not a run error.
    */
   unclassifiedUsers: number;
+  /**
+   * Users on a written non-case status such as trialing or incomplete.
+   * No case finding. Does not, by itself, force allClear false. DR#3 rule P25.
+   */
+  deliberateSkipUsers: number;
   errors: string[];
 };
 
@@ -95,5 +105,8 @@ export function assertStubResult(result: CompareResult): void {
   }
   if (result.unclassifiedUsers !== 0) {
     throw new Error("Stub compare must not invent unclassified users.");
+  }
+  if (result.deliberateSkipUsers !== 0) {
+    throw new Error("Stub compare must not invent skipped users.");
   }
 }

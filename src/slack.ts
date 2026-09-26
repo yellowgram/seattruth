@@ -9,7 +9,7 @@ import type { CompareResult } from "./invariants.js";
  * - Alert text names the disagreement. It does not say to change is_pro or seats.
  * - No email, no customer name, no card data.
  * - The stub never POSTs.
- * - TODO(implement): not in DR#2. Wait for DR#3, then a 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
+ * - TODO(implement): not in DR#3. Next is the 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
  *   Rule P6 and P10 in docs/MVP_SCOPE.md.
  */
 

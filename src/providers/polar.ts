@@ -8,7 +8,7 @@ import type { ProviderSubscriptionSnapshot } from "../invariants.js";
  * - Organization Access Token with read scopes only.
  * - Never create Checkout, products, orders, subscriptions, or refunds.
  * - Never grant or revoke benefits.
- * - TODO(implement): not in DR#2. Wait for DR#3, then a 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
+ * - TODO(implement): not in DR#3. Next is the 4th DR with LaunchGate APPROVE. Do not wait on the founder for that ordinary gate.
  *   Confirm Polar status strings from their API schema. Unknown strings
  *   stay unclassified (docs/MVP_SCOPE.md, rule P2).
  *   Token overview: https://polar.sh/docs/integrate/oat

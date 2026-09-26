@@ -14,7 +14,7 @@ import type { ProductRow } from "./invariants.js";
  * - Never UPDATE, INSERT, DELETE, or change is_pro / seats.
  * - The connection string must be a SELECT-only role. The tool does not
  *   escalate privileges and does not open a second connection for writes.
- * - TODO(implement): not in DR#2. Wait for DR#3, then a 4th DR with LaunchGate APPROVE.
+ * - TODO(implement): not in DR#3. Next is the 4th DR with LaunchGate APPROVE.
  *   Rules: docs/MVP_SCOPE.md (P11, P17, P18, P20).
  */
 

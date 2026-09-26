@@ -79,6 +79,7 @@ test("dry-run compare is not an all-clear and Slack text does not prescribe a fi
   assert.equal(result.mode, "dry-run");
   assert.deepEqual(result.findings, []);
   assert.equal(result.unclassifiedUsers, 0);
+  assert.equal(result.deliberateSkipUsers, 0);
   assert.ok(result.errors.includes("detector_not_implemented"));
 
   const alert = slack.buildSlackAlert(result);
@@ -95,6 +96,7 @@ test("dry-run compare is not an all-clear and Slack text does not prescribe a fi
         mode: "live",
         findings: [],
         unclassifiedUsers: 0,
+        deliberateSkipUsers: 0,
         errors: [],
       }),
     (error: unknown) => error instanceof NotImplementedError

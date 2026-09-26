@@ -37,7 +37,7 @@ If a row looks wrong, a person on your team changes your product, using your own
 
 | Read | Why |
 | --- | --- |
-| [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) | What the two cases are, and the provisional rules. |
+| [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) | What the two cases are, and the active rules after DR#3. |
 | [docs/MINIMUM_SUPPORT_CHECKLIST.md](docs/MINIMUM_SUPPORT_CHECKLIST.md) | What "supported" will mean. |
 | [docs/BUYER_NEEDS_BEYOND_CHECKLIST.md](docs/BUYER_NEEDS_BEYOND_CHECKLIST.md) | Needs that will not be in the first kit. |
 | [docs/STATUS.md](docs/STATUS.md) | Where the work actually is. |

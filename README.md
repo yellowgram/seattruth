@@ -30,7 +30,7 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 ## Price
 
-Self-serve, in the band **$49–99 per month**, once there is a real deliverable to sell. The exact number inside that band is a founder decision at the halt before implementation. There is nothing to buy here today.
+Self-serve, in the band **$49–99 per month**, once there is a real deliverable to sell. The exact number inside that band is a founder (via CoS) decision. It does not block the design reviews. There is nothing to buy here today.
 
 ## Contact
 
@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**DR#2** on this branch. DR#1 is pull request #1. DR#3 is next. LaunchGate is the 4th design review after DR#3, then the implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. The detector is not implemented. [docs/STATUS.md](docs/STATUS.md).
+**DR#3** on this branch. DR#1 is pull request #1. DR#2 is pull request #2. Next is the 4th design review, which needs LaunchGate APPROVE before any implement PR, then CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary design and code gates do not wait on the founder. The detector is not implemented. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

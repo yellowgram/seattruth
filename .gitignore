@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+*.log
+.DS_Store
+
+.env
+.env.*
+!.env.example
+
+# Real mapping may name a private relation. The example stays tracked.
+mapping.yaml

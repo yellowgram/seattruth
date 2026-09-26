@@ -1,0 +1,43 @@
+# Scheduled read-only compare.
+# The detector is not implemented. This workflow always dry-runs.
+# It does not receive Stripe keys, Polar tokens, a database URL, or a Slack webhook.
+# A green dry-run is not an all-clear. See docs/MVP_SCOPE.md and docs/STATUS.md.
+
+name: compare
+
+on:
+  schedule:
+    # Daily, after a quiet hour. Indie cadence. Not an enterprise monitor.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Must stay true until the detector is implemented"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse live mode
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run == false }}
+        run: |
+          echo "Live compare is not implemented. Refusing to run."
+          exit 1
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Dry-run compare
+        run: npm run compare -- --dry-run

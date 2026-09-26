@@ -10,8 +10,8 @@ One organization, one mapping file, restricted keys, a scheduled GitHub Action, 
 
 The two disagreements in scope:
 
-1. Paid in the provider, locked out in the product.
-2. Canceled or refunded in the provider, still entitled in the product.
+1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false. A deliberate skip on another rail does not hide this.
+2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
 
 ## What stays out
 

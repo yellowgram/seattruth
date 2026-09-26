@@ -1,6 +1,6 @@
 # MVP scope
 
-**Rules frozen at DR#3.** This branch is the 4th DR. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). No rule id in this file changed for that packet. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). DR#3 is [pull request #3](https://github.com/yellowgram/seattruth/pull/3). See [STATUS.md](STATUS.md).
+**Rules frozen at DR#3.** This branch is the 4th DR. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). No new rule id. After LaunchGate REQUEST CHANGES, the detect-case summaries below match P26 and P28. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). DR#3 is [pull request #3](https://github.com/yellowgram/seattruth/pull/3). See [STATUS.md](STATUS.md). P2 follow-ups that do not block re-approval are in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
 
 ## Cadence
 
@@ -35,8 +35,8 @@ SeatTruth compares Stripe and Polar, read-only, with one product database. The p
 
 A **finding** is one of these. Both are operator review items. Neither is an instruction.
 
-1. **`paid_locked_out`.** An applicable rail classifies the customer as paid, every applicable rail is classified, and the product `is_pro` value is boolean `false`.
-2. **`canceled_still_entitled`.** Every applicable rail classifies the customer as canceled or fully refunded, at least one rail applies, and the product `is_pro` value is boolean `true`.
+1. **`paid_locked_out`.** At least one applicable rail is **paid**, no applicable rail is **ambiguous**, and `is_pro` is boolean `false`. A deliberate skip on another applicable rail does not block this case (P28).
+2. **`canceled_still_entitled`.** Every applicable rail is **canceled** (provider status `canceled` only), at least one rail applies, and `is_pro` is boolean `true` (P26, P28). A Polar refund does not make a rail canceled. A Stripe subscription with status `active` and any refund is **ambiguous**, so this case does not fire.
 
 `seats` is copied onto the alert. A difference between provider quantity and `seats` is not a third finding. SQL `NULL` seats are not the number zero (P11, P20).
 

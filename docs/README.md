@@ -1,10 +1,11 @@
 # SeatTruth docs
 
-**4th DR.** The detector is not implemented. The Polar listing is dark. DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3. This branch is the LaunchGate gate packet. Approval has not happened.
+**4th DR.** The detector is not implemented. The Polar listing is dark. DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3. This branch is the LaunchGate gate packet. Detect-case summaries match P26 and P28. Re-approval has not happened.
 
 | Doc | What it decides |
 | --- | --- |
-| [MVP_SCOPE.md](MVP_SCOPE.md) | DR#3 rules, unchanged on this branch. Superseded P-rules stay visible. |
+| [MVP_SCOPE.md](MVP_SCOPE.md) | DR#3 rule ids. Detect-case summaries aligned to P26 and P28. Superseded P-rules stay visible. |
+| [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md) | P2 items for the implement PR and the review before the 4th CR. They do not block re-approval. |
 | [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md) | The three adversarial passes inside the DR#2 PR, and the deltas they forced. |
 | [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md) | The three adversarial passes inside the DR#3 PR, and the deltas they forced. |
 | [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md) | 4th DR gate packet. The APPROVE or REQUEST CHANGES ask for LaunchGate. |

@@ -1,12 +1,17 @@
 # 4th design review — LaunchGate gate packet
 
-This pull request is the **4th DR**. It is the packet LaunchGate approves or rejects **before any implement PR**. It is not another adversarial pass. It does not change rules. It does not implement the detector. It does not contact LaunchGate; SeatTruth sends this packet after the pull request exists.
+This pull request is the **4th DR**. It is the packet LaunchGate approves or rejects **before any implement PR**. It is not another adversarial pass. It does not add a rule id. It does not implement the detector. It does not contact LaunchGate; SeatTruth sends this packet after the pull request exists.
 
-Rules stay in [MVP_SCOPE.md](MVP_SCOPE.md) as DR#3 left them. This file only assembles them for a yes or a no.
+Rules stay in [MVP_SCOPE.md](MVP_SCOPE.md). LaunchGate REQUEST CHANGES on the detect-case summaries is applied in this revision: those two sentences now match P26 and P28. Items that wait for the implement PR, and do not block re-approval, are in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
 
 ## Product
 
-SeatTruth is a read-only check of Stripe and Polar against one product database. It reports two disagreements and stops: paid in a provider while `is_pro` is false, or canceled in the provider while `is_pro` is true. Seats ride along on the alert. The operator decides what to do.
+SeatTruth is a read-only check of Stripe and Polar against one product database. It reports two disagreements and stops.
+
+1. **`paid_locked_out`.** At least one applicable rail is paid, no applicable rail is ambiguous, and `is_pro` is boolean false. A deliberate skip on another applicable rail does not block this case (P28).
+2. **`canceled_still_entitled`.** Every applicable rail is canceled (provider status `canceled` only), at least one rail applies, and `is_pro` is boolean true (P26, P28). A Polar refund does not make a rail canceled. A Stripe subscription with status `active` and any refund is ambiguous, so this case does not fire.
+
+Seats ride along on the alert. The operator decides what to do.
 
 Shape: restricted keys, one mapping file, one Postgres relation, a daily GitHub Action, Slack on the operator's channel. Self-serve, **$49–99 per month**, exact price unset. Contact hello@yellowgram.dev. Prefer https://www.yellowgram.dev.
 
@@ -46,7 +51,7 @@ Controlling text is [MVP_SCOPE.md](MVP_SCOPE.md). Superseded ids stay in that ta
 | P29 | Any `active` subscription counts as paid. Price, product, and quantity are not filters. |
 | P30 | `allClear` requires a live complete read, zero findings, zero errors, and `unclassifiedUsers` of 0. `deliberateSkipUsers` may be above zero. Dry-run is not a pass. |
 
-Reading note, not a new rule: the two-sentence detect-case summary in MVP_SCOPE still says "every applicable rail is classified" and "canceled or fully refunded." Those phrases are the superseded P12 and P15 tests. P26 and P28 control. This PR does not rewrite them.
+The detect-case sentences in [MVP_SCOPE.md](MVP_SCOPE.md) are the same two sentences as in Product, above. P26 and P28 are the controlling rules.
 
 ## Design stack
 
@@ -107,10 +112,12 @@ Polar's subscription status enum and refund doc were read for P26. That is Polar
 
 ## Ask
 
-**APPROVE** an implement PR that builds only the active rules above, behind the hard outs, with the limits in the table accepted as written.
+LaunchGate REQUEST CHANGES on the two case summaries is applied. Those sentences now match P26 and P28. P2 items are recorded in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md) and do not block this ask.
+
+**Re-APPROVE** an implement PR that builds only the active rules above, behind the hard outs, with the limits in the table accepted as written.
 
 **or**
 
 **REQUEST CHANGES** and name the rule, the limit, or the kill criterion that fails. Do not leave a change for the implementer to invent.
 
-This document is the request. It is not the approval. The detector stays unimplemented until LaunchGate approves.
+This document is the request. It is not the approval. The detector stays unimplemented until LaunchGate re-approves.

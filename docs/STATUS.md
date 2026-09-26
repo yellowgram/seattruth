@@ -1,13 +1,13 @@
 # Status
 
-Updated 2026-09-26. **This pull request is the 4th DR.** It is the LaunchGate gate packet. LaunchGate has not approved it. Implementation stays blocked until that approval.
+Updated 2026-09-26. **This pull request is the 4th DR.** It is the LaunchGate gate packet. LaunchGate requested changes on the detect-case summaries. That wording now matches P26 and P28. Re-approval has not happened. Implementation stays blocked until LaunchGate re-APPROVE. P2 items are listed in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md) and do not block that re-approval.
 
 | Item | State |
 | --- | --- |
 | DR#1 | Done. https://github.com/yellowgram/seattruth/pull/1 |
 | DR#2 | Done. https://github.com/yellowgram/seattruth/pull/2 |
 | DR#3 | Done. https://github.com/yellowgram/seattruth/pull/3 |
-| 4th DR | **This PR.** Gate packet: [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Awaiting LaunchGate APPROVE or REQUEST CHANGES. |
+| 4th DR | **This PR.** Gate packet: [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). REQUEST CHANGES on the two case summaries is applied. Awaiting re-APPROVE. |
 | Implement PR | **Blocked** until LaunchGate approves this packet. |
 | CR×3 and 4th CR | Not started. The 4th CR needs LaunchGate APPROVE before squash-merge. |
 | Detector | Not started. Stubs throw rather than pretend to compare. |
@@ -55,7 +55,8 @@ Polar stays dark until the zip, the SHA-256, and `POLAR_DELIVERABLES` are real. 
 
 ## Where the reviews live
 
-- Rules: [MVP_SCOPE.md](MVP_SCOPE.md). Unchanged from DR#3.
+- Rules: [MVP_SCOPE.md](MVP_SCOPE.md). Same rule ids as DR#3. Detect-case summaries aligned to P26 and P28.
+- P2, not blocking: [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
 - DR#2 attacks: [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md).
 - DR#3 attacks: [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md).
 - 4th DR packet: [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).

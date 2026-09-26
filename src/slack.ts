@@ -13,6 +13,11 @@ export type SlackAlert = {
 };
 
 const FIX_LANGUAGE = /should have access|should lose access|set is_pro|UPDATE\b|refund the|cancel the subscription/i;
+const SECRET_TEXT = /@|postgres(?:ql)?:\/\/|\brk_|\bsk_|hooks\.slack\.com|Bearer\s/i;
+
+function lineAllowed(line: string): boolean {
+  return !FIX_LANGUAGE.test(line) && !SECRET_TEXT.test(line);
+}
 
 function seatsText(seats: number | null): string {
   return seats === null ? "null" : String(seats);
@@ -39,20 +44,34 @@ export function buildSlackAlert(result: CompareResult): SlackAlert {
     };
   }
   const lines: string[] = [];
+  let refused = false;
   for (const finding of result.findings) {
-    lines.push(findingLine(finding));
+    const line = findingLine(finding);
+    if (!lineAllowed(line)) {
+      refused = true;
+      continue;
+    }
+    lines.push(line);
   }
   if (result.unclassifiedUsers > 0) {
     lines.push(`SeatTruth ambiguous_users=${result.unclassifiedUsers}`);
   }
   for (const error of result.errors) {
-    lines.push(`SeatTruth run_error=${error}`);
+    const line = `SeatTruth run_error=${error}`;
+    if (!lineAllowed(line)) {
+      refused = true;
+      continue;
+    }
+    lines.push(line);
+  }
+  if (refused) {
+    lines.push("SeatTruth run_error=slack_field_refused");
   }
   if (lines.length === 0) {
     return { text: "" };
   }
   const text = lines.join("\n");
-  if (FIX_LANGUAGE.test(text)) {
+  if (!lineAllowed(text)) {
     throw new Error("slack_copy_refused");
   }
   return { text };
@@ -76,17 +95,24 @@ export async function deliverSlackAlert(
   } catch {
     throw new Error("slack_webhook_refused");
   }
-  if (webhook.protocol !== "https:" || webhook.hostname !== "hooks.slack.com") {
+  if (
+    webhook.protocol !== "https:" ||
+    webhook.hostname !== "hooks.slack.com" ||
+    webhook.username !== "" ||
+    webhook.password !== ""
+  ) {
     throw new Error("slack_webhook_refused");
   }
   if (alert.text.trim() === "") {
     return;
   }
+  const target = `https://hooks.slack.com${webhook.pathname}${webhook.search}`;
   let response: { ok: boolean; status: number };
   try {
     const fetchFn = fetchImpl ?? fetch;
-    response = await fetchFn(webhookUrl, {
+    response = await fetchFn(target, {
       method: "POST",
+      redirect: "error",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ text: alert.text }),
     });

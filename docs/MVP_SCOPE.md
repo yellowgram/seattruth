@@ -102,7 +102,7 @@ DR#1 text that failed review stays in the table, marked superseded. Active rules
 | P27 | A provider read is complete or it is a run error. HTTP errors, auth errors, and truncated pagination fail the rail. Ids missing from a partial page are not "no subscription" and are not canceled. Per-customer absence counts only after a complete list. |
 | P28 | Roll up one rail for one user after a complete read. If any subscription is paid, the rail is paid. Otherwise if any subscription is ambiguous, or the customer id is set and there are zero subscriptions, the rail is ambiguous. Otherwise if the rail has both a deliberate skip and a canceled subscription, the rail is ambiguous. Otherwise if every subscription is a deliberate skip, the rail is a deliberate skip. Otherwise if every subscription is canceled, the rail is canceled. A null customer-id cell means the rail does not apply. A user with no applicable rail is skipped and is not a finding. Case 1 does not require a deliberate-skip rail to be paid or canceled: a paid rail still produces `paid_locked_out` when `is_pro` is false and no applicable rail is ambiguous. Case 2 requires every applicable rail to be canceled. A deliberate skip blocks case 2. One paid rail and one canceled rail is case 1 only when `is_pro` is false. There is still no primary rail. P15's "every rail first" test is not applied. |
 | P29 | Price id, product id, and quantity do not change the bucket. Any `active` subscription counts as paid, including an add-on. A price allow-list is plan-drift scope and is out. Quantity `0` on an `active` subscription is still paid. This is a known limit for the 4th DR, not a third finding. |
-| P30 | `allClear` is true only on a live, implemented run that fully read every enabled rail and the product relation, with zero findings, zero errors, and `unclassifiedUsers` of 0. `deliberateSkipUsers` may be above zero. An empty relation that was read successfully can be `allClear`, and that still does not prove the view is the right population. Live exit codes: `0` only when `allClear` is true; `2` when the run finished and `allClear` is false because of findings or ambiguous users; `1` on a run error. Dry-run exits `0`, sets `allClear` false, and says it is not an all-clear. The scaffold's `--live` exit `2` remains the not-implemented refusal. A green dry-run is not an entitlement pass. The live job does not post a daily all-clear Slack message. |
+| P30 | `allClear` is true only on a live, implemented run that fully read every enabled rail and the product relation, with zero findings, zero errors, and `unclassifiedUsers` of 0. `deliberateSkipUsers` may be above zero. An empty relation that was read successfully can be `allClear`, and that still does not prove the view is the right population. Live exit codes: `0` only when `allClear` is true; `2` when the run finished and `allClear` is false because of findings or ambiguous users; `1` on a run error. Dry-run exits `0`, sets `allClear` false, and says it is not an all-clear. The scaffold refusal of `--live` is retired. A green dry-run is not an entitlement pass. The live job does not post a daily all-clear Slack message. |
 
 ### How the two rails combine
 
@@ -126,7 +126,7 @@ The file names the Postgres schema and relation, and the columns that hold the p
 
 ## Cron, GitHub Action, Slack
 
-The shape of a run, once the detector exists:
+The shape of a live run:
 
 1. Load the mapping file. Reject unknown `entitlement.field` values. The active rules accept `is_pro` only. Reject a missing schema, an empty-string rail, and zero enabled rails (P18, P21, P22).
 2. Read enabled rails with restricted credentials. Do not log the credentials (P23).
@@ -135,9 +135,7 @@ The shape of a run, once the detector exists:
 5. Post to Slack for findings, a non-zero ambiguous count, or a run error (P6, P24, P25, P30). Do not post a daily all-clear.
 6. Exit with the P30 codes. Exit non-zero whenever `allClear` is false. A non-zero exit fails the GitHub Actions check. That red check is the cron-failure signal. The kit does not add a second pager.
 
-Until that exists, [../.github/workflows/compare.yml](../.github/workflows/compare.yml) checks out the repo and runs `npm run compare -- --dry-run`. Dispatch with `dry_run` set false fails the job before the CLI. The workflow does not declare provider, database, or Slack secrets. Its green check is not an entitlement pass.
-
-When a later implement PR turns live mode on, the daily cron is the live path. `workflow_dispatch` stays dry-run unless the operator sets an explicit live input. Dry-run does not read providers, does not query the database, and does not post to Slack.
+[../.github/workflows/compare.yml](../.github/workflows/compare.yml) runs that shape. The daily cron is live. `workflow_dispatch` stays dry-run unless `dry_run` is false. Live steps read `STRIPE_RESTRICTED_KEY`, `POLAR_RESTRICTED_TOKEN`, `PRODUCT_DATABASE_URL`, `SLACK_WEBHOOK_URL`, and `SEATTRUTH_MAPPING_YAML` from GitHub Actions secrets. The workflow file does not contain the secret values. A missing secret fails the job. Dry-run does not read providers, does not query the database, and does not post to Slack. A green dry-run is not an entitlement pass.
 
 Cadence is daily. Hourly monitoring is a different product.
 
@@ -227,14 +225,14 @@ These stay in the design on purpose. They are not silent.
 
 ## 4th DR packet
 
-LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This implement branch does not add a rule id. The next gates are CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge.
+LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This implement branch does not add a rule id. CR#1 and CR#2 are done. Next is CR#3, then a 4th code review with LaunchGate APPROVE before squash-merge.
 
 ## Read path
 
 These are the P2 notes from [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md). They do not add a detect case.
 
 - **Polar scope.** `subscriptions:read` only, cited above. Order and refund endpoints are not called.
-- **Stripe refunds.** For `active` subscriptions, paginate `GET /v1/invoices?subscription={id}&expand[]=data.charge` until `has_more` is false. Any charge with `amount_refunded > 0` or `refunded: true` makes that subscription ambiguous. If a paid invoice has no readable charge, the subscription is ambiguous, not paid. Sources: [list invoices](https://docs.stripe.com/api/invoices/list), [expanding objects](https://docs.stripe.com/api/expanding_objects), [charge object](https://docs.stripe.com/api/charges/object).
+- **Stripe refunds.** For `active` subscriptions, paginate `GET /v1/invoices?subscription={id}&expand[]=data.charge` until `has_more` is false. A `ch_…` id is loaded with `GET /v1/charges/{id}`. Any charge with `amount_refunded > 0` or `refunded: true` makes that subscription ambiguous. If a paid invoice has no readable charge, the subscription is ambiguous, not paid. Sources: [list invoices](https://docs.stripe.com/api/invoices/list), [expanding objects](https://docs.stripe.com/api/expanding_objects), [charge object](https://docs.stripe.com/api/charges/object).
 - **P27 Stripe.** `GET /v1/subscriptions?status=all&limit=100`, following `has_more` and `starting_after`. A truncated page is `stripe_incomplete_read` or `stripe_http_*`, and those ids are not compared.
 - **P27 Polar.** `GET /v1/subscriptions?limit=100&page={n}` with no status filter. Complete means pages `1..pagination.max_page` and the item count equals `pagination.total_count`.
 - **P28 fixtures.** The cross-rail table in the acceptance notes is what `tests/rules.test.ts` locks.

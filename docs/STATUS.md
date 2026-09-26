@@ -10,8 +10,8 @@ Updated 2026-09-26. **This pull request is the implement PR.** LaunchGate approv
 | 4th DR | Approved. https://github.com/yellowgram/seattruth/pull/4 at `eed8afdb210a46e489b5815b5261f8574f906336` |
 | Implement PR | **This PR.** https://github.com/yellowgram/seattruth/pull/5 |
 | CR#1 | **Done.** Expert A, billing path. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md). |
-| CR#2 | **Next.** Not started. |
-| CR#3 | Not started. |
+| CR#2 | **Done.** Expert B, operator safety. [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md). |
+| CR#3 | **Next.** Not started. |
 | 4th CR | Not started. LaunchGate APPROVE is required before squash-merge. |
 | Detector | Implemented. Dry-run does not call the network. `--live` reads Stripe, Polar, and Postgres and can post to Slack. |
 | `npm test` | Smoke test plus fixtures for P26, P27, and P28. Export names still ban charge, write, and fix APIs. |
@@ -29,7 +29,7 @@ Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th
 1. **DR×3.** Done. Pull requests #1, #2, and #3.
 2. **4th DR → LaunchGate APPROVE.** Done. Pull request #4.
 3. **Implement PR.** This pull request.
-4. **CR×3.** CR#1 is done on this pull request. CR#2 is next. CR#3 is not started.
+4. **CR×3.** CR#1 and CR#2 are done on this pull request. CR#3 is next.
 5. **4th CR → LaunchGate APPROVE** before squash-merge. Not started.
 
 A green CI run on this pull request is not the 4th code-review approval, and it is not permission to squash-merge.
@@ -57,6 +57,7 @@ Polar stays dark until the zip, the SHA-256, and `POLAR_DELIVERABLES` are real. 
 ## Code review
 
 - CR#1: [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
+- CR#2: [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there. CR#3 is next.
 
 ## Where the reviews live
 

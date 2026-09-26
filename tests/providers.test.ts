@@ -35,6 +35,7 @@ test("Stripe pagination failure is a run error and does not return a partial lis
   const urls: string[] = [];
   const fetchImpl: FetchLike = async (url, init) => {
     assert.equal(init?.method ?? "GET", "GET");
+    assert.equal(init?.redirect, "error");
     const href = String(url);
     urls.push(href);
     assert.equal(href.includes("/v1/refunds"), false);
@@ -179,6 +180,7 @@ test("Polar list is complete only when every page is read, and refunds are not r
   const urls: string[] = [];
   const fetchImpl: FetchLike = async (url, init) => {
     assert.equal(init?.method ?? "GET", "GET");
+    assert.equal(init?.redirect, "error");
     const href = String(url);
     urls.push(href);
     assert.doesNotMatch(href, /\/v1\/orders/);

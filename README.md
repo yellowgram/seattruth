@@ -50,7 +50,7 @@ npm run compare -- --dry-run
 
 `npm test` compiles TypeScript and runs the tests. The smoke test fails if a charge, write, or fix API is exported. It also fails if a dry-run result claims all-clear.
 
-`--dry-run` does not read keys and does not call Stripe, Polar, Slack, or the database. `--live` does those reads when the environment variables in `.env.example` are set. It still does not charge, write, or change `is_pro`. Exit `0` is an all-clear, exit `2` is a finished run that is not all-clear, and exit `1` is a run error.
+`--dry-run` does not read keys and does not call Stripe, Polar, Slack, or the database. It exits 0. That exit is not an all-clear. `--live` does those reads when the environment variables in `.env.example` are set, and it can post to the Slack webhook. It still does not charge, write, or change `is_pro`. On a live run, exit `0` is an all-clear, exit `2` is a finished run that is not all-clear, and exit `1` is a run error. An unknown flag exits 1 and does not fall through to a dry-run.
 
 ## Docs
 
@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**Implement PR** on this branch. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. Next is CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder. The detector is implemented and read-only. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent, so the Polar listing stays dark. [docs/STATUS.md](docs/STATUS.md).
+**Implement PR** on this branch. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR#1 and CR#2 are done. Next is CR#3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder. The detector is implemented and read-only. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent, so the Polar listing stays dark. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

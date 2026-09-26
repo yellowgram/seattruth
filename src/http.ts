@@ -35,7 +35,7 @@ export async function getJson(
 ): Promise<unknown> {
   let response: { ok: boolean; status: number; json: () => Promise<unknown> };
   try {
-    response = await fetchImpl(url, { method: "GET", headers });
+    response = await fetchImpl(url, { method: "GET", redirect: "error", headers });
   } catch {
     throw new ProviderHttpError(provider, 0);
   }

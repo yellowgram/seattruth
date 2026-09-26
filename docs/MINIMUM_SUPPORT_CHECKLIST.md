@@ -10,7 +10,7 @@ What "supported" means for SeatTruth once an operator has the kit. The founder s
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. This branch is the implement PR. Next is CR×3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder.
+Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. This branch is the implement PR. CR#1 and CR#2 are done. Next is CR#3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder.
 
 ## 1. Happy path
 
@@ -169,8 +169,8 @@ This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 - Detector implemented on this branch. Squash-merge still waits on the 4th code review.
 
-The 4th DR packet submits this list. The cases are still decidable without a write or a guessed schema. Approval is the ask in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md), and it has not been given.
+The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 
 ## Done means
 
-The scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming CR×3, the 4th CR, or a LaunchGate approval happened here.
+The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path. A green dry-run is not an all-clear. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming CR#3, the 4th CR, or a squash-merge approval happened here.

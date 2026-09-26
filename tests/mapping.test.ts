@@ -51,7 +51,11 @@ test("booleans and seats are not coerced", () => {
   assert.equal(normalizeIsPro(1), null);
   assert.equal(normalizeSeats(null), null);
   assert.equal(normalizeSeats(0), 0);
-  assert.throws(() => normalizeSeats("0"), /seats_not_numeric/);
+  assert.equal(normalizeSeats("0"), 0);
+  assert.equal(normalizeSeats("12"), 12);
+  assert.throws(() => normalizeSeats("3.00"), /seats_not_numeric/);
+  assert.throws(() => normalizeSeats("1e2"), /seats_not_numeric/);
+  assert.throws(() => normalizeSeats(true), /seats_not_numeric/);
 
   const row = normalizeProductRow(
     {
@@ -67,4 +71,19 @@ test("booleans and seats are not coerced", () => {
   assert.equal(row.isPro, false);
   assert.equal(row.seats, null);
   assert.equal(row.polarCustomerId, null);
+
+  const padded = normalizeProductRow(
+    {
+      user_id: "u2",
+      is_pro: false,
+      seats: "4",
+      stripe_customer_id: "  cus_pad  ",
+      polar_customer_id: "   ",
+    },
+    true,
+    true
+  );
+  assert.equal(padded.seats, 4);
+  assert.equal(padded.stripeCustomerId, "cus_pad");
+  assert.equal(padded.polarCustomerId, "");
 });

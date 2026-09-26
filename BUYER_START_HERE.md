@@ -14,14 +14,16 @@ You run the kit inside your own GitHub repository and your own database. yellowg
 - Copy [.env.example](.env.example) and [mapping.example.yaml](mapping.example.yaml) and see whether your schema can fill them in without a custom join.
 - Run `npm test` and `npm run compare -- --dry-run`. Both succeed without keys. The dry-run text says it is not an all-clear. That success is not evidence your entitlements match.
 
-## What you will need when the detector exists
+## What a live run needs
 
-1. A Stripe restricted key with read access only, or a decision to leave the Stripe rail disabled.
-2. A Polar Organization Access Token with read scopes only, or a decision to leave the Polar rail disabled. Create it in the Polar organization settings. Overview: https://polar.sh/docs/integrate/oat
-3. One Postgres view or table that already has `user id`, `is_pro`, `seats`, and the provider customer and subscription ids you use.
+The detector is already in this repository. A live run still needs your keys. A dry-run does not.
+
+1. A Stripe restricted key (`rk_`) with read access only: Subscriptions, Invoices, and Charges. Secret keys (`sk_`) are refused. Or leave the Stripe rail disabled with `customer_id: null`.
+2. A Polar Organization Access Token with `subscriptions:read` only, or leave the Polar rail disabled the same way. Create it in the Polar organization settings. Overview: https://polar.sh/docs/integrate/oat
+3. One Postgres view or table that already has `user id`, `is_pro`, `seats`, and the provider customer and subscription ids you use. Map a user id that is not an email address. Seats may be an integer, a bigint, or null. Null is not zero.
 4. A database role that can `SELECT` that relation and cannot change it.
-5. A Slack incoming webhook for a channel your operators already watch.
-6. GitHub Actions secrets for those values. The scheduled workflow in this scaffold does not have those secrets, on purpose.
+5. A Slack incoming webhook on `https://hooks.slack.com/…` for a channel your operators already watch.
+6. GitHub Actions secrets for those values, plus `SEATTRUTH_MAPPING_YAML`. The workflow file names those secrets and does not contain the values. The daily cron is the live path. A manual dispatch stays a dry-run unless you set `dry_run` to false. Until the secrets exist, a live job fails. That failure is not an all-clear.
 
 ## What the tool will never do
 

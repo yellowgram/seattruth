@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
-import { HELP, runCli } from "../src/cli.js";
+import { HELP, liveExitCode, runCli } from "../src/cli.js";
 import { compareReadOnly } from "../src/compare.js";
 import { CONTRACT, BUILD } from "../src/invariants.js";
 import * as api from "../src/index.js";
@@ -108,6 +108,7 @@ test("live Slack text names the disagreement and posts only that text", async ()
   let posted = "";
   const fetchImpl: FetchLike = async (url, init) => {
     assert.equal(init?.method, "POST");
+    assert.equal(init?.redirect, "error");
     assert.match(String(url), /^https:\/\/hooks\.slack\.com\//);
     posted = String(init?.body);
     return new Response("ok", { status: 200 });
@@ -123,9 +124,62 @@ test("live Slack text names the disagreement and posts only that text", async ()
   };
   await assert.rejects(
     () => slack.deliverSlackAlert(alert, "https://example.com/hook", refuse),
-    /slack_webhook_refused/
+    (error: unknown) => error instanceof Error && error.message === "slack_webhook_refused"
   );
   assert.equal(leaked, false);
+
+  await assert.rejects(
+    () =>
+      slack.deliverSlackAlert(
+        alert,
+        "https://user:token@hooks.slack.com/services/REPLACE/REPLACE/REPLACE",
+        refuse
+      ),
+    (error: unknown) => error instanceof Error && error.message === "slack_webhook_refused"
+  );
+  assert.equal(leaked, false);
+
+  await assert.rejects(
+    () =>
+      slack.deliverSlackAlert(alert, "https://hooks.slack.com/services/SECRET", async () => {
+        throw new Error("connect failed https://hooks.slack.com/services/SECRET");
+      }),
+    (error: unknown) => error instanceof Error && error.message === "slack_http_0"
+  );
+
+  const mixed = slack.buildSlackAlert({
+    implemented: true,
+    allClear: false,
+    mode: "live",
+    findings: [
+      {
+        detectCase: "paid_locked_out",
+        productUserId: "person@example.com",
+        provider: "stripe",
+        providerCustomerId: "cus_1",
+        providerSubscriptionId: "sub_1",
+        productIsPro: false,
+        productSeats: 1,
+      },
+      {
+        detectCase: "canceled_still_entitled",
+        productUserId: "user-2",
+        provider: "polar",
+        providerCustomerId: "cus_2",
+        providerSubscriptionId: "sub_2",
+        productIsPro: true,
+        productSeats: 0,
+      },
+    ],
+    unclassifiedUsers: 0,
+    deliberateSkipUsers: 0,
+    errors: ["duplicate_customer_id:stripe:other@example.com"],
+  });
+  assert.match(mixed.text, /canceled_still_entitled/);
+  assert.match(mixed.text, /user=user-2/);
+  assert.match(mixed.text, /slack_field_refused/);
+  assert.doesNotMatch(mixed.text, /@/);
+  assert.doesNotMatch(mixed.text, /example\.com/);
 
   const clear = slack.buildSlackAlert({
     implemented: true,
@@ -146,6 +200,33 @@ test("live Slack text names the disagreement and posts only that text", async ()
     deliberateSkipUsers: 3,
     errors: [],
   }), false);
+});
+
+test("live exit codes follow allClear and unknown flags do not dry-run", async () => {
+  assert.equal(liveExitCode(true, []), 0);
+  assert.equal(liveExitCode(false, []), 2);
+  assert.equal(liveExitCode(false, ["stripe_incomplete_read"]), 1);
+  assert.equal(liveExitCode(true, ["compare_failed"]), 1);
+
+  const errors: string[] = [];
+  const original = console.error;
+  console.error = (line?: unknown) => {
+    errors.push(String(line));
+  };
+  const fetchOriginal = globalThis.fetch;
+  let called = false;
+  globalThis.fetch = (() => {
+    called = true;
+    throw new Error("network");
+  }) as typeof fetch;
+  try {
+    assert.equal(await runCli(["--liv", "rk_live_SECRETVALUE"]), 1);
+    assert.deepEqual(errors, ["unknown_argument"]);
+    assert.equal(called, false);
+  } finally {
+    console.error = original;
+    globalThis.fetch = fetchOriginal;
+  }
 });
 
 test("CLI help stays free of checkout and live without config does not call the network", async () => {

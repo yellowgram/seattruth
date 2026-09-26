@@ -8,7 +8,7 @@ import type { ProviderSubscriptionSnapshot } from "../invariants.js";
  * - Never charge, capture, invoice, refund, or open Checkout.
  * - Never update or cancel a Stripe object.
  * - A secret key (sk_) is refused before any network call.
- * - TODO(implement): after three design iterations and the founder halt.
+ * - TODO(implement): not in DR#1. Wait for a separate DR#2 PR, a separate DR#3 PR, and a founder halt.
  *   Rules: docs/MVP_SCOPE.md (provisional rules P2, P3, P7).
  */
 

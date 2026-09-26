@@ -11,7 +11,7 @@ import { buildSlackAlert } from "./slack.js";
  * The stub does not read environment variables and does not open the network.
  *
  * Invariants: read-only; never charge; never mutate entitlements.
- * TODO(implement): after three design iterations and the founder halt.
+ * TODO(implement): not in DR#1. Wait for a separate DR#2 PR, a separate DR#3 PR, and a founder halt.
  */
 
 export const HELP = `SeatTruth compare (scaffold)

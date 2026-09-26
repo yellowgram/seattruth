@@ -12,7 +12,7 @@ import type { CompareResult } from "./invariants.js";
  * - Never charge. Never write providers. Never mutate is_pro or seats.
  * - Never auto-fix, and never describe a fix.
  * - A dry-run or a failed read is not an all-clear.
- * - TODO(implement): after three design iterations and the founder halt.
+ * - TODO(implement): not in DR#1. Wait for a separate DR#2 PR, a separate DR#3 PR, and a founder halt.
  *   Provisional rules P1–P10 in docs/MVP_SCOPE.md are canonical.
  *   Do not add plan drift, orphan rows, or seat inequality as findings.
  */

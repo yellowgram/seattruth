@@ -1,14 +1,14 @@
 # SeatTruth docs
 
-Iteration 0. The detector is not implemented. The Polar listing is dark.
+**DR#1 only.** The detector is not implemented. The Polar listing is dark. DR#2 and DR#3 are later, separate design PRs. They are not done in this pack.
 
 | Doc | What it decides |
 | --- | --- |
-| [MVP_SCOPE.md](MVP_SCOPE.md) | In, out, later, the two detect cases, the mapping file, cron and Slack, price, kill criteria. |
-| [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) | What an operator can expect without the founder in the room, plus the Expert A/B/C iteration log. |
-| [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) | Real operator needs that the first kit will not absorb. |
+| [MVP_SCOPE.md](MVP_SCOPE.md) | DR#1 seed: in, out, later, the two detect cases, the mapping file, cron and Slack, price, kill criteria. |
+| [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) | Support checklist v1. Later design PRs may revise it. Not a v3 final. |
+| [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) | Buyer needs v1: what the first kit will not absorb. |
 | [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) | DriftExact and ProdVerdict from public pages, with unknowns left unknown. |
-| [STATUS.md](STATUS.md) | Design-only status and the halt before implementation. |
+| [STATUS.md](STATUS.md) | DR#1 status. Next: DR#2, then DR#3, then founder halt, then implement PR, then CR×3. |
 
 Front door for an operator: [../BUYER_START_HERE.md](../BUYER_START_HERE.md).
 

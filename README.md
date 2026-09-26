@@ -58,7 +58,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-Design only, iteration 0. Next is three adversarial design iterations, then a founder halt, before any detector code. [docs/STATUS.md](docs/STATUS.md).
+**DR#1 only** (scaffold and design-pack seed). DR#2 and DR#3 are not done here. Next is a separate DR#2 design PR, then a separate DR#3 design PR, then a founder halt, then an implement PR, then CR×3 before that implement PR merges. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

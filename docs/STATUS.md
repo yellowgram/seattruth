@@ -1,10 +1,16 @@
 # Status
 
-Updated 2026-09-26. Design only.
+Updated 2026-09-26. **This pull request is DR#1 only.**
+
+DR#1 is the scaffold plus the design-pack seed: [MVP_SCOPE.md](MVP_SCOPE.md), [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) v1, [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) v1, [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md), and this file.
+
+DR#2 is not done. DR#3 is not done. This PR does not contain those reviews.
 
 | Item | State |
 | --- | --- |
-| Design pack | Iteration 0. Scoped so an adversary can attack it. |
+| Design review | DR#1 only. Seed, not a finished design. |
+| DR#2 | Not started. Separate design PR. |
+| DR#3 | Not started. Separate design PR after DR#2. |
 | Detector | Not started. Stubs throw rather than pretend to compare. |
 | `npm test` | Smoke test on the stub surface. |
 | GitHub Action `compare` | Cron and manual dispatch, dry-run only. No live secrets. |
@@ -13,15 +19,17 @@ Updated 2026-09-26. Design only.
 | Package version | `0.0.0`, private. Not a release. |
 | Exact price inside $49–99 | Unset. Setting it before a zip exists would be a fake door. |
 
-## Process
+## Next steps
 
-1. **This branch.** Iteration-0 design pack and a thin runnable scaffold.
-2. **Three design iterations.** Expert A, then Expert B, then Expert C, in that order. Each one tries to break the provisional rules in [MVP_SCOPE.md](MVP_SCOPE.md) and records a delta in [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md). Not started.
-3. **Founder halt.** Stop. Wait for an explicit go-ahead to implement. A green CI run on this scaffold is not that go-ahead.
-4. **Implement** inside the rules that survive the halt.
-5. **Three deep adversarial code reviews** before merge to `main`.
+These stay separate. Do not fold them into this PR.
 
-Skipping from this scaffold to a live Stripe or Polar call is a process break.
+1. **DR#2** — its own design PR. It may revise the DR#1 seed. It is not started here.
+2. **DR#3** — its own design PR, after DR#2. It is not started here.
+3. **Founder halt.** Stop. Wait for an explicit go-ahead to implement.
+4. **Implement PR.** The detector. Not this PR.
+5. **CR×3** — three code reviews before that implement PR merges.
+
+A green CI run on this scaffold is not the founder halt, and it is not permission to implement. Skipping from these stubs to a live Stripe or Polar call is a process break.
 
 ## Contact
 

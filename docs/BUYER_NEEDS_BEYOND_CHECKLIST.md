@@ -1,6 +1,8 @@
-# Buyer needs beyond the checklist
+# Buyer needs beyond the checklist (v1)
 
-Operators will ask for these. The minimum-support checklist does not promise them. Each line is **decided**, **deferred**, or **refuse**, so a later implementer does not absorb them as "small."
+**DR#1.** This is the first cut of needs that sit outside [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) v1. DR#2 and DR#3 may revise it, each in its own PR. This file does not pre-run those reviews.
+
+Operators will ask for these. The v1 checklist does not promise them. Each line is **decided**, **deferred**, or **refuse**, so a later implementer does not absorb them as "small."
 
 Contact for the ones that are just questions: hello@yellowgram.dev. Prefer [www.yellowgram.dev](https://www.yellowgram.dev).
 
@@ -13,20 +15,20 @@ These are real needs, and the answer is already a rule. The kit meets them by re
 | "Put the customer's email in Slack so I can act." | Refused by P6. The operator joins email in their own database. Slack keeps ids and the two fields. |
 | "Tell me whether to turn `is_pro` on." | Refused by P10. The alert names the disagreement. |
 | "Just fix the row." | Refused. Auto-fix is a hard out. The license does not warrant entitlement correctness. |
-| "Treat `past_due` as canceled." | Refused by P2. It stays unclassified, the run is not all-clear, and there is no case finding. Expert A is chartered to attack this silence. |
+| "Treat `past_due` as canceled." | Refused by P2 in this seed. It stays unclassified, the run is not all-clear, and there is no case finding. Whether that silence holds is for DR#2, in its own PR. |
 | "We only bill on Polar." | Supported. Set Stripe `customer_id` to null (P7). |
 | "Prove the GitHub Action is not using a secret key." | Supported by the `sk_` refusal and by the workflow shipping without secrets. |
 
 ## Deferred
 
-Real needs. Not in v1. They move only by an edit to [MVP_SCOPE.md](MVP_SCOPE.md) during a design iteration.
+Real needs. Not in the DR#1 seed. They move only by an edit to [MVP_SCOPE.md](MVP_SCOPE.md) in the DR#2 PR or the DR#3 PR.
 
 | Need | Why it waits |
 | --- | --- |
 | Stop repeating the same Slack message every day. | Deduping needs memory. Memory of "ignore this customer" becomes a second entitlement store. Any design has to show it cannot grant or hide access. |
 | Export a CSV for a finance note. | Useful, and easy to inflate into an audit pack. A flat file of the same fields as the Slack alert can wait until a buyer has run the two cases for a month. |
 | Seat count differs from provider quantity, while `is_pro` agrees. | The field is on the alert. A separate finding is a third detect case. The product promise is two cases. |
-| Ids live in another table, so the operator wants a hand-written pair list. | A second mapping path doubles join bugs (Expert B). v1 is one relation with the columns on it. |
+| Ids live in another table, so the operator wants a hand-written pair list. | A second mapping path doubles join bugs. DR#1 keeps one relation with the columns on it. |
 | MySQL, SQLite, or a hosted auth database that is not Postgres. | One engine is the whole read path. A second engine is a second P8. |
 | More than one product table (workspace and user both have `is_pro`). | Same reason. |
 | A page of history inside yellowgram. | Hosting buyer customer rows is out. History stays in the operator's Slack and Actions logs. |

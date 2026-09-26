@@ -1,6 +1,6 @@
 # Competitive skim
 
-Public material only. Fetched **2026-09-26**. No customer counts, no accuracy rates, no revenue, and no "they win or lose" scores. Where a page was down or two sources disagree, that is written as unknown.
+**DR#1.** Public material only. Fetched **2026-09-26**. This skim is part of the design-pack seed. It is not DR#2 or DR#3. No customer counts, no accuracy rates, no revenue, and no "they win or lose" scores. Where a page was down or two sources disagree, that is written as unknown.
 
 SeatTruth's intended wedge, repeated so this file has a point: a Polar read connector beside Stripe, two detect cases, no fix advice, self-serve in the $49–99 band. That wedge is a statement about SeatTruth. The notes below are what the other public pages actually say.
 

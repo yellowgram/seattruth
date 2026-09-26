@@ -23,7 +23,7 @@ export const CONTRACT = Object.freeze({
   autoFixes: false,
 });
 
-/** What this build actually does. Iteration 0 does not touch the network. */
+/** What this build actually does. DR#1 does not touch the network. */
 export const BUILD = Object.freeze({
   detectorImplemented: false,
   performsNetworkReads: false,

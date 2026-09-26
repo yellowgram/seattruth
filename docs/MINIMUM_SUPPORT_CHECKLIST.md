@@ -1,10 +1,12 @@
-# Minimum support checklist
+# Minimum support checklist (v1)
 
-What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room. Items marked done are true of this scaffold. Items left open wait for the detector, the zip, or the design iterations.
+**DR#1.** This is a solid first checklist, not a final v3. DR#2 and DR#3 are separate design PRs, and each one may revise this file. Those revisions are not in this PR. Do not read the checked boxes as a sign-off from later reviews.
+
+What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this scaffold. Items left open wait for later design PRs, the implement PR, or the zip.
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when this file was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Process: three adversarial design iterations, founder halt, implement, then three code reviews. The iteration log is at the bottom. It is empty of deltas on purpose.
+Next steps, each its own PR: DR#2, then DR#3, then a founder halt, then an implement PR, then CR×3 before that implement PR merges. See [STATUS.md](STATUS.md).
 
 ## 1. Happy path
 
@@ -88,64 +90,12 @@ Distribution matches the private-kit pattern: this private GitHub repo now, a zi
 - [ ] Key rotation is the operator's job: replace the GitHub secret, expire the old Polar token in the Polar UI, roll the Stripe restricted key in the Stripe dashboard.
 - [ ] A missed cron (Actions outage) is visible because the operator notices the channel went quiet. The kit does not promise a second pager.
 
-## 8. Adversarial iteration log
+## 8. Later revisions of this checklist
 
-Three passes, in order. Each pass is one expert trying to break the provisional rules. A **delta** is a rule that changed because the attack held. "None yet" means the pass has not been run. Do not backfill a delta to look finished.
+DR#2 and DR#3 have not been run. This section does not record their findings. Running those reviews inside DR#1 would collapse them into one pass.
 
-When a delta happens: leave the old rule text in [MVP_SCOPE.md](MVP_SCOPE.md), mark it superseded, add the new rule id, and write one paragraph here. Do not delete the attack.
-
-### Expert A — billing-state adversary
-
-**Status:** not started.
-
-**Charter:** Break the status table. The interesting lie is a customer who is "kind of paid" or "kind of canceled" being forced into case 1 or case 2.
-
-**Seed attacks:**
-
-- Stripe `past_due` with `is_pro` true. P2 says unclassified, so no case 2. Is silence the failure mode the operator actually fears?
-- Stripe `active` plus a partial refund. P3 says unclassified. Case 1 also stays silent if classification is incomplete (P4). Confirm that is the intended fail-closed behavior, and that it does not get "fixed" by treating partial as full.
-- Stripe `trialing` with `is_pro` false. Must not become `paid_locked_out`.
-- Polar statuses that do not match Stripe's enum. Any status missing from the written Polar map must stay unclassified. The attack is an implementer guessing `active` means paid because the word looks right.
-- A dispute that is not a refund. P2 does not mention disputes. They should fall through to unclassified. If Polar models disputes as a refund object, Expert A has to say which, from the API schema, not from memory.
-- "Latest paid charge" (P3) is the easy phrase to implement wrong when an annual invoice and a one-off invoice both exist.
-
-**Delta:** none yet.
-
-### Expert B — mapping and dual-rail adversary
-
-**Status:** not started. Runs after Expert A's delta is recorded.
-
-**Charter:** Break the join. The interesting lie is two truths about the same person, or a mapping file that becomes SQL.
-
-**Seed attacks:**
-
-- Enabled Stripe rail is `canceled_or_refunded`, enabled Polar rail is `paid`, `is_pro` is true. P4's mix rule says this is not case 2. Attack the product story: the operator may have meant "Polar is the billing system of record" and Stripe is a stale id. Is `customer_id: null` the only way to say that, and is that documented where they will see it?
-- The same Stripe customer id on two product users (P5) must error the run, not emit two findings and not pick the first row.
-- `is_pro` true and `seats` 0. P1 says seats are payload. Attack whether operators will read the alert as "SeatTruth approved this" because it did not flag the zero.
-- A mapping `relation` of `users; drop table users` or a column named with a quote. P8's identifier grammar has to reject it before a query is built. The attack is a future loader that string-concatenates the YAML into SQL.
-- A read-only URL that points at a superuser. The tool cannot fully police the role. The attack is a doc that implies the kit enforces read-only when only the operator's role does. The checklist has to keep saying that out loud.
-- Both rails disabled. That run should error, not report all-clear.
-
-**Delta:** none yet.
-
-### Expert C — liability and go-to-market adversary
-
-**Status:** not started. Runs after Expert B's delta is recorded.
-
-**Charter:** Break the boundary that keeps this out of auto-fix, Soft-WTP, and enterprise-audit work. The interesting lie is a helpful sentence.
-
-**Seed attacks:**
-
-- Slack copy that says the customer "should have access" is already a fix instruction. P10 has to survive contact with a friendly writer.
-- An "acknowledge this user for 30 days" feature. It is the ignore list banned in the scope. The attack will come dressed as noise reduction.
-- A Polar product page, a buy button, or a price in the README that looks like Checkout, created before `POLAR_DELIVERABLES` exists.
-- Moving the price to match DriftExact, or adding an executive PDF, because a single prospect asked. Kill criterion 2.
-- A support reply that includes an `UPDATE` for `is_pro`. That reply is the product failing, even if the code is clean.
-- Cold email that attaches an invoice. Soft-WTP rule.
-- The dry-run workflow going green on `main` and someone treating the badge as "entitlements checked."
-
-**Delta:** none yet.
+When DR#2 opens, it gets its own PR and may edit this checklist. DR#3 does the same after DR#2, in another PR. Until those PRs exist, v1 above is the support promise of the seed. It is not a v3 final.
 
 ## Done means
 
-The checklist is not done. The scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs still match the boxes above. The product portion stays unchecked until the halt, the implementation, and the three code reviews.
+The DR#1 scaffold portion is done when `npm test` passes, the workflow stays dry-run, and the docs still match the boxes above. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming DR#2, DR#3, or CR×3 happened here.

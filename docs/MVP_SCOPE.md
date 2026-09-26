@@ -1,6 +1,16 @@
 # MVP scope
 
-Iteration 0. These rules are provisional on purpose. Expert A, Expert B, and Expert C attack them in that order. Implementation waits for a founder halt after those three passes. See [STATUS.md](STATUS.md).
+**DR#1 seed.** This file is the first design pass, written with the scaffold. It is not DR#2 and it is not DR#3. Those are later pull requests. See [STATUS.md](STATUS.md).
+
+## Next steps
+
+1. **DR#2** — a separate design PR. Not this one.
+2. **DR#3** — a separate design PR after DR#2. Not this one.
+3. **Founder halt.** Stop until there is an explicit go-ahead to implement.
+4. **Implement PR.** Detector code. Not started.
+5. **CR×3** before that implement PR merges.
+
+Do not treat the rules below as a finished design, and do not implement them from this PR.
 
 SeatTruth compares Stripe and Polar, read-only, with one product database. The product fields in view are `is_pro` and seats. The kit is restricted keys, one mapping file, a GitHub Action on a cron, and a Slack alert.
 
@@ -28,7 +38,7 @@ A **finding** is one of these. Both are operator review items. Neither is an ins
 
 ### Provisional rules
 
-These are the iteration-0 decisions. A later iteration that changes one must mark the old text superseded and name the new rule. Code does not get to widen them quietly.
+These are DR#1 decisions. DR#2, then DR#3, each in its own PR, may supersede a rule. This PR does not apply those revisions. A superseded rule stays in the text, marked superseded, with the new rule id beside it. Code does not get to widen these rules quietly, and code does not land in this PR.
 
 | Id | Rule |
 | --- | --- |
@@ -85,7 +95,7 @@ Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, p
 
 Stop the product, or refuse the request, when any of these is true:
 
-1. A design iteration shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case. Do not widen the product to save it.
+1. DR#2 or DR#3 shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case in that later PR. Do not widen the product to save it.
 2. The buyer being served wants a qualification call, an executive PDF, or pricing aimed at large subscription counts. That is a different business. Decline.
 3. The implementation cannot keep the smoke test's ban on charge, write, and fix exports.
 4. Most support demand is "change my webhook" or "fix this row." The kit does not do that work. If that is the demand, the product is the wrong shape.
@@ -121,7 +131,7 @@ Hard outs for v1 and for the life of this positioning:
 
 ## Later
 
-Parked. Not promised. A later item moves into scope only by changing this doc in a design iteration.
+Parked. Not promised. A later item moves into scope only by an edit in the DR#2 PR or the DR#3 PR, not by slipping it into this seed.
 
 - Seat quantity inequality as its own finding.
 - Deduped alerts that do not become an entitlement store.

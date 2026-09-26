@@ -120,7 +120,11 @@ export async function readProductRows(input: ProductDbReadInput): Promise<readon
     throw new ProductReadError("mapping_unreadable");
   }
   const select = buildProductSelect(mapping);
-  if (!select.text.startsWith("SELECT ") || /\b(UPDATE|INSERT|DELETE|DROP|ALTER)\b/i.test(select.text)) {
+  if (
+    !select.text.startsWith("SELECT ") ||
+    select.text.includes(";") ||
+    /\b(UPDATE|INSERT|DELETE|DROP|ALTER)\b/i.test(select.text)
+  ) {
     throw new ProductReadError("product_sql_refused");
   }
   const client = new Client({ connectionString: input.connectionString });

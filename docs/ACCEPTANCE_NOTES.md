@@ -17,8 +17,8 @@ The same note is in [.env.example](../.env.example) and the read-path section of
 For each Stripe subscription whose status is `active`:
 
 1. Paginate `GET /v1/invoices?subscription={id}&limit=100&expand[]=data.charge` until `has_more` is false. [List invoices](https://docs.stripe.com/api/invoices/list) documents the `subscription` filter. [Expanding objects](https://docs.stripe.com/api/expanding_objects) requires the `data.` prefix on list expansions.
-2. On each invoice, read the expanded charge's `amount_refunded` and `refunded`. [Charge object](https://docs.stripe.com/api/charges/object). Any `amount_refunded > 0`, or `refunded: true`, on any invoice is a refund. There is no "latest charge" choice.
-3. If a paid invoice (`amount_paid > 0`) has no readable charge object, or the nested `payments` list has `has_more: true`, the refund state is unknown.
+2. On each invoice, read the expanded charge's `amount_refunded` and `refunded`. [Charge object](https://docs.stripe.com/api/charges/object). If the charge is only an id (`ch_…`), `GET /v1/charges/{id}` reads that same object. Any `amount_refunded > 0`, or `refunded: true`, on any invoice is a refund. A charge with `disputed: true` is not "no refund." There is no "latest charge" choice.
+3. If a paid invoice (`status` `paid`, or `amount_paid > 0`) has no readable charge object, or the nested `payments` list has `has_more: true`, the refund state is unknown.
 4. A refund or an unknown refund state makes that `active` subscription **ambiguous** (P26). A complete invoice list with every charge showing no refund leaves it **paid**.
 
 Subscriptions that are not `active` do not need this invoice read. Status `canceled` stays canceled.
@@ -47,6 +47,6 @@ Same-rail rollup, also tested: any paid subscription makes the rail paid; a deli
 
 ## 4. P27 pagination contract
 
-**Stripe.** `GET /v1/subscriptions?status=all&limit=100`, then `starting_after` the last id while `has_more` is true. [Pagination](https://docs.stripe.com/api/pagination). Invoice lists for the refund recipe use the same `has_more` / `starting_after` contract. A page that ends with `has_more: true` and then fails, or a list body without `has_more`, is `stripe_incomplete_read` or `stripe_http_*`. The partial ids are not compared.
+**Stripe.** `GET /v1/subscriptions?status=all&limit=100`, then `starting_after` the last id while `has_more` is true. [Pagination](https://docs.stripe.com/api/pagination). Invoice lists for the refund recipe use the same `has_more` / `starting_after` contract. A page that ends with `has_more: true` and then fails, a list body without `has_more`, or a subscription id that appears twice is `stripe_incomplete_read` or `stripe_http_*`. The partial ids are not compared.
 
-**Polar.** `GET /v1/subscriptions?limit=100&page={n}` with no `status` filter and without the deprecated `active` flag. [List subscriptions](https://polar.sh/docs/api-reference/subscriptions/list). The body has `pagination.total_count` and `pagination.max_page`. A complete read fetches pages `1..max_page` and the collected item count equals `total_count`. Stopping early, a changing `max_page`, or a count mismatch is `polar_incomplete_read` or `polar_http_*`. Absence is counted only after that complete list.
+**Polar.** `GET /v1/subscriptions?limit=100&page={n}` with no `status` filter and without the deprecated `active` flag. [List subscriptions](https://polar.sh/docs/api-reference/subscriptions/list). The body has `pagination.total_count` and `pagination.max_page`. A complete read fetches pages `1..max_page` and the collected item count equals `total_count`. Stopping early, a changing `max_page`, a repeated subscription id, or a count mismatch is `polar_incomplete_read` or `polar_http_*`. Absence is counted only after that complete list.

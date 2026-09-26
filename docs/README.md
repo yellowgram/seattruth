@@ -1,6 +1,6 @@
 # SeatTruth docs
 
-**Implement PR.** The detector is implemented and read-only. The Polar listing is dark. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. Next is CR×3, then LaunchGate on the 4th code review before squash-merge.
+**Implement PR.** The detector is implemented and read-only. The Polar listing is dark. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR#1 is done. Next is CR#2, then CR#3, then LaunchGate on the 4th code review before squash-merge.
 
 | Doc | What it decides |
 | --- | --- |
@@ -12,7 +12,8 @@
 | [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) | Buyer needs v3. Auto-fix and Soft-WTP are refused, including the DR#3 variants. |
 | [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) | DR#1 skim, still dated 2026-09-26. DR#2 and DR#3 did not add metrics. |
 | [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md) | Polar scope, Stripe refund recipe, P28 fixtures, and P27 pagination. |
-| [STATUS.md](STATUS.md) | 4th DR approved on pull request #4. This PR is the implement PR. Next is CR×3. |
+| [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md) | CR#1, billing path. P0/P1 fixes and deferred P2 limits. |
+| [STATUS.md](STATUS.md) | Implement pull request #5. CR#1 is done. CR#2 is next. |
 
 Front door for an operator: [../BUYER_START_HERE.md](../BUYER_START_HERE.md).
 

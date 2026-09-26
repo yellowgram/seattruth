@@ -116,6 +116,17 @@ test("live Slack text names the disagreement and posts only that text", async ()
   assert.match(posted, /paid_locked_out/);
   assert.doesNotMatch(posted, /REPLACE/);
 
+  let leaked = false;
+  const refuse: FetchLike = async () => {
+    leaked = true;
+    return new Response("ok", { status: 200 });
+  };
+  await assert.rejects(
+    () => slack.deliverSlackAlert(alert, "https://example.com/hook", refuse),
+    /slack_webhook_refused/
+  );
+  assert.equal(leaked, false);
+
   const clear = slack.buildSlackAlert({
     implemented: true,
     allClear: true,

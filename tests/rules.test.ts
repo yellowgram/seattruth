@@ -170,6 +170,16 @@ test("P28 cross-rail edges", () => {
   assert.equal(nonBoolean.findings.length, 0);
   assert.equal(nonBoolean.unclassifiedUsers, 1);
 
+  const blankPolarId = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u13", isPro: false, stripeCustomerId: "cus_s", polarCustomerId: "" })],
+    stripe: [sub("stripe", "cus_s", "sub_paid", "paid")],
+    polar: [],
+  });
+  assert.equal(blankPolarId.findings.length, 1);
+  assert.equal(blankPolarId.findings[0]?.detectCase, "paid_locked_out");
+  assert.equal(blankPolarId.unclassifiedUsers, 0);
+
   const productSubIdDoesNotFilter = compareSnapshots({
     ...stripeOnly,
     rows: [

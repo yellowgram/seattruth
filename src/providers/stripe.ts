@@ -45,19 +45,40 @@ function asRecord(value: unknown): Record<string, unknown> | null {
 
 function customerIdOf(subscription: Record<string, unknown>): string | null {
   const customer = subscription.customer;
-  if (typeof customer === "string" && customer !== "") {
-    return customer;
+  if (typeof customer === "string" && customer.trim() !== "") {
+    return customer.trim();
   }
   const record = asRecord(customer);
-  if (record && typeof record.id === "string") {
-    return record.id;
+  if (record && typeof record.id === "string" && record.id.trim() !== "") {
+    return record.id.trim();
   }
   return null;
 }
 
-function refundSignalFromInvoice(invoice: Record<string, unknown>): RefundSignal {
+const CHARGE_ID = /^ch_[A-Za-z0-9]+$/;
+
+async function resolveCharge(
+  fetchImpl: FetchLike,
+  key: string,
+  charge: unknown
+): Promise<RefundSignal | "absent"> {
+  if (typeof charge !== "string") {
+    return signalFromCharge(charge);
+  }
+  if (!CHARGE_ID.test(charge)) {
+    return "unknown";
+  }
+  const body = await stripeGet(fetchImpl, key, `/v1/charges/${charge}`);
+  return signalFromCharge(body);
+}
+
+async function refundSignalFromInvoice(
+  fetchImpl: FetchLike,
+  key: string,
+  invoice: Record<string, unknown>
+): Promise<RefundSignal> {
   const signals: Array<RefundSignal | "absent"> = [];
-  signals.push(signalFromCharge(invoice.charge));
+  signals.push(await resolveCharge(fetchImpl, key, invoice.charge));
   const payments = asRecord(invoice.payments);
   if (payments) {
     if (payments.has_more === true) {
@@ -68,7 +89,7 @@ function refundSignalFromInvoice(invoice: Record<string, unknown>): RefundSignal
       for (const entry of data) {
         const payment = asRecord(asRecord(entry)?.payment);
         if (payment && "charge" in payment) {
-          signals.push(signalFromCharge(payment.charge));
+          signals.push(await resolveCharge(fetchImpl, key, payment.charge));
         }
       }
     }
@@ -81,7 +102,8 @@ function refundSignalFromInvoice(invoice: Record<string, unknown>): RefundSignal
   }
   const sawCharge = signals.includes("none");
   const amountPaid = invoice.amount_paid;
-  if (!sawCharge && typeof amountPaid === "number" && amountPaid > 0) {
+  const paidInvoice = invoice.status === "paid" || (typeof amountPaid === "number" && amountPaid > 0);
+  if (!sawCharge && paidInvoice) {
     return "unknown";
   }
   return "none";
@@ -96,6 +118,9 @@ function signalFromCharge(charge: unknown): RefundSignal | "absent" {
   }
   const record = asRecord(charge);
   if (!record || record.object !== "charge") {
+    return "unknown";
+  }
+  if (record.disputed === true) {
     return "unknown";
   }
   if (record.refunded === true) {
@@ -137,6 +162,7 @@ async function eachPage(
   query: URLSearchParams
 ): Promise<Record<string, unknown>[]> {
   const rows: Record<string, unknown>[] = [];
+  const seen = new Set<string>();
   let startingAfter: string | undefined;
   for (let page = 0; page < MAX_PAGES; page += 1) {
     const params = new URLSearchParams(query);
@@ -154,6 +180,10 @@ async function eachPage(
       if (!record || typeof record.id !== "string") {
         throw new IncompleteReadError("stripe");
       }
+      if (seen.has(record.id)) {
+        throw new IncompleteReadError("stripe");
+      }
+      seen.add(record.id);
       rows.push(record);
     }
     if (!body.has_more) {
@@ -178,7 +208,11 @@ async function refundSignalForSubscription(
   query.set("subscription", subscriptionId);
   query.append("expand[]", "data.charge");
   const invoices = await eachPage(fetchImpl, key, "/v1/invoices", query);
-  return combineRefundSignals(invoices.map((invoice) => refundSignalFromInvoice(invoice)));
+  const signals: RefundSignal[] = [];
+  for (const invoice of invoices) {
+    signals.push(await refundSignalFromInvoice(fetchImpl, key, invoice));
+  }
+  return combineRefundSignals(signals);
 }
 
 export async function readStripeSnapshot(

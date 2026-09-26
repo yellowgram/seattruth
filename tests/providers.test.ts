@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { ProviderHttpError } from "../src/http.js";
+import { IncompleteReadError, ProviderHttpError } from "../src/http.js";
 import type { FetchLike } from "../src/http.js";
 import { readPolarSnapshot } from "../src/providers/polar.js";
 import { readStripeSnapshot } from "../src/providers/stripe.js";
@@ -114,11 +114,65 @@ test("Stripe active plus any refund is ambiguous, and a readable zero refund is 
   });
   assert.equal(unreadable?.bucket, "ambiguous");
 
+  const disputed = await readWithInvoice({
+    id: "in_1",
+    object: "invoice",
+    status: "paid",
+    amount_paid: 2000,
+    charge: { id: "ch_1", object: "charge", amount_refunded: 0, refunded: false, disputed: true },
+  });
+  assert.equal(disputed?.bucket, "ambiguous");
+
   const canceled = await readWithInvoice(
     { id: "in_1", object: "invoice", amount_paid: 0, charge: null },
     "canceled"
   );
   assert.equal(canceled?.bucket, "canceled");
+});
+
+test("an unexpanded Stripe charge id is read with GET and any refund stays ambiguous", async () => {
+  const urls: string[] = [];
+  const fetchImpl: FetchLike = async (url, init) => {
+    assert.equal(init?.method ?? "GET", "GET");
+    const href = String(url);
+    urls.push(href);
+    assert.doesNotMatch(href, /\/v1\/refunds/);
+    if (href.includes("/v1/subscriptions")) {
+      return jsonResponse(200, {
+        object: "list",
+        has_more: false,
+        data: [{ id: "sub_live", object: "subscription", status: "active", customer: "cus_1" }],
+      });
+    }
+    if (href.includes("/v1/invoices")) {
+      return jsonResponse(200, {
+        object: "list",
+        has_more: false,
+        data: [{ id: "in_1", object: "invoice", status: "paid", amount_paid: 2000, charge: "ch_refunded1" }],
+      });
+    }
+    assert.match(href, /\/v1\/charges\/ch_refunded1$/);
+    return jsonResponse(200, { id: "ch_refunded1", object: "charge", amount_refunded: 2000, refunded: true });
+  };
+  const [snapshot] = await readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl });
+  assert.equal(snapshot?.bucket, "ambiguous");
+  assert.equal(urls.some((url) => url.includes("/v1/charges/ch_refunded1")), true);
+});
+
+test("a repeated Stripe page is an incomplete read", async () => {
+  const fetchImpl: FetchLike = async (url) => {
+    const href = String(url);
+    assert.equal(href.includes("/v1/invoices"), false);
+    return jsonResponse(200, {
+      object: "list",
+      has_more: !href.includes("starting_after="),
+      data: [{ id: "sub_1", object: "subscription", status: "canceled", customer: "cus_1" }],
+    });
+  };
+  await assert.rejects(
+    () => readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl }),
+    (error: unknown) => error instanceof IncompleteReadError
+  );
 });
 
 test("Polar list is complete only when every page is read, and refunds are not requested", async () => {
@@ -172,6 +226,27 @@ test("Polar active status stays paid when a refund field is present on the subsc
   };
   const [snapshot] = await readPolarSnapshot({ restrictedToken: "polar_oat_REPLACE_ME", fetchImpl });
   assert.equal(snapshot?.bucket, "paid");
+});
+
+test("a repeated Polar page is an incomplete read", async () => {
+  const fetchImpl: FetchLike = async (url) => {
+    const href = String(url);
+    const page = href.includes("page=2") ? 2 : 1;
+    return jsonResponse(200, {
+      items: [
+        {
+          id: "11111111-1111-1111-1111-111111111111",
+          customer_id: "22222222-2222-2222-2222-222222222222",
+          status: "canceled",
+        },
+      ],
+      pagination: { total_count: page === 1 ? 2 : 2, max_page: 2 },
+    });
+  };
+  await assert.rejects(
+    () => readPolarSnapshot({ restrictedToken: "polar_oat_REPLACE_ME", fetchImpl }),
+    (error: unknown) => error instanceof IncompleteReadError
+  );
 });
 
 test("a truncated provider page fails the live run instead of looking like no subscription", async () => {

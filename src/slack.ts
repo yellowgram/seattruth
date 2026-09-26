@@ -70,6 +70,15 @@ export async function deliverSlackAlert(
   if (webhookUrl.trim() === "") {
     throw new Error("missing_slack_webhook");
   }
+  let webhook: URL;
+  try {
+    webhook = new URL(webhookUrl);
+  } catch {
+    throw new Error("slack_webhook_refused");
+  }
+  if (webhook.protocol !== "https:" || webhook.hostname !== "hooks.slack.com") {
+    throw new Error("slack_webhook_refused");
+  }
   if (alert.text.trim() === "") {
     return;
   }

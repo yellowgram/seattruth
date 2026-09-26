@@ -108,7 +108,7 @@ function railForCustomer(
   enabled: boolean,
   byCustomer: Map<string, ClassifiedSubscription[]>
 ): Applicable | null {
-  if (!enabled || customerId === null) {
+  if (!enabled || customerId === null || customerId.trim() === "") {
     return null;
   }
   const subs = byCustomer.get(customerId) ?? [];

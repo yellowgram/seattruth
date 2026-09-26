@@ -46,6 +46,7 @@ export async function readPolarSnapshot(
   }
   const fetchImpl = input.fetchImpl ?? fetch;
   const items: Record<string, unknown>[] = [];
+  const seen = new Set<string>();
   let expectedTotal: number | null = null;
   let maxPage = 1;
 
@@ -77,9 +78,13 @@ export async function readPolarSnapshot(
       }
       for (const entry of pageItems) {
         const record = asRecord(entry);
-        if (!record) {
+        if (!record || typeof record.id !== "string") {
           throw new IncompleteReadError("polar");
         }
+        if (seen.has(record.id)) {
+          throw new IncompleteReadError("polar");
+        }
+        seen.add(record.id);
         items.push(record);
       }
       if (maxPage === 0 || page >= maxPage) {
@@ -102,14 +107,22 @@ export async function readPolarSnapshot(
 
   const snapshots: ProviderSubscriptionSnapshot[] = [];
   for (const item of items) {
-    if (typeof item.id !== "string" || typeof item.customer_id !== "string" || typeof item.status !== "string") {
+    const customerId = item.customer_id;
+    const status = item.status;
+    const subscriptionId = item.id;
+    if (
+      typeof customerId !== "string" ||
+      customerId.trim() === "" ||
+      typeof status !== "string" ||
+      typeof subscriptionId !== "string"
+    ) {
       throw new IncompleteReadError("polar");
     }
     snapshots.push({
       provider: "polar",
-      customerId: item.customer_id,
-      subscriptionId: item.id,
-      bucket: classifyStatus(item.status, "none"),
+      customerId: customerId.trim(),
+      subscriptionId,
+      bucket: classifyStatus(status, "none"),
     });
   }
   return snapshots;

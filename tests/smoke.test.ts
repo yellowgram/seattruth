@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { HELP, liveExitCode, runCli } from "../src/cli.js";
-import { compareReadOnly } from "../src/compare.js";
+import { HELP, LIVE_ALL_CLEAR_TEXT, applyEnvText, liveExitCode, runCli } from "../src/cli.js";
+import { compareReadOnly, runLiveCompare } from "../src/compare.js";
 import { CONTRACT, BUILD } from "../src/invariants.js";
 import * as api from "../src/index.js";
 import * as productDb from "../src/productDb.js";
@@ -263,6 +264,66 @@ test("CLI help stays free of checkout and live without config does not call the 
       }
     }
   }
+});
+
+test("a missing mapping file and a database failure stay coded and do not echo secrets", async () => {
+  let called = false;
+  const fetchImpl: FetchLike = async () => {
+    called = true;
+    throw new Error("network");
+  };
+  const missing = await runLiveCompare({
+    stripeKey: "rk_test_REPLACE_ME",
+    polarToken: "polar_oat_REPLACE_ME",
+    databaseUrl: "postgres://db.example/app",
+    mappingPath: "/tmp/seattruth-missing-mapping.yaml",
+    fetchImpl,
+  });
+  assert.deepEqual(missing.errors, ["mapping_unreadable"]);
+  assert.equal(missing.allClear, false);
+  assert.equal(JSON.stringify(missing).includes("seattruth-missing"), false);
+  assert.equal(called, false);
+
+  const dir = mkdtempSync(path.join(tmpdir(), "seattruth-"));
+  const badPath = path.join(dir, "bad.yaml");
+  writeFileSync(badPath, "version: [\n");
+  const bad = await runLiveCompare({
+    stripeKey: "rk_test_REPLACE_ME",
+    polarToken: "polar_oat_REPLACE_ME",
+    databaseUrl: "postgres://db.example/app",
+    mappingPath: badPath,
+    fetchImpl,
+  });
+  assert.deepEqual(bad.errors, ["mapping_unreadable"]);
+  assert.equal(JSON.stringify(bad).includes("version"), false);
+
+  const query = await runLiveCompare({
+    stripeKey: "rk_test_REPLACE_ME",
+    polarToken: "polar_oat_REPLACE_ME",
+    databaseUrl: "postgres://secret:secret@db.example/app",
+    mappingPath: path.join(root, "mapping.example.yaml"),
+    fetchImpl,
+    readRows: async () => {
+      throw new Error("password authentication failed postgres://secret");
+    },
+  });
+  assert.deepEqual(query.errors, ["product_query_failed"]);
+  assert.equal(JSON.stringify(query).includes("secret"), false);
+  assert.equal(called, false);
+});
+
+test("env export lines are read and the local all-clear is not a certification", () => {
+  const env: NodeJS.ProcessEnv = {};
+  applyEnvText('export STRIPE_RESTRICTED_KEY=rk_test_from_env\n# comment\nPOLAR_RESTRICTED_TOKEN=already\n', env);
+  assert.equal(env.STRIPE_RESTRICTED_KEY, "rk_test_from_env");
+  applyEnvText("export POLAR_RESTRICTED_TOKEN=second\n", env);
+  assert.equal(env.POLAR_RESTRICTED_TOKEN, "already");
+  assert.match(LIVE_ALL_CLEAR_TEXT, /Slack was not posted/);
+  assert.match(LIVE_ALL_CLEAR_TEXT, /not a certification/);
+  assert.match(LIVE_ALL_CLEAR_TEXT, /empty relation/);
+  assert.doesNotMatch(LIVE_ALL_CLEAR_TEXT, /set is_pro/i);
+  assert.doesNotMatch(LIVE_ALL_CLEAR_TEXT, /\bUPDATE\b/);
+  assert.doesNotMatch(LIVE_ALL_CLEAR_TEXT, /should have access/i);
 });
 
 test("committed examples contain placeholders and no live secrets", () => {

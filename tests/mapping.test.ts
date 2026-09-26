@@ -53,7 +53,8 @@ test("booleans and seats are not coerced", () => {
   assert.equal(normalizeSeats(0), 0);
   assert.equal(normalizeSeats("0"), 0);
   assert.equal(normalizeSeats("12"), 12);
-  assert.throws(() => normalizeSeats("3.00"), /seats_not_numeric/);
+  assert.equal(normalizeSeats("3.00"), 3);
+  assert.throws(() => normalizeSeats("3.50"), /seats_not_numeric/);
   assert.throws(() => normalizeSeats("1e2"), /seats_not_numeric/);
   assert.throws(() => normalizeSeats(true), /seats_not_numeric/);
 

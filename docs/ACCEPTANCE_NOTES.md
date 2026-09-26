@@ -42,6 +42,13 @@ Normative edges. Tests in `tests/rules.test.ts` lock this table. One finding per
 | Non-boolean `is_pro` | paid | rail off | null | No finding. `unclassifiedUsers` |
 | Product subscription id points at an old canceled row, another sub is paid | paid and canceled | rail off | false | `paid_locked_out` on the paid subscription. The product column is not a filter |
 | Duplicate provider customer id | same id on two users | rail off | either | Those users are excluded. Other users are still compared. Run error |
+| Both rails paid | paid | paid | false | `paid_locked_out` on each rail. Two findings |
+| One applicable rail canceled | canceled | rail off | true | `canceled_still_entitled` on that rail |
+| Both rails canceled | canceled | canceled | false | No finding. Access already matches. `allClear` may stay true |
+| Paid, and the other rail has a customer id but zero subscriptions | paid | no subscriptions | false | No finding. `unclassifiedUsers`. Not case 1 |
+| Canceled, and the other rail has a customer id but zero subscriptions | canceled | no subscriptions | true | No finding. `unclassifiedUsers`. Not case 2 |
+| Paid plus a deliberate skip | paid | deliberate skip | true | No finding. Not a skip count. `allClear` may stay true |
+| Deliberate skip on every applicable rail | deliberate skip | deliberate skip | true | No finding. `deliberateSkipUsers`. `allClear` may stay true |
 
 Same-rail rollup, also tested: any paid subscription makes the rail paid; a deliberate skip plus a canceled subscription on that same rail is ambiguous; zero subscriptions is ambiguous.
 

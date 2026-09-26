@@ -85,7 +85,10 @@ export async function runLiveCompare(input: LiveCompareInput): Promise<CompareRe
   try {
     mapping = loadMapping(input.mappingPath);
   } catch (error) {
-    return fail(errorCode(error));
+    if (error instanceof MappingError) {
+      return fail(error.code);
+    }
+    return fail("mapping_unreadable");
   }
 
   const stripeEnabled = mapping.rails.stripe.customer_id !== null;
@@ -117,6 +120,14 @@ export async function runLiveCompare(input: LiveCompareInput): Promise<CompareRe
       polarEnabled,
     });
   } catch (error) {
-    return fail(errorCode(error));
+    if (
+      error instanceof MappingError ||
+      error instanceof IncompleteReadError ||
+      error instanceof ProviderHttpError ||
+      error instanceof ProductReadError
+    ) {
+      return fail(errorCode(error));
+    }
+    return fail("product_query_failed");
   }
 }

@@ -1,6 +1,6 @@
 # SeatTruth docs
 
-**Implement PR.** The detector is implemented and read-only. The Polar listing is dark. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR#1 and CR#2 are done. Next is CR#3, then LaunchGate on the 4th code review before squash-merge.
+**Implement PR.** The detector is implemented and read-only. The Polar listing is dark. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR×3 is done. Next is the 4th code review. LaunchGate APPROVE is required before squash-merge.
 
 | Doc | What it decides |
 | --- | --- |
@@ -14,7 +14,9 @@
 | [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md) | Polar scope, Stripe refund recipe, P28 fixtures, and P27 pagination. |
 | [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md) | CR#1, billing path. P0/P1 fixes and deferred P2 limits. |
 | [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md) | CR#2, operator safety. P0/P1 fixes and deferred P2 limits. |
-| [STATUS.md](STATUS.md) | Implement pull request #5. CR#2 is done. CR#3 is next. |
+| [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md) | CR#3, buyer path. P0/P1 fixes and deferred P2 limits. |
+| [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md) | 4th code-review gate packet. Ask is APPROVE squash-merge or REQUEST CHANGES. |
+| [STATUS.md](STATUS.md) | Implement pull request #5. CR×3 is done. Next is the 4th code review. |
 
 Front door for an operator: [../BUYER_START_HERE.md](../BUYER_START_HERE.md).
 

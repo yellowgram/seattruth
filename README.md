@@ -1,6 +1,6 @@
 # SeatTruth
 
-SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It is being designed to report two disagreements. The operator decides what to do about them.
+SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
 This repository is the read-only detector and its design pack. A dry-run is not a clean bill of health. There is still nothing to buy here: no zip, and the Polar listing is dark.
 
@@ -12,6 +12,8 @@ The two disagreements in scope:
 
 1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false. A deliberate skip on another rail does not hide this.
 2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
+
+A match is silence. Paid with `is_pro` true, or canceled on every applicable rail with `is_pro` false, is not a finding. Paid on one rail and canceled on the other, with `is_pro` true, is not a finding. A customer id with zero subscriptions after a complete read is ambiguous, not a cancel, and it blocks both cases. Any `active` subscription counts as paid, including quantity 0 and any price. Trials (`trialing`, `incomplete`, `incomplete_expired`) can be included in a live all-clear. An empty relation can be all-clear and does not prove the view is the right population. The kit does not add a price filter, a third case, or an automatic change.
 
 ## What stays out
 
@@ -58,7 +60,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-**Implement PR** on this branch. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR#1 and CR#2 are done. Next is CR#3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder. The detector is implemented and read-only. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent, so the Polar listing stays dark. [docs/STATUS.md](docs/STATUS.md).
+**Implement PR** on this branch. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR×3 is done. Next is the 4th code review, which needs LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder. The detector is implemented and read-only. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent, so the Polar listing stays dark. [docs/STATUS.md](docs/STATUS.md). The ask is [docs/CODE_REVIEW_CR4.md](docs/CODE_REVIEW_CR4.md).
 
 ## License
 

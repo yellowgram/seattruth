@@ -10,7 +10,7 @@ What "supported" means for SeatTruth once an operator has the kit. The founder s
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. This branch is the implement PR. CR#1 and CR#2 are done. Next is CR#3, then a 4th code review with LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder.
+Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. This branch is the implement PR. CR×3 is done. Next is the 4th code review, which needs LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder.
 
 ## 1. Happy path
 
@@ -54,7 +54,7 @@ An operator should not need a call to learn the boundary.
 - [x] [../.env.example](../.env.example) names each secret and the read-only constraint.
 - [x] [../mapping.example.yaml](../mapping.example.yaml) is the whole mapping surface.
 - [x] [../LICENSE](../LICENSE) states single-org use, no competing-kit resale, and no warranty of entitlement correctness.
-- [ ] A short "first live run" note, written when the detector exists, showing one redacted finding and one failed-read alert. Not before, so the repo does not show fake customers.
+- [x] A short first live run note is in [../BUYER_START_HERE.md](../BUYER_START_HERE.md). The ids are invented. It shows a finding, an ambiguous count, and a failed read, and it does not say which change to make.
 
 ## 4. CI
 

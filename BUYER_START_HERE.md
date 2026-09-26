@@ -25,6 +25,35 @@ The detector is already in this repository. A live run still needs your keys. A 
 5. A Slack incoming webhook on `https://hooks.slack.com/…` for a channel your operators already watch.
 6. GitHub Actions secrets for those values, plus `SEATTRUTH_MAPPING_YAML`. The workflow file names those secrets and does not contain the values. The daily cron is the live path. A manual dispatch stays a dry-run unless you set `dry_run` to false. Until the secrets exist, a live job fails. That failure is not an all-clear.
 
+## How to read a result
+
+Ids below are invented. They are not customers.
+
+A dry-run prints: `SeatTruth dry-run: detector is implemented. This is not an all-clear. No charges. No entitlement changes.` Exit 0 on that line is not a pass.
+
+A live finding looks like this, and it is the whole instruction. It does not say which change to make:
+
+```text
+SeatTruth paid_locked_out user=user-1 provider=stripe customer=cus_example subscription=sub_example is_pro=false seats=1
+SeatTruth canceled_still_entitled user=user-2 provider=polar customer=cus_example subscription=sub_example is_pro=true seats=null
+SeatTruth ambiguous_users=4
+SeatTruth run_error=mapping_unreadable
+```
+
+`ambiguous_users` is a count, not a list of people. `mapping_unreadable` means the mapping file is missing or is not valid YAML. `product_query_failed` means the database read failed. Neither line includes the file text, the query, or the database URL.
+
+Copy `mapping.example.yaml` to `mapping.yaml` before `--live`. Column names are case-sensitive. Set a rail you do not use to `customer_id: null`. An empty string does not turn a rail off. A null customer id on a row skips that rail. A customer id with no subscription, after a complete read, is ambiguous and blocks both cases. It is not a cancel.
+
+These are quiet on purpose, and they are not a request to change a row:
+
+- Paid, and `is_pro` true.
+- Canceled on every applicable rail, and `is_pro` false.
+- Paid on one rail and canceled on the other, with `is_pro` true.
+- A trial, `incomplete`, or `incomplete_expired` only. A live all-clear can include those.
+- Stripe `active` with any refund. That user is ambiguous, so neither case fires, and the run is not all-clear.
+
+Any `active` subscription counts as paid, including quantity 0 and any price. There is no price filter. An empty relation can be all-clear and does not prove the view is the population you meant. A local all-clear line says Slack was not posted. That line is not a certification, and it is not sent to Slack.
+
 ## What the tool will never do
 
 - Charge a card, refund an order, or open Checkout.

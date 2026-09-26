@@ -8,7 +8,7 @@ import type { ProductRow } from "./invariants.js";
  *
  * One SELECT of the mapped columns on one schema and relation (P18, P19).
  * SQL NULL seats stay null. Booleans are not coerced (P11, P20).
- * A bigint seats value arrives as a digit string and is accepted when it is a safe integer.
+ * A bigint or whole-number numeric seats value arrives as a digit string and is accepted when it is a safe integer.
  * Customer ids are trimmed so a padded character column still joins. A blank id does not apply.
  * Never UPDATE, INSERT, or DELETE.
  */
@@ -85,8 +85,8 @@ export function normalizeSeats(value: unknown): number | null {
     }
     return value;
   }
-  // pg returns bigint and integer-looking numeric as decimal digit strings.
-  if (typeof value === "string" && /^-?\d+$/.test(value)) {
+  // pg returns bigint as digits, and numeric(n,0) or "3.00" as a trailing-zero scale.
+  if (typeof value === "string" && /^-?\d+(?:\.0+)?$/.test(value)) {
     const parsed = Number(value);
     if (Number.isSafeInteger(parsed)) {
       return parsed;

@@ -198,6 +198,79 @@ test("P28 cross-rail edges", () => {
   });
   assert.equal(productSubIdDoesNotFilter.findings.length, 1);
   assert.equal(productSubIdDoesNotFilter.findings[0]?.providerSubscriptionId, "sub_addon");
+
+  const bothPaid = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u14", isPro: false, stripeCustomerId: "cus_s", polarCustomerId: "cus_p" })],
+    stripe: [sub("stripe", "cus_s", "sub_s", "paid")],
+    polar: [sub("polar", "cus_p", "sub_p", "paid")],
+  });
+  assert.deepEqual(
+    bothPaid.findings.map((finding) => finding.provider),
+    ["stripe", "polar"]
+  );
+  assert.ok(bothPaid.findings.every((finding) => finding.detectCase === "paid_locked_out"));
+  assert.equal(bothPaid.allClear, false);
+
+  const oneRailCanceled = compareSnapshots({
+    ...stripeOnly,
+    rows: [row({ userId: "u15", isPro: true, stripeCustomerId: "cus_s" })],
+    stripe: [sub("stripe", "cus_s", "sub_can", "canceled")],
+    polar: [],
+  });
+  assert.equal(oneRailCanceled.findings.length, 1);
+  assert.equal(oneRailCanceled.findings[0]?.detectCase, "canceled_still_entitled");
+  assert.equal(oneRailCanceled.allClear, false);
+
+  const canceledAndLockedOut = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u16", isPro: false, stripeCustomerId: "cus_s", polarCustomerId: "cus_p" })],
+    stripe: [sub("stripe", "cus_s", "sub_s", "canceled")],
+    polar: [sub("polar", "cus_p", "sub_p", "canceled")],
+  });
+  assert.equal(canceledAndLockedOut.findings.length, 0);
+  assert.equal(canceledAndLockedOut.unclassifiedUsers, 0);
+  assert.equal(canceledAndLockedOut.allClear, true);
+
+  const paidAndTrialEntitled = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u17", isPro: true, stripeCustomerId: "cus_s", polarCustomerId: "cus_p" })],
+    stripe: [sub("stripe", "cus_s", "sub_paid", "paid")],
+    polar: [sub("polar", "cus_p", "sub_trial", "deliberate_skip")],
+  });
+  assert.equal(paidAndTrialEntitled.findings.length, 0);
+  assert.equal(paidAndTrialEntitled.deliberateSkipUsers, 0);
+  assert.equal(paidAndTrialEntitled.allClear, true);
+
+  const trialsEntitled = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u18", isPro: true, stripeCustomerId: "cus_s", polarCustomerId: "cus_p" })],
+    stripe: [sub("stripe", "cus_s", "sub_trial", "deliberate_skip")],
+    polar: [sub("polar", "cus_p", "sub_trial", "deliberate_skip")],
+  });
+  assert.equal(trialsEntitled.findings.length, 0);
+  assert.equal(trialsEntitled.deliberateSkipUsers, 1);
+  assert.equal(trialsEntitled.allClear, true);
+
+  const paidAndNoPolarSub = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u19", isPro: false, stripeCustomerId: "cus_s", polarCustomerId: "cus_p" })],
+    stripe: [sub("stripe", "cus_s", "sub_paid", "paid")],
+    polar: [],
+  });
+  assert.equal(paidAndNoPolarSub.findings.length, 0);
+  assert.equal(paidAndNoPolarSub.unclassifiedUsers, 1);
+  assert.equal(paidAndNoPolarSub.allClear, false);
+
+  const canceledAndNoPolarSub = compareSnapshots({
+    ...both,
+    rows: [row({ userId: "u20", isPro: true, stripeCustomerId: "cus_s", polarCustomerId: "cus_p" })],
+    stripe: [sub("stripe", "cus_s", "sub_can", "canceled")],
+    polar: [],
+  });
+  assert.equal(canceledAndNoPolarSub.findings.length, 0);
+  assert.equal(canceledAndNoPolarSub.unclassifiedUsers, 1);
+  assert.equal(canceledAndNoPolarSub.allClear, false);
 });
 
 test("P17 duplicate customer ids exclude those users only", () => {

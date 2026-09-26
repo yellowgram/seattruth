@@ -11,7 +11,8 @@ version: 1
 product:
   engine: postgres
   # Required. One identifier. The SELECT is "schema"."relation" after validation.
-  # There is no search_path fallback. See docs/MVP_SCOPE.md rule P18.
+  # Names are case-sensitive. id does not match Id. There is no search_path fallback.
+  # See docs/MVP_SCOPE.md rule P18.
   schema: billing
   # Table or view. The database role needs SELECT on this relation only.
   relation: billing_access
@@ -23,6 +24,8 @@ product:
 rails:
   stripe:
     # Set a rail's customer_id to null to disable that rail.
+    # An empty string is an error. It does not mean off.
+    # A null customer id on a row skips that rail. Zero subscriptions is not a cancel.
     customer_id: stripe_customer_id
     subscription_id: stripe_subscription_id
   polar:

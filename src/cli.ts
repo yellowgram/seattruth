@@ -31,13 +31,11 @@ Contact: hello@yellowgram.dev
 const KNOWN_FLAGS = new Set(["--live", "--dry-run", "--help", "-h"]);
 const SAFE_LOG_CODE = /^(?:slack_[a-z0-9_]+|missing_slack_webhook|unknown_argument|compare_failed)$/;
 
-function loadEnvFile(): void {
-  let text: string;
-  try {
-    text = readFileSync(".env", "utf8");
-  } catch {
-    return;
-  }
+/** Local stdout only. Not posted to Slack. Not a certification (P30). */
+export const LIVE_ALL_CLEAR_TEXT =
+  "SeatTruth live run finished all-clear. Slack was not posted. Deliberate skips can be included. An empty relation can finish this way. This is not a certification.";
+
+export function applyEnvText(text: string, env: NodeJS.ProcessEnv): void {
   for (const line of text.split("\n")) {
     const trimmed = line.trim();
     if (trimmed === "" || trimmed.startsWith("#")) {
@@ -47,7 +45,7 @@ function loadEnvFile(): void {
     if (eq <= 0) {
       continue;
     }
-    const key = trimmed.slice(0, eq).trim();
+    let key = trimmed.slice(0, eq).trim().replace(/^export\s+/, "");
     let value = trimmed.slice(eq + 1).trim();
     if (
       (value.startsWith('"') && value.endsWith('"')) ||
@@ -55,10 +53,20 @@ function loadEnvFile(): void {
     ) {
       value = value.slice(1, -1);
     }
-    if (process.env[key] === undefined) {
-      process.env[key] = value;
+    if (key !== "" && env[key] === undefined) {
+      env[key] = value;
     }
   }
+}
+
+function loadEnvFile(): void {
+  let text: string;
+  try {
+    text = readFileSync(".env", "utf8");
+  } catch {
+    return;
+  }
+  applyEnvText(text, process.env);
 }
 
 /** P30 live exit: 1 on a run error, 0 only when allClear, otherwise 2. */
@@ -111,7 +119,7 @@ export async function runCli(argv: readonly string[]): Promise<number> {
   if (alert.text !== "") {
     console.log(alert.text);
   } else if (result.allClear) {
-    console.log("SeatTruth live run finished all-clear. Slack was not posted.");
+    console.log(LIVE_ALL_CLEAR_TEXT);
   }
 
   if (slackNeeded(result)) {

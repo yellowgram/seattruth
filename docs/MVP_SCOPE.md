@@ -225,7 +225,7 @@ These stay in the design on purpose. They are not silent.
 
 ## 4th DR packet
 
-LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This implement branch does not add a rule id. CR#1 and CR#2 are done. Next is CR#3, then a 4th code review with LaunchGate APPROVE before squash-merge.
+LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This implement branch does not add a rule id. CR×3 is done. The 4th code review ask is [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). Squash-merge waits on LaunchGate APPROVE.
 
 ## Read path
 

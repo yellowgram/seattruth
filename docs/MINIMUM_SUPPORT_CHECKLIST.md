@@ -1,16 +1,16 @@
 # Minimum support checklist (v3)
 
-**Checklist v3, unchanged.** DR#1 shipped v1. DR#2 shipped v2. DR#3 shipped this v3 text. The v1→v2 log is section 8. The v2→v3 log is section 9. The 4th DR does not publish a v4. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
+**Checklist v3.** DR#1 shipped v1. DR#2 shipped v2. DR#3 shipped this v3 text. The v1→v2 log is section 8. The v2→v3 log is section 9. The 4th DR did not publish a v4. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 
-**Absent, and this pull request does not add them:** a versioned zip, its SHA-256, and `POLAR_DELIVERABLES`. Do not treat a missing file as "coming in this PR." The Polar listing stays dark until those three are real. Listing go-live is a founder (via CoS) decision after that, and it is not requested here.
+**0.1.0 pack.** The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. Founder typed Polar go-live on 2026-09-26. The listing may go light after this pack is on `main` and GitHub Release `v0.1.0` includes the zip. This checklist does not add a Checkout URL.
 
-LaunchGate approved the 4th DR. This branch is the implement PR. Section 10 was the input list for that gate. See [STATUS.md](STATUS.md).
+The detector is on `main` (pull request #5). Section 10 was the input list for the 4th DR. See [STATUS.md](STATUS.md).
 
 What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this implement branch. Items left open wait for an operator's own keys, or for the zip.
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. This branch is the implement PR. CR×3 is done. Next is the 4th code review, which needs LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder.
+Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. The implement work is pull request #5, merged to `main`. The price lock is pull request #6. Ordinary code gates did not wait on the founder. Founder typed Polar go-live on 2026-09-26.
 
 ## 1. Happy path
 
@@ -54,6 +54,7 @@ An operator should not need a call to learn the boundary.
 - [x] [../.env.example](../.env.example) names each secret and the read-only constraint.
 - [x] [../mapping.example.yaml](../mapping.example.yaml) is the whole mapping surface.
 - [x] [../LICENSE](../LICENSE) states single-org use, no competing-kit resale, and no warranty of entitlement correctness.
+- [x] [../SUPPORT.md](../SUPPORT.md) is the email boundary. English, no concierge, and no end-customer refund advice.
 - [x] A short first live run note is in [../BUYER_START_HERE.md](../BUYER_START_HERE.md). The ids are invented. It shows a finding, an ambiguous count, and a failed read, and it does not say which change to make.
 
 ## 4. CI
@@ -66,28 +67,28 @@ An operator should not need a call to learn the boundary.
 
 ## 5. Versioned zip
 
-Distribution matches the private-kit pattern: this private GitHub repo now, a zip later.
+Distribution is the private GitHub repo `yellowgram/seattruth` plus the versioned zip.
 
-The zip, the SHA-256, and `POLAR_DELIVERABLES` **stay absent**. This checklist does not close those boxes by describing them. DR#3 does not add a placeholder file.
+`npm run pack:release` builds `release/seattruth-0.1.0.zip` from `git archive` of HEAD. The mtime is pinned to `2026-09-26T00:00:00Z`. The zip comment is `seattruth-0.1.0`. The archive omits `node_modules/`, `.env`, `.env.local` (`.env.example` stays), `.git/`, `release/`, `docs/CHECKSUMS.md`, dumps, a real `mapping.yaml` (`mapping.example.yaml` stays), and `dist/`.
 
-- [x] `package.json` is `private` and version `0.0.0`.
-- [ ] A zip of a tagged source tree is built with the real detector, after LaunchGate approves the 4th design review. Polar listing go-live stays a founder (via CoS) decision.
-- [ ] SHA-256 of that zip is recorded as lowercase hex of the file bytes.
-- [ ] The zip does not contain `.env`, `mapping.yaml`, or `node_modules`.
-- [ ] `POLAR_DELIVERABLES` lists the zip name, the SHA-256, and the tag. The file does not exist. This PR does not create it.
-- [ ] Polar listing stays dark until those three are real. No Checkout URL in the repo, the README, or the CLI help.
+- [x] `package.json` is `private` and version `0.1.0`.
+- [x] A zip of the source tree is built with the real detector: `release/seattruth-0.1.0.zip`.
+- [x] SHA-256 of that zip is recorded as lowercase hex of the file bytes in [CHECKSUMS.md](CHECKSUMS.md).
+- [x] The zip does not contain `.env`, `mapping.yaml`, or `node_modules`.
+- [x] [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) names the zip `release/seattruth-0.1.0.zip` and the tag `v0.1.0`. The SHA-256 paste line is in [CHECKSUMS.md](CHECKSUMS.md), not copied into the packet.
+- [x] No Checkout URL in the repo, the README, or the CLI help. Founder typed go-live on 2026-09-26. CoS publishes the listing after the GitHub Release asset exists.
 
 ## 6. Support and money boundary
 
 - [x] Contact is hello@yellowgram.dev. Prefer https://www.yellowgram.dev.
 - [x] Support language is English.
 - [x] The license refuses a warranty that comparisons are correct.
-- [ ] Email support, when a kit has been sold, covers: how to run the documented path, how to read a finding, and defects where the kit breaks its own rules.
+- [x] Email support, when a kit has been sold, covers: how to run the documented path, how to read a finding, and defects where the kit breaks its own rules. See [../SUPPORT.md](../SUPPORT.md).
 - [x] Support channel is email to hello@yellowgram.dev. GitHub Issues on a private buyer repo are not a channel yellowgram can read. They are not a place to paste keys or production rows. A collaborator seat on that private repo is not support, and it is not permission to patch `is_pro` (DR#2, restated in DR#3).
-- [ ] Email support does not cover: changing the operator's webhook, editing `is_pro`, interpreting a partial refund, writing a custom SQL join, sending an `UPDATE` "for convenience", or joining the operator's Slack.
-- [ ] The only invoice yellowgram sends is for SeatTruth itself, to an organization that bought it. No cold invoices. No invoices for the operator's end customers.
-- [ ] The kit never creates a charge, a refund, or a Checkout session.
-- [ ] Price, when a listing exists, is **$99 once** per organization. Optional launch hook: the first 10 at **$79 once**. Not monthly. No pay-what-you-want. No "reply with what you'd pay." No discount because the first week of alerts was noisy. No negotiation off the locked number.
+- [x] Email support does not cover: changing the operator's webhook, editing `is_pro`, interpreting a partial refund, writing a custom SQL join, sending an `UPDATE` "for convenience", or joining the operator's Slack. The kit does not recommend end-customer refunds.
+- [x] The only invoice yellowgram sends is for SeatTruth itself, to an organization that bought it. No cold invoices. No invoices for the operator's end customers.
+- [x] The kit never creates a charge, a refund, or a Checkout session.
+- [x] Price is **$99 once** per organization. Launch hook: the first 10 at **$79 once**, one SKU. Not monthly. No pay-what-you-want. No "reply with what you'd pay." No discount because the first week of alerts was noisy. No negotiation off the locked number. Soft-WTP stays forbidden.
 
 ## 7. Ops for Slack and cron
 
@@ -169,8 +170,8 @@ This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 - Detector implemented on this branch. Squash-merge still waits on the 4th code review.
 
-The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**) and the refund window at **14 days**. This section does not rewrite that input.
+The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**) and the refund window at **14 days**. Founder later typed Polar go-live on 2026-09-26. The 0.1.0 zip, [CHECKSUMS.md](CHECKSUMS.md), and [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) are in the tree. The detector is on `main`. This section does not rewrite that input.
 
 ## Done means
 
-The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path. A green dry-run is not an all-clear. The product boxes stay open. They are not closed by this PR, and they are not closed by claiming CR#3, the 4th CR, or a squash-merge approval happened here.
+The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path. A green dry-run is not an all-clear. Section 5 is closed for 0.1.0: the zip, the SHA-256, and `POLAR_DELIVERABLES` are real, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys. CoS publishes the Polar listing. This file does not.

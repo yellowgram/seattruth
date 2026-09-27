@@ -1,20 +1,18 @@
 # MVP scope
 
-**Rules frozen at DR#3.** This branch is the 4th DR. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). No new rule id. After LaunchGate REQUEST CHANGES, the detect-case summaries below match P26 and P28. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). DR#3 is [pull request #3](https://github.com/yellowgram/seattruth/pull/3). See [STATUS.md](STATUS.md). P2 follow-ups that do not block re-approval are in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
+**Rules frozen at DR#3.** LaunchGate approved the 4th DR on [pull request #4](https://github.com/yellowgram/seattruth/pull/4). The detector is on `main` ([pull request #5](https://github.com/yellowgram/seattruth/pull/5)). No new rule id. The detect-case summaries below match P26 and P28. DR#1 is [pull request #1](https://github.com/yellowgram/seattruth/pull/1). DR#2 is [pull request #2](https://github.com/yellowgram/seattruth/pull/2). DR#3 is [pull request #3](https://github.com/yellowgram/seattruth/pull/3). See [STATUS.md](STATUS.md). P2 follow-ups are in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
 
 ## Cadence
 
-Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th gate.
+The gates below are finished. The detector on `main` is that implement work.
 
 1. **DR×3.** Done. DR#1, DR#2, and DR#3 are separate pull requests. This file's rules are the DR#3 text.
-2. **4th DR → LaunchGate APPROVE** before any implement PR. The packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Approval has not happened.
-3. **Implement PR.** Detector code. Not started.
-4. **CR×3.** Three code reviews of that implement work.
-5. **4th CR → LaunchGate APPROVE** before squash-merge.
+2. **4th DR → LaunchGate APPROVE.** Done, before the implement PR. The packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
+3. **Implement PR.** Done. Pull request #5 is merged. The detector is on `main`.
+4. **CR×3.** Done on that implement work.
+5. **Price and refund.** Locked on pull request #6.
 
-The price is locked at **$99 once** per organization (optional first 10 at **$79 once**). The refund window is locked at **14 days**. Founder (via CoS) still decides only: Polar listing go-live, Soft-WTP, spending money, or scope that becomes Chargebee, Autumn, or auto-fix. Polar stays dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are real.
-
-Do not implement the detector from this PR.
+The price is locked at **$99 once** per organization (first 10 at **$79 once**, one SKU). The refund window is locked at **14 days**. Founder typed Polar **go-live** on 2026-09-26. The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree for **0.1.0**. The listing may go light after this pack is on `main` and GitHub Release `v0.1.0` includes the zip. CoS publishes that listing. This repo has no Checkout URL. Soft-WTP stays forbidden. Founder (via CoS) still decides spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 
 SeatTruth compares Stripe and Polar, read-only, with one product database. The product fields in view are `is_pro` and seats. The kit is restricted keys, one mapping file, a GitHub Action on a cron, and a Slack alert.
 
@@ -29,7 +27,7 @@ SeatTruth compares Stripe and Polar, read-only, with one product database. The p
 - GitHub Actions: daily cron (`0 6 * * *`) runs live. `workflow_dispatch` stays dry-run unless the operator sets the live input. Secrets stay in GitHub Actions, not in the workflow file. A green dry-run is not an entitlement pass (P30).
 - Slack incoming webhook on the operator's channel when a real run has a finding, a non-zero unclassified count, or a run error.
 - English docs and English alerts.
-- Self-serve price **$99 once** per organization, once a versioned zip exists. Optional launch hook: the first 10 organizations at **$79 once**. Not monthly. The number is locked and not negotiable. The refund window is **14 days**. There is no checkout in this repo. Nothing to buy until the zip exists.
+- Self-serve price **$99 once** per organization. Launch hook: the first 10 organizations at **$79 once**, one SKU. Not monthly. The number is locked and not negotiable. The refund window is **14 days**. The versioned zip is in the tree. There is no Checkout URL in this repo.
 
 ## Detect cases
 
@@ -141,7 +139,7 @@ Cadence is daily. Hourly monitoring is a different product.
 
 ## Price
 
-**$99 once** per organization. One-time purchase, not a monthly fee. Optional launch hook: the first 10 organizations at **$79 once**. Self-serve, one organization, when the zip and checksum exist. Global English buyers. No sales call. The Polar listing stays dark until then. There is nothing to buy in this repo today.
+**$99 once** per organization. One-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. Self-serve, one organization. Global English buyers. No sales call. The versioned zip is `release/seattruth-0.1.0.zip`. The SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). Listing steps are in [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS publishes the Polar listing after the GitHub Release asset exists. There is no Checkout URL in this repo.
 
 Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, pay-what-you-want, and cold invoices. The locked number is not a negotiation. The refund window is **14 days**. Neither figure is a survey or a LaunchGate substitute. The kit does not recommend refunding an end customer (P24).
 
@@ -154,7 +152,7 @@ Stop the product, or refuse the request, when any of these is true:
 3. The implementation cannot keep the smoke test's ban on charge, write, and fix exports.
 4. Most support demand is "change my webhook" or "fix this row." The kit does not do that work. If that is the demand, the product is the wrong shape.
 5. A named entitlement reconciler (DriftExact, ProdVerdict, Venwai, or EntitleGuard) ships a maintained Polar read against a product database, at a self-serve price near the locked **$99 once**, before SeatTruth has an operator. Reconsider. Do not answer by adding audit features or auto-fix. RevReclaim already names Polar for billing-leak scans and markets auto-fix. That product does not close this gap.
-6. LaunchGate does not approve the 4th DR or the 4th CR. Separately, the founder (via CoS) refuses a reserved decision: Polar listing go-live, Soft-WTP, spending money, or scope that becomes Chargebee, Autumn, or auto-fix. The price is already locked at **$99 once** (first 10 at **$79 once**). The refund window is already locked at **14 days**.
+6. LaunchGate does not approve the 4th DR. Separately, the founder (via CoS) refuses a reserved decision: spending money, or scope that becomes Chargebee, Autumn, or auto-fix. Soft-WTP stays refused. The price is already locked at **$99 once** (first 10 at **$79 once**). The refund window is already locked at **14 days**. Founder typed Polar go-live on 2026-09-26.
 
 ## Differentiation
 
@@ -194,7 +192,7 @@ Hard outs for the life of this positioning:
 - A Stripe mirror or warehouse.
 - An LLM in the compare path. Fuzzy matching. Schema guessing.
 - Email, name, or card data in Slack.
-- A public Polar listing, a Checkout URL, or a zip, until `POLAR_DELIVERABLES` is real.
+- A Checkout URL in this repository. The 0.1.0 zip and `POLAR_DELIVERABLES` are real. CoS publishes the Polar listing. Soft-WTP and cold invoices stay out.
 - Exception lists, snooze, and "ack this user" state.
 - Support in languages other than English.
 - Reading GitHub Issues on a private buyer repo as the support channel.
@@ -220,12 +218,12 @@ These stay in the design on purpose. They are not silent.
 - `trialing`, `incomplete`, and `incomplete_expired` do not block `allClear` (P25, P30). `past_due`, `paused`, and `unpaid` do.
 - There is no primary rail (P28). P15 is superseded.
 - A Polar refund does not classify the subscription. Status `canceled` does (P26).
-- The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent. The listing stays dark.
-- The 4th DR left the price and the refund window unset. Founder later locked **$99 once** per organization (first 10 at **$79 once**) and a **14-day** refund window. Those locks did not come from the 4th DR.
+- The 0.1.0 zip is `release/seattruth-0.1.0.zip`. Its SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). The CoS packet is [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. The listing goes light when CoS publishes it, after the GitHub Release asset exists.
+- The 4th DR left the price and the refund window unset. Founder later locked **$99 once** per organization (first 10 at **$79 once**) and a **14-day** refund window, then typed Polar go-live on 2026-09-26. Those locks did not come from the 4th DR.
 
 ## 4th DR packet
 
-LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). This implement branch does not add a rule id. CR×3 is done. The 4th code review ask is [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). Squash-merge waits on LaunchGate APPROVE.
+LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). The implement work is on `main` (pull request #5). This file does not add a rule id. CR×3 is done. The 4th code-review packet remains [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). It is not an open gate for the detector that is already on `main`.
 
 ## Read path
 
@@ -239,4 +237,4 @@ These are the P2 notes from [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md). They do 
 
 ## Runtime behavior
 
-Dry-run (`compareReadOnly`, the CLI default) returns `implemented: true`, `allClear: false`, and does not read providers, Postgres, or Slack. `--live` follows the P30 exit table: `0` when `allClear` is true, `2` when the run finished with findings or ambiguous users, `1` on a run error. The earlier scaffold refusal of `--live` with exit 2 is retired. Slack is posted only for a finding, a non-zero ambiguous count, or a run error. The smoke test still locks the export surface against charge, write, and fix names. `MappingDocument` requires `schema`. The zip, its SHA-256, and `POLAR_DELIVERABLES` are still absent.
+Dry-run (`compareReadOnly`, the CLI default) returns `implemented: true`, `allClear: false`, and does not read providers, Postgres, or Slack. `--live` follows the P30 exit table: `0` when `allClear` is true, `2` when the run finished with findings or ambiguous users, `1` on a run error. The earlier scaffold refusal of `--live` with exit 2 is retired. Slack is posted only for a finding, a non-zero ambiguous count, or a run error. The smoke test still locks the export surface against charge, write, and fix names. `MappingDocument` requires `schema`. The 0.1.0 zip, its SHA-256 in [CHECKSUMS.md](CHECKSUMS.md), and [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) are in the tree.

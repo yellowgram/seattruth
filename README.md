@@ -2,7 +2,7 @@
 
 SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
-This repository is the read-only detector and its design pack. A dry-run is not a clean bill of health. There is still nothing to buy here: no zip, and the Polar listing is dark.
+This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.0** ships the zip, its SHA-256, and the Polar packet. Purchase is one Polar SKU after CoS publishes the listing. This page is not a Checkout link.
 
 ## What it is
 
@@ -22,7 +22,7 @@ A match is silence. Paid with `is_pro` true, or canceled on every applicable rai
 - Writes to Stripe, Polar, or the product database, including `is_pro` and seats.
 - Auto-fix, and alert text that tells an operator to flip a flag.
 - Soft-WTP and cold invoices. That covers asking strangers what they would pay, fake-door checkout, pay-what-you-want, and an invoice sent to someone who did not buy.
-- A public Polar listing. The listing stays dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are real. Nothing in this repo is a Checkout link.
+- A Checkout URL in this repository. Founder typed Polar go-live on 2026-09-26. CoS publishes the listing after the 0.1.0 zip, its SHA-256, and `POLAR_DELIVERABLES` are on `main` and GitHub Release `v0.1.0` includes the zip.
 
 ## Who it is for
 
@@ -32,9 +32,9 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 ## Price
 
-**$99 once** per organization. That is a one-time purchase, not a monthly fee. Optional launch hook: the first 10 organizations at **$79 once**. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is **14 days**.
+**$99 once** per organization. That is a one-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is **14 days**. The kit does not recommend end-customer refunds.
 
-There is nothing to buy here today. The Polar listing stays dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are real.
+The zip is [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). Listing steps are in [docs/POLAR_DELIVERABLES.md](docs/POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS can list after this pack is on `main` and the GitHub Release asset exists.
 
 ## Contact
 
@@ -54,15 +54,17 @@ npm run compare -- --dry-run
 
 `npm test` compiles TypeScript and runs the tests. The smoke test fails if a charge, write, or fix API is exported. It also fails if a dry-run result claims all-clear.
 
+`npm run pack:release` writes the versioned zip and `docs/CHECKSUMS.md` from a committed tree. See [release/README.md](release/README.md).
+
 `--dry-run` does not read keys and does not call Stripe, Polar, Slack, or the database. It exits 0. That exit is not an all-clear. `--live` does those reads when the environment variables in `.env.example` are set, and it can post to the Slack webhook. It still does not charge, write, or change `is_pro`. On a live run, exit `0` is an all-clear, exit `2` is a finished run that is not all-clear, and exit `1` is a run error. An unknown flag exits 1 and does not fall through to a dry-run.
 
 ## Docs
 
-[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md).
+[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.0 note is [CHANGELOG.md](CHANGELOG.md).
 
 ## Status
 
-**Implement PR** on this branch. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. CR×3 is done. Next is the 4th code review, which needs LaunchGate APPROVE before squash-merge. Ordinary code gates do not wait on the founder. The detector is implemented and read-only. The zip, its SHA-256, and `POLAR_DELIVERABLES` are absent, so the Polar listing stays dark. [docs/STATUS.md](docs/STATUS.md). The ask is [docs/CODE_REVIEW_CR4.md](docs/CODE_REVIEW_CR4.md).
+The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.0** is this baseline. Founder typed Polar go-live on 2026-09-26. The zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. CoS publishes the listing after GitHub Release `v0.1.0` includes the zip. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

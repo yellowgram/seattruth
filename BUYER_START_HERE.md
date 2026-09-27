@@ -1,12 +1,12 @@
 # Buyer start here
 
-SeatTruth is not for sale from this repository. The detector can run a read-only compare when you supply your own keys. The Polar listing is dark. This page is the front door you will use once a versioned zip exists, and it is the outline of what an operator has to prepare.
+SeatTruth 0.1.0 is the read-only detector in this private repository, plus the versioned zip [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). You run it with your own keys. Purchase is one Polar SKU, **$99 once** per organization (first 10 at **$79 once**), after CoS publishes the listing. This page is not a Checkout link. The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). Listing steps are in [docs/POLAR_DELIVERABLES.md](docs/POLAR_DELIVERABLES.md).
 
 Contact: hello@yellowgram.dev · prefer [www.yellowgram.dev](https://www.yellowgram.dev)
 
 ## You are the operator
 
-You run the kit inside your own GitHub repository and your own database. yellowgram does not host your customer rows, and yellowgram does not join your Slack workspace. The tool's only money relationship with you is the SeatTruth subscription, later, when a real deliverable exists. The tool never charges your customers.
+You run the kit inside your own GitHub repository and your own database. yellowgram does not host your customer rows, and yellowgram does not join your Slack workspace. The only money relationship with yellowgram is the one-time SeatTruth purchase. The tool never charges your customers, and it does not recommend refunds of those customers. The **14-day** refund window is for the SeatTruth purchase only.
 
 ## What you can do today
 
@@ -69,7 +69,8 @@ If a row looks wrong, a person on your team changes your product, using your own
 | Read | Why |
 | --- | --- |
 | [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) | What the two cases are, and the active rules after DR#3. |
-| [docs/MINIMUM_SUPPORT_CHECKLIST.md](docs/MINIMUM_SUPPORT_CHECKLIST.md) | What "supported" will mean. |
+| [docs/MINIMUM_SUPPORT_CHECKLIST.md](docs/MINIMUM_SUPPORT_CHECKLIST.md) | What "supported" means, including the 0.1.0 zip. |
+| [SUPPORT.md](SUPPORT.md) | Email boundary. No concierge. |
 | [docs/BUYER_NEEDS_BEYOND_CHECKLIST.md](docs/BUYER_NEEDS_BEYOND_CHECKLIST.md) | Needs that will not be in the first kit. |
 | [docs/STATUS.md](docs/STATUS.md) | Where the work actually is. |
 | [LICENSE](LICENSE) | Single-organization commercial terms. No warranty of entitlement correctness. |

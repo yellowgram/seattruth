@@ -1,41 +1,48 @@
 # Suthirth Commercial Grant
 
-This grant is the commercial license for SeatTruth. It is separate from the PolyForm Noncommercial License 1.0.0 in [LICENSE](../LICENSE).
+**Product:** SeatTruth  
+**Seller:** Suthirth solutions  
+**Contact:** hello@yellowgram.dev · https://www.yellowgram.dev  
+**Public license:** PolyForm Noncommercial 1.0.0 (`LICENSE`) — source-available; not OSI open source  
+**Soft-WTP:** off (no coupons, no cold invoices)
 
-Noncommercial use follows that license. Commercial use requires this grant. PolyForm Noncommercial 1.0.0 is not an OSI-approved license. SeatTruth is source-available under that license, and commercial use is this grant.
+## What you buy
 
-Licensor and seller: **Suthirth solutions**.
+A paid Polar purchase of the **SeatTruth** self-host kit grants **one organization** a **Suthirth Commercial Grant** for that kit.
 
-Contact: hello@yellowgram.dev · https://www.yellowgram.dev
+| Term | Grant |
+| --- | --- |
+| Scope | **One organization** (the buyer named on the Polar order) |
+| Version | The **named git tag** delivered with that purchase (and its sealed zip SHA) |
+| Duration | **Perpetual** for that named tag |
+| Rights | Use and modify the kit for that organization’s own commercial production purposes for the product’s intended function |
+| Delivery | Kit zip + checksums as listed on Polar for that tag (and GitHub access when the listing includes it) |
+| Support | no included Issues SLA; refund per Polar listing — no SLA unless a separate written agreement says otherwise |
+| Refund | As stated on the Polar listing at purchase time (do not invent a longer window here) |
 
-## Who receives this grant
+Price for the current kit SKU is set on Polar / yellowgram.dev Current card (Founding → standard: $99 once per organization (Polar product 9aab6e67-3533-44d1-aa0b-bfdaf6dbc753)). Do **not** put Polar checkout URLs in the README or inside the zip.
 
-One organization that lawfully purchased SeatTruth from Suthirth solutions receives this grant. The purchase is the one-time SeatTruth price. The organization is the buyer on that purchase.
+## What this grant does **not** include
 
-## Use and modification
+- Rights for a **second organization** (each org needs its own purchase)
+- Rights to **other tags** or future major lines unless separately purchased or explicitly upgraded in writing
+- Permission to **resell, sublicense, republish, or redistribute** the kit (or a substantial portion) as a competing starter, boilerplate, template, course, or hosted service
+- **Self-host production rights** bundled into any **hosted** SKU (hosted is separate; it does not sell the self-host grant)
+- Permission to run a **competing hosted** offering of SeatTruth
+- Any OSI “open source” grant; payment does not convert the public PolyForm Noncommercial terms into MIT/Apache/BSD
 
-That organization may use SeatTruth and modify it for that organization's own internal operations.
+## Relationship to `LICENSE`
 
-## No competing kit
+Without this grant, only PolyForm Noncommercial 1.0.0 applies.  
+With this grant, the named organization may use the named tag commercially as above. The public PolyForm text in `LICENSE` stays the public fence for everyone else.
 
-That organization may not sell, sublicense, publish, or otherwise distribute SeatTruth, or a derivative of it, as a competing dual-rail access-contract or billing-versus-entitlement kit. That includes a product, service, or kit that compares billing-provider state with product entitlements, or that otherwise competes with SeatTruth.
+## Prior distributions
 
-## No warranty of entitlement correctness
+Tags and zips already shipped under an older license (for example MIT, or a prior custom commercial license) are **not rewritten**. Rights already granted for those sealed artifacts are not clawed back. New purchases and new tags use this grant + PolyForm Noncommercial fence.
 
-SeatTruth is provided "as is", without warranty of any kind. There is no warranty that a comparison is correct, complete, current, or fit for granting access, refusing access, charging a customer, issuing a refund, or making a legal or accounting decision.
+## Operator responsibility
 
-Entitlement correctness stays with the operator. To the extent the law allows, Suthirth solutions is not liable for any claim, damages, or other liability arising from the software or from a decision made after reading its output.
+SeatTruth is provided **as is**. You remain responsible for production correctness, compliance, and decisions made from its outputs. This is not legal, tax, or accounting advice.
 
-## Price
+---
 
-**$99 once** per organization. That is a one-time purchase, not a monthly fee. The first 10 organizations are **$79 once**, on the same SKU. The number is locked. It is not negotiable. Soft-WTP stays off. There is no Soft-WTP coupon, and there is no cold invoice.
-
-## Refund
-
-The refund window is **14 days** from the SeatTruth purchase. That window is for the SeatTruth purchase only. This grant does not recommend refunds of an operator's end customers.
-
-## Contact
-
-hello@yellowgram.dev
-
-https://www.yellowgram.dev

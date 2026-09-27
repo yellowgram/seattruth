@@ -362,6 +362,10 @@ test("committed examples contain placeholders and no live secrets", () => {
 
 const POLYFORM_NC_BODY_SHA256 =
   "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8";
+const LICENSE_SHA256 =
+  "dce3fbcf6775643262bef46400f8074628acc296ce71e617add633c48f17d6b5";
+const COMMERCIAL_GRANT_SHA256 =
+  "cb1248d331a8c4f7d14d95564b73de7a0b29f78a8ea71cc2673c16120f87c36d";
 const V010_ZIP_SHA256 =
   "abda9333e0ac6b2af3ff71439b0f275f8bcf7aff2fefb99b8d9d0b0870eccb2b";
 
@@ -373,29 +377,34 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   };
   assert.equal(pkg.version, "0.1.1");
   assert.equal(pkg.private, true);
-  assert.equal(pkg.license, "SEE LICENSE IN LICENSE");
+  assert.equal(pkg.license, "LicenseRef-PolyForm-Noncommercial-1.0.0");
+  assert.notEqual(pkg.license, "MIT");
   assert.equal(existsSync(path.join(root, "scripts/pack-release.sh")), true);
 
-  const license = readFileSync(path.join(root, "LICENSE"), "utf8");
+  const licenseBytes = readFileSync(path.join(root, "LICENSE"));
+  assert.equal(createHash("sha256").update(licenseBytes).digest("hex"), LICENSE_SHA256);
+  const license = licenseBytes.toString("utf8");
   const marker = "# PolyForm Noncommercial License 1.0.0\n";
   const markerAt = license.indexOf(marker);
   assert.ok(markerAt > 0);
   const header = license.slice(0, markerAt);
-  assert.match(header, /Required Notice: Copyright Suthirth solutions \/ yellowgram/);
+  assert.match(header, /Required Notice: Copyright yellowgram \(https:\/\/www\.yellowgram\.dev\)/);
   assert.match(header, /hello@yellowgram\.dev/);
   assert.match(header, /www\.yellowgram\.dev/);
   assert.match(header, /docs\/COMMERCIAL_GRANT\.md/);
-  assert.match(header, /source-available/);
+  assert.match(header, /source-available = true/);
+  assert.match(header, /Suthirth Commercial Grant/);
   const body = license.slice(markerAt);
   assert.equal(createHash("sha256").update(body).digest("hex"), POLYFORM_NC_BODY_SHA256);
 
-  const grant = readFileSync(path.join(root, "docs/COMMERCIAL_GRANT.md"), "utf8");
+  const grantBytes = readFileSync(path.join(root, "docs/COMMERCIAL_GRANT.md"));
+  assert.equal(createHash("sha256").update(grantBytes).digest("hex"), COMMERCIAL_GRANT_SHA256);
+  const grant = grantBytes.toString("utf8");
   assert.match(grant, /Suthirth solutions/);
-  assert.match(grant, /\$99 once/);
-  assert.match(grant, /\$79 once/);
-  assert.match(grant, /14 days/);
-  assert.match(grant, /internal operations/);
-  assert.match(grant, /entitlement correctness/);
+  assert.match(grant, /\$99 once per organization/);
+  assert.match(grant, /9aab6e67-3533-44d1-aa0b-bfdaf6dbc753/);
+  assert.match(grant, /no included Issues SLA/);
+  assert.match(grant, /Soft-WTP/);
   assert.doesNotMatch(grant, /buy\.polar\.sh/i);
 
   const polar = readFileSync(path.join(root, "docs/POLAR_DELIVERABLES.md"), "utf8");

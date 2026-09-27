@@ -10,7 +10,7 @@ The detector is on `main` and is read-only. Version **0.1.1** is source-availabl
 | [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md) | 4th DR gate packet. The APPROVE or REQUEST CHANGES ask for LaunchGate. |
 | [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) | Support checklist v3. Section 5 records the 0.1.0 zip. Delta logs from v1 and v2 stay historical. |
 | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) | Operator packet for the listed Polar SKU. No Checkout URL. Listing, price, and attachment unchanged. |
-| [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md) | Suthirth Commercial Grant. Seller: Suthirth solutions. One organization, internal use, no competing-kit resale. |
+| [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md) | Suthirth Commercial Grant for SeatTruth. Seller: Suthirth solutions. |
 | [CHECKSUMS.md](CHECKSUMS.md) | Lowercase SHA-256 of `release/seattruth-0.1.1.zip` and the unchanged `release/seattruth-0.1.0.zip`. |
 | [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) | Buyer needs v3. Auto-fix and Soft-WTP are refused, including the DR#3 variants. |
 | [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) | DR#1 skim, still dated 2026-09-26. DR#2 and DR#3 did not add metrics. |

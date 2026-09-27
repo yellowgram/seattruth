@@ -4,7 +4,7 @@ English email to hello@yellowgram.dev. Prefer [www.yellowgram.dev](https://www.y
 
 There is no concierge, no qualification call, and no response-time promise.
 
-Commercial use is the Suthirth Commercial Grant in [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md). Seller and licensor: Suthirth solutions. Public source is under the PolyForm Noncommercial License 1.0.0 in [LICENSE](LICENSE). That license is not an OSI-approved license. SeatTruth is source-available. The price is **$99 once** per organization, or **$79 once** for the first 10 organizations, on one SKU. Soft-WTP stays off. The **14-day** window applies to the SeatTruth purchase only.
+Commercial use is the Suthirth Commercial Grant in [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md). Seller: Suthirth solutions. Public source is the PolyForm Noncommercial License 1.0.0 in [LICENSE](LICENSE). That license is not an OSI-approved license. SeatTruth is source-available. Soft-WTP stays off. Support has no included Issues SLA. The purchase refund is the window on the Polar listing.
 
 ## In bounds
 

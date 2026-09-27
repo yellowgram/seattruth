@@ -74,7 +74,7 @@ If a row looks wrong, a person on your team changes your product, using your own
 | [docs/BUYER_NEEDS_BEYOND_CHECKLIST.md](docs/BUYER_NEEDS_BEYOND_CHECKLIST.md) | Needs that will not be in the first kit. |
 | [docs/STATUS.md](docs/STATUS.md) | Where the work actually is. |
 | [LICENSE](LICENSE) | Source-available under PolyForm Noncommercial 1.0.0. Not an OSI-approved license. |
-| [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md) | Paid use for one organization. No competing-kit resale. No warranty of entitlement correctness. Seller: Suthirth solutions. |
+| [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md) | Suthirth Commercial Grant for one organization. Seller: Suthirth solutions. |
 
 ## Support
 

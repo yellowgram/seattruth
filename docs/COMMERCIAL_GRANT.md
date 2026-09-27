@@ -40,6 +40,10 @@ With this grant, the named organization may use the named tag commercially as ab
 
 Tags and zips already shipped under an older license (for example MIT, or a prior custom commercial license) are **not rewritten**. Rights already granted for those sealed artifacts are not clawed back. New purchases and new tags use this grant + PolyForm Noncommercial fence.
 
+| Tag | Zip | SHA-256 | Note |
+| --- | --- | --- | --- |
+| `v0.1.0` | `seattruth-0.1.0.zip` | `abda9333e0ac6b2af3ff71439b0f275f8bcf7aff2fefb99b8d9d0b0870eccb2b` | Custom SeatTruth Commercial License v1.0 at ship time; not rewritten; rights for that sealed artifact are not clawed back. |
+
 ## Operator responsibility
 
 SeatTruth is provided **as is**. You remain responsible for production correctness, compliance, and decisions made from its outputs. This is not legal, tax, or accounting advice.

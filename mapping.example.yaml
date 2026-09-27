@@ -1,0 +1,37 @@
+# SeatTruth mapping (example).
+# Copy to mapping.yaml (gitignored) and point the columns at one read-only
+# Postgres relation. This file is column names, not a SQL script.
+# SeatTruth may read only these columns. It does not change rows.
+#
+# Canonical rules: docs/MVP_SCOPE.md
+# Copy this file before a live run. The example itself is not your database.
+
+version: 1
+
+product:
+  engine: postgres
+  # Required. One identifier. The SELECT is "schema"."relation" after validation.
+  # Names are case-sensitive. id does not match Id. There is no search_path fallback.
+  # See docs/MVP_SCOPE.md rule P18.
+  schema: billing
+  # Table or view. The database role needs SELECT on this relation only.
+  relation: billing_access
+  columns:
+    user_id: id
+    is_pro: is_pro
+    seats: seat_count
+
+rails:
+  stripe:
+    # Set a rail's customer_id to null to disable that rail.
+    # An empty string is an error. It does not mean off.
+    # A null customer id on a row skips that rail. Zero subscriptions is not a cancel.
+    customer_id: stripe_customer_id
+    subscription_id: stripe_subscription_id
+  polar:
+    customer_id: polar_customer_id
+    subscription_id: polar_subscription_id
+
+entitlement:
+  # v1 uses this field as the entitlement bit. seats is alert context.
+  field: is_pro

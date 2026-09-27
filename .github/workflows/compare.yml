@@ -1,0 +1,58 @@
+# Scheduled read-only compare.
+# The daily cron is live. workflow_dispatch stays dry-run unless dry_run is false.
+# Secrets are not written into this file. A green dry-run is not an all-clear.
+# See docs/MVP_SCOPE.md and docs/STATUS.md.
+
+name: compare
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "true skips provider, database, and Slack calls"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Dry-run compare
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run != false
+        run: npm run compare -- --dry-run
+
+      - name: Write mapping for live compare
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        env:
+          SEATTRUTH_MAPPING_YAML: ${{ secrets.SEATTRUTH_MAPPING_YAML }}
+        run: |
+          if [ -z "$SEATTRUTH_MAPPING_YAML" ]; then
+            echo "Missing SEATTRUTH_MAPPING_YAML secret."
+            exit 1
+          fi
+          printf '%s\n' "$SEATTRUTH_MAPPING_YAML" > mapping.yaml
+
+      - name: Live compare
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        env:
+          STRIPE_RESTRICTED_KEY: ${{ secrets.STRIPE_RESTRICTED_KEY }}
+          POLAR_RESTRICTED_TOKEN: ${{ secrets.POLAR_RESTRICTED_TOKEN }}
+          PRODUCT_DATABASE_URL: ${{ secrets.PRODUCT_DATABASE_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SEATTRUTH_MAPPING_PATH: ./mapping.yaml
+        run: npm run compare -- --live

@@ -16,6 +16,7 @@
   "scripts": {
     "build": "tsc",
     "compare": "npm run build && node dist/src/cli.js",
+    "demo:60s": "npm run build && node dist/scripts/demo-60s.js",
     "test": "npm run build && node --test dist/tests/*.test.js",
     "typecheck": "tsc --noEmit",
     "pack:release": "bash scripts/pack-release.sh"

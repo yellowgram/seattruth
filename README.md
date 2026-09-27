@@ -60,7 +60,7 @@ npm run compare -- --dry-run
 
 ## Docs
 
-[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.1 note is [CHANGELOG.md](CHANGELOG.md).
+[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). The fixture clip is [docs/DEMO_60S.md](docs/DEMO_60S.md) (`npm run demo:60s`). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.1 note is [CHANGELOG.md](CHANGELOG.md).
 
 ## Status
 

@@ -4,6 +4,7 @@ The detector is on `main` and is read-only. Version **0.1.1** is source-availabl
 
 | Doc | What it decides |
 | --- | --- |
+| [DEMO_60S.md](DEMO_60S.md) | Fixture clip script. Stripe and Polar in one command. No live keys. |
 | [MVP_SCOPE.md](MVP_SCOPE.md) | DR#3 rule ids. Detect-case summaries aligned to P26 and P28. Superseded P-rules stay visible. |
 | [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md) | The three adversarial passes inside the DR#2 PR, and the deltas they forced. |
 | [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md) | The three adversarial passes inside the DR#3 PR, and the deltas they forced. |

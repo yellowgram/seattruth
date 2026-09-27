@@ -13,6 +13,7 @@ You run the kit inside your own GitHub repository and your own database. yellowg
 - Read [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) and decide whether the two detect cases match a real argument you have had with your database.
 - Copy [.env.example](.env.example) and [mapping.example.yaml](mapping.example.yaml) and see whether your schema can fill them in without a custom join.
 - Run `npm test` and `npm run compare -- --dry-run`. Both succeed without keys. The dry-run text says it is not an all-clear. That success is not evidence your entitlements match.
+- Run `npm run demo:60s` for the fixture clip in [docs/DEMO_60S.md](docs/DEMO_60S.md). Invented rows only. No keys. The dry-run line in that clip is not an all-clear.
 
 ## What a live run needs
 
@@ -68,6 +69,7 @@ If a row looks wrong, a person on your team changes your product, using your own
 
 | Read | Why |
 | --- | --- |
+| [docs/DEMO_60S.md](docs/DEMO_60S.md) | One-command fixture clip. Stripe and Polar in the same take. No live keys. |
 | [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) | What the two cases are, and the active rules after DR#3. |
 | [docs/MINIMUM_SUPPORT_CHECKLIST.md](docs/MINIMUM_SUPPORT_CHECKLIST.md) | What "supported" means, including the 0.1.1 zip. |
 | [SUPPORT.md](SUPPORT.md) | Email boundary. No concierge. |

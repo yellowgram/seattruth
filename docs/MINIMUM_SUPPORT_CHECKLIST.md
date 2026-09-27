@@ -2,15 +2,15 @@
 
 **Checklist v3.** DR#1 shipped v1. DR#2 shipped v2. DR#3 shipped this v3 text. The v1→v2 log is section 8. The v2→v3 log is section 9. The 4th DR did not publish a v4. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 
-**0.1.0 pack.** The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. Founder typed Polar go-live on 2026-09-26. The listing may go light after this pack is on `main` and GitHub Release `v0.1.0` includes the zip. This checklist does not add a Checkout URL.
+**0.1.0 pack.** The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed. GitHub Release `v0.1.0` exists. This checklist does not add a Checkout URL.
 
 The detector is on `main` (pull request #5). Section 10 was the input list for the 4th DR. See [STATUS.md](STATUS.md).
 
-What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this implement branch. Items left open wait for an operator's own keys, or for the zip.
+What "supported" means for SeatTruth once an operator has the kit. The founder should be able to stay out of the room for the path below. Items marked done are true of this tree. Items left open wait for an operator's own keys.
 
 HookSteel (`yellowgram/hooksteel`) is the doc pattern this list follows: happy path, safe defaults, docs that replace the founder, CI, a versioned zip, a support and money boundary, and ops. That repo was not readable when the scaffold was written (GitHub 404). The sections below are SeatTruth's, for a read-only drift detector. No HookSteel billing code is included.
 
-Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. The implement work is pull request #5, merged to `main`. The price lock is pull request #6. Ordinary code gates did not wait on the founder. Founder typed Polar go-live on 2026-09-26.
+Cadence: DR#1 is pull request #1. DR#2 is pull request #2. DR#3 is pull request #3, which shipped this v3 text. The 4th DR is pull request #4 and is approved. The implement work is pull request #5, merged to `main`. The price lock is pull request #6. Ordinary code gates did not wait on the founder. Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed.
 
 ## 1. Happy path
 
@@ -76,7 +76,7 @@ Distribution is the private GitHub repo `yellowgram/seattruth` plus the versione
 - [x] SHA-256 of that zip is recorded as lowercase hex of the file bytes in [CHECKSUMS.md](CHECKSUMS.md).
 - [x] The zip does not contain `.env`, `mapping.yaml`, or `node_modules`.
 - [x] [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) names the zip `release/seattruth-0.1.0.zip` and the tag `v0.1.0`. The SHA-256 paste line is in [CHECKSUMS.md](CHECKSUMS.md), not copied into the packet.
-- [x] No Checkout URL in the repo, the README, or the CLI help. Founder typed go-live on 2026-09-26. CoS publishes the listing after the GitHub Release asset exists.
+- [x] Polar listing is listed (CoS confirmed). GitHub Release `v0.1.0` exists and the zip is attached on the Polar product. No Checkout URL in the repo, the README, or the CLI help. The purchase path from this repo is https://www.yellowgram.dev or hello@yellowgram.dev.
 
 ## 6. Support and money boundary
 
@@ -165,13 +165,13 @@ This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR
 - Two detect cases only: `paid_locked_out` and `canceled_still_entitled`.
 - Active rules: P6, P7, P11, P17–P24, P25–P30. Superseded text stays in [MVP_SCOPE.md](MVP_SCOPE.md).
 - Accepted limits: no price filter (P29); trials do not block `allClear` (P25, P30); no primary rail (P28); Polar refunds do not classify the subscription (P26); a partial provider page is a run error (P27).
-- Hard locks: no auto-fix, no Soft-WTP, no Chargebee, no Autumn, Polar listing dark.
+- Hard locks: no auto-fix, no Soft-WTP, no Chargebee, no Autumn. The 4th DR input also recorded the Polar listing as dark. That line is historical. The listing is listed.
 - Zip, SHA-256, and `POLAR_DELIVERABLES` absent.
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 - Detector implemented on this branch. Squash-merge still waits on the 4th code review.
 
-The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**) and the refund window at **14 days**. Founder later typed Polar go-live on 2026-09-26. The 0.1.0 zip, [CHECKSUMS.md](CHECKSUMS.md), and [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) are in the tree. The detector is on `main`. This section does not rewrite that input.
+The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**) and the refund window at **14 days**. Founder later typed Polar go-live on 2026-09-26. CoS later confirmed the Polar listing is listed. The 0.1.0 zip, [CHECKSUMS.md](CHECKSUMS.md), and [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) are in the tree. The detector is on `main`. This section does not rewrite that input.
 
 ## Done means
 
-The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path. A green dry-run is not an all-clear. Section 5 is closed for 0.1.0: the zip, the SHA-256, and `POLAR_DELIVERABLES` are real, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys. CoS publishes the Polar listing. This file does not.
+The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path. A green dry-run is not an all-clear. Section 5 is closed for 0.1.0: the zip, the SHA-256, and `POLAR_DELIVERABLES` are real, the Polar listing is listed, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.

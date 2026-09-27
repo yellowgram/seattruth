@@ -1,6 +1,6 @@
 # Buyer start here
 
-SeatTruth 0.1.0 is the read-only detector in this private repository, plus the versioned zip [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). You run it with your own keys. Purchase is one Polar SKU, **$99 once** per organization (first 10 at **$79 once**), after CoS publishes the listing. This page is not a Checkout link. The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). Listing steps are in [docs/POLAR_DELIVERABLES.md](docs/POLAR_DELIVERABLES.md).
+SeatTruth 0.1.0 is the read-only detector in this private repository, plus the versioned zip [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). You run it with your own keys. SeatTruth is for sale via Polar: **$99 once** per organization, with the first 10 organizations at **$79 once**. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link. The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md).
 
 Contact: hello@yellowgram.dev · prefer [www.yellowgram.dev](https://www.yellowgram.dev)
 

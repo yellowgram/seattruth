@@ -2,7 +2,7 @@
 
 SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
-This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.0** ships the zip, its SHA-256, and the Polar packet. Purchase is one Polar SKU after CoS publishes the listing. This page is not a Checkout link.
+This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.0** ships the zip and its SHA-256. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
 
 ## What it is
 
@@ -22,7 +22,7 @@ A match is silence. Paid with `is_pro` true, or canceled on every applicable rai
 - Writes to Stripe, Polar, or the product database, including `is_pro` and seats.
 - Auto-fix, and alert text that tells an operator to flip a flag.
 - Soft-WTP and cold invoices. That covers asking strangers what they would pay, fake-door checkout, pay-what-you-want, and an invoice sent to someone who did not buy.
-- A Checkout URL in this repository. Founder typed Polar go-live on 2026-09-26. CoS publishes the listing after the 0.1.0 zip, its SHA-256, and `POLAR_DELIVERABLES` are on `main` and GitHub Release `v0.1.0` includes the zip.
+- A Checkout URL in this repository. SeatTruth is for sale via Polar. The purchase path is [www.yellowgram.dev](https://www.yellowgram.dev) or hello@yellowgram.dev.
 
 ## Who it is for
 
@@ -34,7 +34,7 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 **$99 once** per organization. That is a one-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is **14 days**. The kit does not recommend end-customer refunds.
 
-The zip is [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). Listing steps are in [docs/POLAR_DELIVERABLES.md](docs/POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS can list after this pack is on `main` and the GitHub Release asset exists.
+The zip is [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). SeatTruth is for sale via Polar at this locked price. The first 10 organizations are **$79 once** on that SKU; the SKU is **$99 once** after that. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
 
 ## Contact
 
@@ -64,7 +64,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.0** is this baseline. Founder typed Polar go-live on 2026-09-26. The zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. CoS publishes the listing after GitHub Release `v0.1.0` includes the zip. [docs/STATUS.md](docs/STATUS.md).
+The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.0** is this baseline. The Polar listing is live. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

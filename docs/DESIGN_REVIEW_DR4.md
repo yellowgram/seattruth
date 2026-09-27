@@ -4,6 +4,8 @@ This pull request is the **4th DR**. It is the packet LaunchGate approves or rej
 
 Rules stay in [MVP_SCOPE.md](MVP_SCOPE.md). LaunchGate REQUEST CHANGES on the detect-case summaries is applied in this revision: those two sentences now match P26 and P28. Items that wait for the implement PR, and do not block re-approval, are in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
 
+**Later price lock.** This review froze an unset monthly band and an unset refund window. It did not set either. Founder later locked **$99 once** per organization, optional first 10 at **$79 once**, and a **14-day** refund window. The price and refund sentences below stay as the review wrote them.
+
 ## Product
 
 SeatTruth is a read-only check of Stripe and Polar against one product database. It reports two disagreements and stops.

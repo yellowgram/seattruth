@@ -4,7 +4,7 @@
 
 ARR, logos, accuracy rates, and customer counts are omitted. Where a page was down or two pages disagree, that disagreement stays in the text. Prices below are the figures those pages published. They are not a live quote from yellowgram, and they are not a currency conversion.
 
-SeatTruth, for comparison, is the product stated in [MVP_SCOPE.md](MVP_SCOPE.md): Stripe and Polar, read-only, against product `is_pro` and seats, restricted keys, one mapping file, cron or GitHub Actions, Slack, **$49–99/mo**, no auto-fix.
+SeatTruth, for comparison, is the product stated in [MVP_SCOPE.md](MVP_SCOPE.md): Stripe and Polar, read-only, against product `is_pro` and seats, restricted keys, one mapping file, cron or GitHub Actions, Slack, **$99 once** per organization (optional first 10 at **$79 once**), no auto-fix. That price moved from a monthly $49–99 band to one-time. The competitor prices below are the 2026-09-26 skim and are unchanged.
 
 ## Takeaway
 
@@ -18,7 +18,7 @@ The public gap for a **Polar ↔ product-database entitlement reconciler** is op
 | EntitleGuard | Stripe | Yes | No | Free CSV audit; monitoring beta $79/mo | Open. No Polar mention. |
 | RevReclaim | Stripe + Polar + Paddle | No. Billing-platform leak scan. | Paid plans market auto-fix | Free; Pro $29 or $49 (pages disagree); Team $79 | Polar is present. Different product. |
 
-SeatTruth's public wedge is **$49–99/mo**, **Stripe and Polar**, and **no auto-fix**. That price band sits with the indie tools above and below DriftExact's published tiers. DriftExact, ProdVerdict, Venwai, and EntitleGuard do not show a Polar entitlement reconcile. RevReclaim does show Polar, for in-billing leak hygiene, and it markets auto-fix.
+SeatTruth's public wedge is **$99 once** per organization (optional first 10 at **$79 once**), **Stripe and Polar**, and **no auto-fix**. It moved from a monthly $49–99 band to that one-time price. DriftExact, ProdVerdict, Venwai, and EntitleGuard do not show a Polar entitlement reconcile. RevReclaim does show Polar, for in-billing leak hygiene, and it markets auto-fix.
 
 ## DriftExact
 
@@ -136,7 +136,7 @@ Stripe CSV audit, plus a monitoring beta. Public pages do not mention Polar.
 | Price | Free local audit. Monitoring beta $79/month. |
 | ICP | Usage-heavy B2B SaaS that keeps entitlement state locally. The pages set aside apps that ask Stripe on every request. |
 
-Venwai at $29/mo and EntitleGuard monitoring at $79/mo bracket SeatTruth's $49–99 band. Neither shows Polar.
+Venwai at $29/mo and EntitleGuard monitoring at $79/mo bracket the monthly $49–99 band SeatTruth has left. SeatTruth is now **$99 once** (first 10 at **$79 once**). Neither shows Polar.
 
 ## RevReclaim
 
@@ -170,7 +170,7 @@ RevReclaim is evidence that indie tools already call the Polar API. It is not an
 | Auto-fix | No | No | No write-back described | No | No |
 | Schedule | Daily GitHub Action (scaffold is dry-run) | Scheduled on Continuous | GitHub Action, hourly or daily | Daily hosted | Nightly scheduler |
 | Alert | Slack | Email on Continuous. Slack not described. | Slack | Slack, Discord, Telegram, email | Email in the beta. Landing page says no Slack. |
-| Price | $49–99/mo, self-serve, not for sale in this repo | £399–£1,500+/mo | Free, and Pro ~$39/project/mo in the changelog | Free beta, then $29/mo | Free audit, monitoring $79/mo |
+| Price | $99 once (first 10 at $79 once). Moved from $49–99/mo. Not for sale in this repo | £399–£1,500+/mo | Free, and Pro ~$39/project/mo in the changelog | Free beta, then $29/mo | Free audit, monitoring $79/mo |
 | How you buy | Self-serve once a zip exists. No checkout now. | Qualification | Self-serve CLI | Self-serve beta | Free audit. Monitoring beta is an application. |
 
 ## Unknowns
@@ -186,7 +186,7 @@ RevReclaim is evidence that indie tools already call the Polar API. It is not an
 
 ## What would change the wedge
 
-If DriftExact, ProdVerdict, Venwai, or EntitleGuard ships a maintained Polar read against a product database, at a self-serve price near this band, kill criterion 5 in [MVP_SCOPE.md](MVP_SCOPE.md) applies. RevReclaim already naming Polar for billing-leak scans does not trip that criterion. The response is to reconsider the wedge, not to add an audit practice or an auto-fix.
+If DriftExact, ProdVerdict, Venwai, or EntitleGuard ships a maintained Polar read against a product database, at a self-serve price near SeatTruth's locked **$99 once**, kill criterion 5 in [MVP_SCOPE.md](MVP_SCOPE.md) applies. RevReclaim already naming Polar for billing-leak scans does not trip that criterion. The response is to reconsider the wedge, not to add an audit practice or an auto-fix.
 
 ## Source index
 

@@ -12,7 +12,7 @@ The gates below are finished. The detector on `main` is that implement work.
 4. **CR×3.** Done on that implement work.
 5. **Price and refund.** Locked on pull request #6.
 
-The price is locked at **$99 once** per organization (first 10 at **$79 once**, one SKU). The refund window is locked at **14 days**. Founder typed Polar **go-live** on 2026-09-26. The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree for **0.1.0**. The listing may go light after this pack is on `main` and GitHub Release `v0.1.0` includes the zip. CoS publishes that listing. This repo has no Checkout URL. Soft-WTP stays forbidden. Founder (via CoS) still decides spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
+The price is locked at **$99 once** per organization (first 10 at **$79 once**, one SKU). The refund window is locked at **14 days**. Founder typed Polar **go-live** on 2026-09-26. CoS confirmed the Polar listing is listed. The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree for **0.1.0**. GitHub Release `v0.1.0` exists. This repo has no Checkout URL. Soft-WTP stays forbidden. Founder (via CoS) still decides spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 
 SeatTruth compares Stripe and Polar, read-only, with one product database. The product fields in view are `is_pro` and seats. The kit is restricted keys, one mapping file, a GitHub Action on a cron, and a Slack alert.
 
@@ -139,7 +139,7 @@ Cadence is daily. Hourly monitoring is a different product.
 
 ## Price
 
-**$99 once** per organization. One-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. Self-serve, one organization. Global English buyers. No sales call. The versioned zip is `release/seattruth-0.1.0.zip`. The SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). Listing steps are in [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS publishes the Polar listing after the GitHub Release asset exists. There is no Checkout URL in this repo.
+**$99 once** per organization. One-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. Self-serve, one organization. Global English buyers. No sales call. The versioned zip is `release/seattruth-0.1.0.zip`. The SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). The operator packet is [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS confirmed the Polar listing is listed. SeatTruth is for sale via Polar. The purchase path from this repo is [www.yellowgram.dev](https://www.yellowgram.dev) or hello@yellowgram.dev. There is no Checkout URL in this repo.
 
 Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, pay-what-you-want, and cold invoices. The locked number is not a negotiation. The refund window is **14 days**. Neither figure is a survey or a LaunchGate substitute. The kit does not recommend refunding an end customer (P24).
 
@@ -192,7 +192,7 @@ Hard outs for the life of this positioning:
 - A Stripe mirror or warehouse.
 - An LLM in the compare path. Fuzzy matching. Schema guessing.
 - Email, name, or card data in Slack.
-- A Checkout URL in this repository. The 0.1.0 zip and `POLAR_DELIVERABLES` are real. CoS publishes the Polar listing. Soft-WTP and cold invoices stay out.
+- A Checkout URL in this repository. The 0.1.0 zip and `POLAR_DELIVERABLES` are real. The Polar listing is listed. SeatTruth is for sale via Polar. Soft-WTP and cold invoices stay out.
 - Exception lists, snooze, and "ack this user" state.
 - Support in languages other than English.
 - Reading GitHub Issues on a private buyer repo as the support channel.
@@ -218,7 +218,7 @@ These stay in the design on purpose. They are not silent.
 - `trialing`, `incomplete`, and `incomplete_expired` do not block `allClear` (P25, P30). `past_due`, `paused`, and `unpaid` do.
 - There is no primary rail (P28). P15 is superseded.
 - A Polar refund does not classify the subscription. Status `canceled` does (P26).
-- The 0.1.0 zip is `release/seattruth-0.1.0.zip`. Its SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). The CoS packet is [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. The listing goes light when CoS publishes it, after the GitHub Release asset exists.
+- The 0.1.0 zip is `release/seattruth-0.1.0.zip`. Its SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). The operator packet is [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS confirmed the Polar listing is listed. GitHub Release `v0.1.0` exists.
 - The 4th DR left the price and the refund window unset. Founder later locked **$99 once** per organization (first 10 at **$79 once**) and a **14-day** refund window, then typed Polar go-live on 2026-09-26. Those locks did not come from the 4th DR.
 
 ## 4th DR packet

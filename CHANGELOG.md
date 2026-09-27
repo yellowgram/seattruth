@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.1 — 2026-09-27
+
+License fence. The Polar listing, price, and zip attachment are unchanged. Soft-WTP stays off.
+
+- SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. PolyForm Noncommercial 1.0.0 is not an OSI-approved license.
+- Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller and licensor: Suthirth solutions. One purchasing organization may use and modify SeatTruth for that organization's own internal operations. Resale as a competing dual-rail access-contract or billing-versus-entitlement kit is not allowed. There is no warranty of entitlement correctness.
+- Price stays **$99 once** per organization. The first 10 organizations stay **$79 once**. The refund window stays **14 days** for the SeatTruth purchase. Soft-WTP stays off.
+- New zip `release/seattruth-0.1.1.zip`. Tag `v0.1.1`. SHA-256 in `docs/CHECKSUMS.md`.
+- `release/seattruth-0.1.0.zip` and tag `v0.1.0` are unchanged. The Polar product still has `seattruth-0.1.0.zip` attached. This repository does not contain a Checkout URL. The purchase path is https://www.yellowgram.dev or hello@yellowgram.dev.
+
 ## 0.1.0 — 2026-09-26
 
 First baseline of the read-only SeatTruth detector.

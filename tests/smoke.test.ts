@@ -360,14 +360,43 @@ test("committed examples contain placeholders and no live secrets", () => {
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
 });
 
-test("0.1.0 pack script, Polar packet, and checksum match the zip", () => {
+const POLYFORM_NC_BODY_SHA256 =
+  "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8";
+const V010_ZIP_SHA256 =
+  "abda9333e0ac6b2af3ff71439b0f275f8bcf7aff2fefb99b8d9d0b0870eccb2b";
+
+test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")) as {
     version: string;
     private: boolean;
+    license: string;
   };
-  assert.equal(pkg.version, "0.1.0");
+  assert.equal(pkg.version, "0.1.1");
   assert.equal(pkg.private, true);
+  assert.equal(pkg.license, "SEE LICENSE IN LICENSE");
   assert.equal(existsSync(path.join(root, "scripts/pack-release.sh")), true);
+
+  const license = readFileSync(path.join(root, "LICENSE"), "utf8");
+  const marker = "# PolyForm Noncommercial License 1.0.0\n";
+  const markerAt = license.indexOf(marker);
+  assert.ok(markerAt > 0);
+  const header = license.slice(0, markerAt);
+  assert.match(header, /Required Notice: Copyright Suthirth solutions \/ yellowgram/);
+  assert.match(header, /hello@yellowgram\.dev/);
+  assert.match(header, /www\.yellowgram\.dev/);
+  assert.match(header, /docs\/COMMERCIAL_GRANT\.md/);
+  assert.match(header, /source-available/);
+  const body = license.slice(markerAt);
+  assert.equal(createHash("sha256").update(body).digest("hex"), POLYFORM_NC_BODY_SHA256);
+
+  const grant = readFileSync(path.join(root, "docs/COMMERCIAL_GRANT.md"), "utf8");
+  assert.match(grant, /Suthirth solutions/);
+  assert.match(grant, /\$99 once/);
+  assert.match(grant, /\$79 once/);
+  assert.match(grant, /14 days/);
+  assert.match(grant, /internal operations/);
+  assert.match(grant, /entitlement correctness/);
+  assert.doesNotMatch(grant, /buy\.polar\.sh/i);
 
   const polar = readFileSync(path.join(root, "docs/POLAR_DELIVERABLES.md"), "utf8");
   assert.match(polar, /go-live/);
@@ -377,21 +406,38 @@ test("0.1.0 pack script, Polar packet, and checksum match the zip", () => {
   assert.match(polar, /Suthirth solutions/);
   assert.match(polar, /CHECKSUMS\.md/);
   assert.match(polar, /Soft-WTP/);
+  assert.match(polar, /PolyForm Noncommercial/);
   assert.match(polar, /seattruth-0\.1\.0\.zip/);
   assert.match(polar, /v0\.1\.0/);
+  assert.match(polar, /seattruth-0\.1\.1\.zip/);
+  assert.match(polar, /v0\.1\.1/);
   assert.doesNotMatch(polar, /buy\.polar\.sh/i);
   assert.doesNotMatch(polar, /[0-9a-f]{64}/);
 
   const readme = readFileSync(path.join(root, "README.md"), "utf8");
+  assert.match(readme, /source-available/);
+  assert.match(readme, /PolyForm Noncommercial/);
+  assert.match(readme, /not an OSI-approved license/);
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
   assert.doesNotMatch(readme, /nothing to buy/i);
+  assert.doesNotMatch(readme, /open[- ]source/i);
+  assert.doesNotMatch(readme, /\bMIT\b/);
 
-  const zipPath = path.join(root, "release/seattruth-0.1.0.zip");
+  const priorZip = path.join(root, "release/seattruth-0.1.0.zip");
+  const priorHex = createHash("sha256").update(readFileSync(priorZip)).digest("hex");
+  assert.equal(priorHex, V010_ZIP_SHA256);
+  const priorComment = execFileSync("unzip", ["-z", priorZip], { encoding: "utf8" });
+  assert.match(priorComment, /seattruth-0\.1\.0/);
+
+  const zipPath = path.join(root, "release/seattruth-0.1.1.zip");
   const hex = createHash("sha256").update(readFileSync(zipPath)).digest("hex");
   assert.match(hex, /^[0-9a-f]{64}$/);
+  assert.notEqual(hex, priorHex);
   const checksums = readFileSync(path.join(root, "docs/CHECKSUMS.md"), "utf8");
   assert.match(checksums, new RegExp(hex));
+  assert.match(checksums, new RegExp(priorHex));
   assert.doesNotMatch(polar, new RegExp(hex));
+  assert.doesNotMatch(polar, new RegExp(priorHex));
 
   const names = execFileSync("unzip", ["-Z1", zipPath], { encoding: "utf8" })
     .split("\n")
@@ -399,6 +445,8 @@ test("0.1.0 pack script, Polar packet, and checksum match the zip", () => {
     .filter((line) => line.length > 0);
   assert.ok(names.some((name) => name.endsWith("/.env.example")));
   assert.ok(names.some((name) => name.endsWith("/mapping.example.yaml")));
+  assert.ok(names.some((name) => name.endsWith("/LICENSE")));
+  assert.ok(names.some((name) => name.endsWith("/docs/COMMERCIAL_GRANT.md")));
   for (const name of names) {
     assert.equal(name.includes("node_modules"), false, name);
     assert.equal(name.includes("CHECKSUMS.md"), false, name);
@@ -409,5 +457,5 @@ test("0.1.0 pack script, Polar packet, and checksum match the zip", () => {
   }
 
   const comment = execFileSync("unzip", ["-z", zipPath], { encoding: "utf8" });
-  assert.match(comment, /seattruth-0\.1\.0/);
+  assert.match(comment, /seattruth-0\.1\.1/);
 });

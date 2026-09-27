@@ -1,6 +1,6 @@
 {
   "name": "seattruth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Read-only Stripe and Polar entitlement drift detector for is_pro and seats.",
   "type": "module",

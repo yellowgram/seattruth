@@ -120,14 +120,26 @@ if [[ ! "$hex" =~ ^[0-9a-f]{64}$ ]]; then
   exit 1
 fi
 
+# Keep checksum lines for older zips. Never rewrite those zip bytes.
+preserved=""
+while IFS= read -r old; do
+  [[ "$old" == "$zip_rel" ]] && continue
+  old_hex="$(sha256sum "$old" | awk '{print tolower($1)}')"
+  if [[ ! "$old_hex" =~ ^[0-9a-f]{64}$ ]]; then
+    echo "pack-release: bad sha256 for ${old}" >&2
+    exit 1
+  fi
+  preserved+="${old_hex}  ${old}"$'\n'
+done < <(find release -maxdepth 1 -type f -name 'seattruth-*.zip' | sort)
+
 cat > "$checksum_rel" <<EOF
 # Checksums
 
-SHA-256 of \`${zip_rel}\`, lowercase hex of the zip bytes. \`npm run pack:release\` writes this file. Do not edit the hex by hand. [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) points here and does not copy the hex.
+SHA-256 of each versioned zip, lowercase hex of the zip bytes. \`npm run pack:release\` writes the current package version first and keeps lines for older \`release/seattruth-*.zip\` files still in the tree. Do not edit the hex by hand. Do not rewrite an older zip. [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) points here and does not copy the hex.
 
 \`\`\`
 ${hex}  ${zip_rel}
-\`\`\`
+${preserved}\`\`\`
 EOF
 
 echo "pack-release: wrote ${zip_rel}"

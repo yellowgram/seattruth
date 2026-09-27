@@ -4,6 +4,8 @@ English email to hello@yellowgram.dev. Prefer [www.yellowgram.dev](https://www.y
 
 There is no concierge, no qualification call, and no response-time promise.
 
+Commercial use is the Suthirth Commercial Grant in [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md). Seller: Suthirth solutions. Public source is the PolyForm Noncommercial License 1.0.0 in [LICENSE](LICENSE). That license is not an OSI-approved license. SeatTruth is source-available. Soft-WTP stays off. Support has no included Issues SLA. The purchase refund is the window on the Polar listing.
+
 ## In bounds
 
 - How to run the documented dry-run and the documented live path.
@@ -14,7 +16,7 @@ There is no concierge, no qualification call, and no response-time promise.
 
 - Changing the operator's webhook, editing `is_pro`, or writing SQL.
 - Advice to refund an end customer. The kit does not recommend end-customer refunds. The **14-day** window applies to the SeatTruth purchase only.
-- Cold invoices, Soft-WTP, and price negotiation. The price is **$99 once** per organization, or **$79 once** for the first 10 organizations, on one SKU.
+- Cold invoices, Soft-WTP, and price negotiation. The price is **$99 once** per organization, or **$79 once** for the first 10 organizations, on one SKU. Soft-WTP stays off.
 - GitHub Issues on a private buyer repository. That channel is not the support desk, and it is the wrong place for keys or customer rows.
 - Joining the operator's Slack, or a collaborator seat used to patch production data.
 

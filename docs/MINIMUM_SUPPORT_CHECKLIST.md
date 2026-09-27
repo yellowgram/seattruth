@@ -2,7 +2,7 @@
 
 **Checklist v3.** DR#1 shipped v1. DR#2 shipped v2. DR#3 shipped this v3 text. The v1→v2 log is section 8. The v2→v3 log is section 9. The 4th DR did not publish a v4. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 
-**0.1.0 pack.** The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed. GitHub Release `v0.1.0` exists. This checklist does not add a Checkout URL.
+**0.1.1 pack.** The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant. PolyForm Noncommercial 1.0.0 is not an OSI-approved license. `release/seattruth-0.1.0.zip` and tag `v0.1.0` are unchanged. Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed. The Polar listing, price, and zip attachment are unchanged. Soft-WTP stays off. This checklist does not add a Checkout URL.
 
 The detector is on `main` (pull request #5). Section 10 was the input list for the 4th DR. See [STATUS.md](STATUS.md).
 
@@ -53,7 +53,7 @@ An operator should not need a call to learn the boundary.
 - [x] [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) records public claims and leaves unknowns unmarked as facts. DR#3 did not add metrics.
 - [x] [../.env.example](../.env.example) names each secret and the read-only constraint.
 - [x] [../mapping.example.yaml](../mapping.example.yaml) is the whole mapping surface.
-- [x] [../LICENSE](../LICENSE) states single-org use, no competing-kit resale, and no warranty of entitlement correctness.
+- [x] [../LICENSE](../LICENSE) is the fleet header plus the PolyForm Noncommercial License 1.0.0. [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md) is the Suthirth Commercial Grant for SeatTruth. Seller: Suthirth solutions. SeatTruth is source-available. PolyForm Noncommercial 1.0.0 is not an OSI-approved license.
 - [x] [../SUPPORT.md](../SUPPORT.md) is the email boundary. English, no concierge, and no end-customer refund advice.
 - [x] A short first live run note is in [../BUYER_START_HERE.md](../BUYER_START_HERE.md). The ids are invented. It shows a finding, an ambiguous count, and a failed read, and it does not say which change to make.
 
@@ -69,20 +69,21 @@ An operator should not need a call to learn the boundary.
 
 Distribution is the private GitHub repo `yellowgram/seattruth` plus the versioned zip.
 
-`npm run pack:release` builds `release/seattruth-0.1.0.zip` from `git archive` of HEAD. The mtime is pinned to `2026-09-26T00:00:00Z`. The zip comment is `seattruth-0.1.0`. The archive omits `node_modules/`, `.env`, `.env.local` (`.env.example` stays), `.git/`, `release/`, `docs/CHECKSUMS.md`, dumps, a real `mapping.yaml` (`mapping.example.yaml` stays), and `dist/`.
+`npm run pack:release` builds `release/seattruth-<version>.zip` from `git archive` of HEAD, using the version in `package.json`. The mtime is pinned to `2026-09-26T00:00:00Z`. The zip comment is `seattruth-<version>`. The archive omits `node_modules/`, `.env`, `.env.local` (`.env.example` stays), `.git/`, `release/`, `docs/CHECKSUMS.md`, dumps, a real `mapping.yaml` (`mapping.example.yaml` stays), and `dist/`. Older zips stay in `release/` and are not rewritten.
 
-- [x] `package.json` is `private` and version `0.1.0`.
-- [x] A zip of the source tree is built with the real detector: `release/seattruth-0.1.0.zip`.
-- [x] SHA-256 of that zip is recorded as lowercase hex of the file bytes in [CHECKSUMS.md](CHECKSUMS.md).
+- [x] `package.json` is `private` and version `0.1.1`. The license field is `LicenseRef-PolyForm-Noncommercial-1.0.0`.
+- [x] The 0.1.0 zip remains `release/seattruth-0.1.0.zip`. Its bytes are unchanged. GitHub Release `v0.1.0` is not retagged.
+- [x] The current pack is `release/seattruth-0.1.1.zip`, built with the real detector.
+- [x] SHA-256 of each zip is recorded as lowercase hex of the file bytes in [CHECKSUMS.md](CHECKSUMS.md).
 - [x] The zip does not contain `.env`, `mapping.yaml`, or `node_modules`.
-- [x] [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) names the zip `release/seattruth-0.1.0.zip` and the tag `v0.1.0`. The SHA-256 paste line is in [CHECKSUMS.md](CHECKSUMS.md), not copied into the packet.
-- [x] Polar listing is listed (CoS confirmed). GitHub Release `v0.1.0` exists and the zip is attached on the Polar product. No Checkout URL in the repo, the README, or the CLI help. The purchase path from this repo is https://www.yellowgram.dev or hello@yellowgram.dev.
+- [x] [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) names the Polar attachment `seattruth-0.1.0.zip` and the tag `v0.1.0`, and the repository pack `release/seattruth-0.1.1.zip` and the tag `v0.1.1`. The SHA-256 paste line is in [CHECKSUMS.md](CHECKSUMS.md), not copied into the packet.
+- [x] Polar listing is listed (CoS confirmed). GitHub Release `v0.1.0` exists and `seattruth-0.1.0.zip` stays attached on the Polar product. This license fence does not change the listing, the price, or that attachment. No Checkout URL in the repo, the README, or the CLI help. The purchase path from this repo is https://www.yellowgram.dev or hello@yellowgram.dev.
 
 ## 6. Support and money boundary
 
 - [x] Contact is hello@yellowgram.dev. Prefer https://www.yellowgram.dev.
 - [x] Support language is English.
-- [x] The license refuses a warranty that comparisons are correct.
+- [x] The Suthirth Commercial Grant provides SeatTruth as is. The operator remains responsible for production correctness. See [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md).
 - [x] Email support, when a kit has been sold, covers: how to run the documented path, how to read a finding, and defects where the kit breaks its own rules. See [../SUPPORT.md](../SUPPORT.md).
 - [x] Support channel is email to hello@yellowgram.dev. GitHub Issues on a private buyer repo are not a channel yellowgram can read. They are not a place to paste keys or production rows. A collaborator seat on that private repo is not support, and it is not permission to patch `is_pro` (DR#2, restated in DR#3).
 - [x] Email support does not cover: changing the operator's webhook, editing `is_pro`, interpreting a partial refund, writing a custom SQL join, sending an `UPDATE` "for convenience", or joining the operator's Slack. The kit does not recommend end-customer refunds.
@@ -174,4 +175,4 @@ The 4th DR packet submitted this list. LaunchGate approved it on pull request #4
 
 ## Done means
 
-The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. An unset mapping secret skips that cron with exit 0, and that skip is not an all-clear. A green dry-run is not an all-clear. Section 5 is closed for 0.1.0: the zip, the SHA-256, and `POLAR_DELIVERABLES` are real, the Polar listing is listed, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.
+The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. An unset mapping secret skips that cron with exit 0, and that skip is not an all-clear. A green dry-run is not an all-clear. Section 5 is closed for 0.1.1: the current zip, the SHA-256 file, and `POLAR_DELIVERABLES` are real, `release/seattruth-0.1.0.zip` is unchanged, the Polar listing is listed with that 0.1.0 attachment, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.

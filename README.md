@@ -2,7 +2,7 @@
 
 SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
-This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.0** ships the zip and its SHA-256. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
+This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.1** ships the zip and its SHA-256. Tag `v0.1.0` and `release/seattruth-0.1.0.zip` stay as they were. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
 
 ## What it is
 
@@ -34,7 +34,7 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 **$99 once** per organization. That is a one-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is **14 days**. The kit does not recommend end-customer refunds.
 
-The zip is [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip). The SHA-256 is in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). SeatTruth is for sale via Polar at this locked price. The first 10 organizations are **$79 once** on that SKU; the SKU is **$99 once** after that. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
+The current zip is [release/seattruth-0.1.1.zip](release/seattruth-0.1.1.zip). The SHA-256 values are in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip) is unchanged and remains the file attached on the Polar product. SeatTruth is for sale via Polar at this locked price. The first 10 organizations are **$79 once** on that SKU; the SKU is **$99 once** after that. Soft-WTP stays off. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
 
 ## Contact
 
@@ -60,12 +60,12 @@ npm run compare -- --dry-run
 
 ## Docs
 
-[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.0 note is [CHANGELOG.md](CHANGELOG.md).
+[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.1 note is [CHANGELOG.md](CHANGELOG.md).
 
 ## Status
 
-The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.0** is this baseline. The Polar listing is live. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. [docs/STATUS.md](docs/STATUS.md).
+The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.1** is this pack. Version **0.1.0** remains the Polar attachment and is not rewritten. The Polar listing is live. This pack does not change that listing, its price, or its zip attachment. Soft-WTP stays off. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 
-Commercial, single organization. Use and modification for that organization are allowed. Resale as a competing kit is not. There is no warranty that an entitlement comparison is correct. See [LICENSE](LICENSE).
+SeatTruth is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE). PolyForm Noncommercial 1.0.0 is not an OSI-approved license. Commercial production use requires a paid [Suthirth Commercial Grant](docs/COMMERCIAL_GRANT.md) from Suthirth solutions. Seller: Suthirth solutions. Contact hello@yellowgram.dev.

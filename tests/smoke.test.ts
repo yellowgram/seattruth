@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -356,4 +358,56 @@ test("committed examples contain placeholders and no live secrets", () => {
   assert.match(readme, /hello@yellowgram\.dev/);
   assert.match(readme, /www\.yellowgram\.dev/);
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
+});
+
+test("0.1.0 pack script, Polar packet, and checksum match the zip", () => {
+  const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")) as {
+    version: string;
+    private: boolean;
+  };
+  assert.equal(pkg.version, "0.1.0");
+  assert.equal(pkg.private, true);
+  assert.equal(existsSync(path.join(root, "scripts/pack-release.sh")), true);
+
+  const polar = readFileSync(path.join(root, "docs/POLAR_DELIVERABLES.md"), "utf8");
+  assert.match(polar, /go-live/);
+  assert.match(polar, /\$99/);
+  assert.match(polar, /\$79/);
+  assert.match(polar, /14 days/);
+  assert.match(polar, /Suthirth solutions/);
+  assert.match(polar, /CHECKSUMS\.md/);
+  assert.match(polar, /Soft-WTP/);
+  assert.match(polar, /seattruth-0\.1\.0\.zip/);
+  assert.match(polar, /v0\.1\.0/);
+  assert.doesNotMatch(polar, /buy\.polar\.sh/i);
+  assert.doesNotMatch(polar, /[0-9a-f]{64}/);
+
+  const readme = readFileSync(path.join(root, "README.md"), "utf8");
+  assert.doesNotMatch(readme, /buy\.polar\.sh/i);
+  assert.doesNotMatch(readme, /nothing to buy/i);
+
+  const zipPath = path.join(root, "release/seattruth-0.1.0.zip");
+  const hex = createHash("sha256").update(readFileSync(zipPath)).digest("hex");
+  assert.match(hex, /^[0-9a-f]{64}$/);
+  const checksums = readFileSync(path.join(root, "docs/CHECKSUMS.md"), "utf8");
+  assert.match(checksums, new RegExp(hex));
+  assert.doesNotMatch(polar, new RegExp(hex));
+
+  const names = execFileSync("unzip", ["-Z1", zipPath], { encoding: "utf8" })
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+  assert.ok(names.some((name) => name.endsWith("/.env.example")));
+  assert.ok(names.some((name) => name.endsWith("/mapping.example.yaml")));
+  for (const name of names) {
+    assert.equal(name.includes("node_modules"), false, name);
+    assert.equal(name.includes("CHECKSUMS.md"), false, name);
+    assert.equal(name.includes("/release/"), false, name);
+    assert.equal(/(^|\/)\.env$/.test(name), false, name);
+    assert.equal(name.endsWith("/.env.local"), false, name);
+    assert.equal(/(^|\/)mapping\.yaml$/.test(name), false, name);
+  }
+
+  const comment = execFileSync("unzip", ["-z", zipPath], { encoding: "utf8" });
+  assert.match(comment, /seattruth-0\.1\.0/);
 });

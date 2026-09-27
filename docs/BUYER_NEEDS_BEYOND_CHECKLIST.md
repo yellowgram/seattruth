@@ -45,7 +45,7 @@ Asking well does not put these in the backlog. These answers are explicit. They 
 | The kit refunds the operator's end customer, or cancels their subscription. | The kit does not move money. |
 | "Support" that edits production `is_pro`. | Lawsuit-shaped, and outside the license. |
 | Paddle, or a generic "any billing API" adapter, in v1. | Polar is the gap being filled. A third processor is a new product. |
-| A public Polar listing so people can click Buy on this scaffold. | The listing stays dark until the zip, the SHA-256, and `POLAR_DELIVERABLES` exist. Those three are absent. |
+| A Buy button inside this repository. | Refused. The 0.1.0 zip, the SHA-256, and `POLAR_DELIVERABLES` are real. CoS publishes the Polar listing. This repo has no Checkout URL. |
 | Non-English support. | The ICP is global English. The docs do not pretend otherwise. |
 | A guarantee that a green run means nobody is locked out. | `allClear` has a narrow definition (P30). A green dry-run does not count. Trials can be green. `past_due` cannot. The license states the rest. |
 | "Snooze this customer" or "stop repeating the same row." | Hiding a repeat is an ignore list. The next day's alert is the product. |

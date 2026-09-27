@@ -1,6 +1,6 @@
 # Status
 
-Updated 2026-09-26. **This pull request is the implement PR.** LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The detector is implemented. It is not merged. CR×3 is done. Squash-merge waits on the 4th code review with LaunchGate APPROVE.
+Updated 2026-09-27. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the Polar-ready **0.1.0** pack. Founder typed **go-live** on 2026-09-26. The listing may go light after this packet is on `main` and GitHub Release `v0.1.0` carries the zip. This repository does not publish the listing and does not contain a Checkout URL.
 
 | Item | State |
 | --- | --- |
@@ -8,56 +8,57 @@ Updated 2026-09-26. **This pull request is the implement PR.** LaunchGate approv
 | DR#2 | Done. https://github.com/yellowgram/seattruth/pull/2 |
 | DR#3 | Done. https://github.com/yellowgram/seattruth/pull/3 |
 | 4th DR | Approved. https://github.com/yellowgram/seattruth/pull/4 at `eed8afdb210a46e489b5815b5261f8574f906336` |
-| Implement PR | **This PR.** https://github.com/yellowgram/seattruth/pull/5 |
+| Implement PR | **Merged.** https://github.com/yellowgram/seattruth/pull/5. The detector is on `main`. |
 | CR#1 | **Done.** Expert A, billing path. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md). |
 | CR#2 | **Done.** Expert B, operator safety. [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md). |
 | CR#3 | **Done.** Expert C, buyer path. [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md). |
-| 4th CR | **Next.** Gate packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). LaunchGate APPROVE is required before squash-merge. |
-| Detector | Implemented. Dry-run does not call the network. `--live` reads Stripe, Polar, and Postgres and can post to Slack. |
+| 4th CR | Historical gate packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). It is not an open step. The detector from that implement work is already on `main`. |
+| Detector | On `main`. Read-only. Dry-run does not call the network. `--live` reads Stripe, Polar, and Postgres and can post to Slack. |
 | `npm test` | Smoke test plus fixtures for P26, P27, and P28. Export names still ban charge, write, and fix APIs. |
 | GitHub Action `compare` | Daily cron is live. Manual dispatch stays dry-run unless the operator turns that off. Secrets are not in the workflow file. A green dry-run is not an entitlement pass. |
-| Polar listing | Dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` exist. Those three are absent. Listing go-live is a founder decision on top of that. |
-| Versioned zip, SHA-256, `POLAR_DELIVERABLES` | Absent. This PR does not add them. |
-| Package version | `0.0.0`, private. Not a release. |
-| Price | Locked. **$99 once** per organization (one-time, not monthly). Optional launch hook: first 10 at **$79 once**. Not negotiable. Soft-WTP stays forbidden. Nothing to buy until the zip exists; the Polar listing stays dark. |
+| Polar listing | Founder typed go-live on 2026-09-26. CoS publishes after this pack is on `main` and GitHub Release `v0.1.0` includes the zip. Polar organization: **Suthirth solutions**. No Checkout URL in this repo. |
+| Versioned zip | `release/seattruth-0.1.0.zip`, built by `npm run pack:release`. |
+| SHA-256 | [CHECKSUMS.md](CHECKSUMS.md). Lowercase hex of the zip bytes. |
+| `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the zip and the tag. The hex stays in the checksum file. |
+| Package version | `0.1.0`, private. First baseline. |
+| Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. Not negotiable. Soft-WTP stays forbidden. |
 | Refund window | Locked. **14 days**. The kit does not recommend end-customer refunds. |
 
 ## Cadence
 
-Ordinary design and code gates do not wait on the founder. LaunchGate is the 4th gate, twice: once before implementation, once before squash-merge.
+The design and code gates that produced the detector are finished. Ordinary gates did not wait on the founder. What remains for the listing is CoS, not another design review.
 
 1. **DR×3.** Done. Pull requests #1, #2, and #3.
 2. **4th DR → LaunchGate APPROVE.** Done. Pull request #4.
-3. **Implement PR.** This pull request.
-4. **CR×3.** Done on this pull request. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md), [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md), [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md).
-5. **4th CR → LaunchGate APPROVE** before squash-merge. Packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). Not sent by this review. Not approved here.
+3. **Implement PR.** Merged. Pull request #5. The detector is on `main`.
+4. **CR×3.** Done on that implement work. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md), [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md), [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md).
+5. **Price and refund.** Locked on pull request #6.
+6. **Polar go-live.** Founder typed it on 2026-09-26. This 0.1.0 pack is the zip, the checksum, and `POLAR_DELIVERABLES`. CoS cuts GitHub Release `v0.1.0` and publishes one SKU.
 
-A green CI run on this pull request is not the 4th code-review approval, and it is not permission to squash-merge.
+A green CI run is not a Polar publish. This repository does not contain a Checkout URL.
 
 ## Scope that shipped
 
 - Two detect cases only: `paid_locked_out` and `canceled_still_entitled`, matching the P26 and P28 summaries LaunchGate approved.
 - Active rules: P6, P7, P11, P17–P24, P25–P30. No new rule ids.
 - P2 notes are implemented and written in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md): Polar scope `subscriptions:read`, the Stripe invoice-and-charge refund recipe, the P28 fixture table, and the Stripe and Polar pagination contracts.
-- Hard locks stay closed: no auto-fix, no Soft-WTP, no Chargebee, no Autumn, Polar listing dark.
+- Hard locks stay closed: no auto-fix, no Soft-WTP, no Chargebee, no Autumn. No Checkout URL in the repo.
 
 ## Founder (via CoS)
 
-The founder is not in the ordinary CR path. The price is locked at **$99 once** per organization (first 10 at **$79 once**). The refund window is locked at **14 days**. Founder (via CoS) still decides only:
+The founder is not in the ordinary CR path. The price is locked at **$99 once** per organization (first 10 at **$79 once**, one SKU). The refund window is locked at **14 days**. Founder typed Polar go-live on 2026-09-26. Founder (via CoS) still decides:
 
-- Polar listing go-live
-- Soft-WTP (the standing answer is no)
 - spending money
 - scope that becomes Chargebee, Autumn, or auto-fix
 
-Polar stays dark until the zip, the SHA-256, and `POLAR_DELIVERABLES` are real. None of the three files exist in this PR.
+Soft-WTP stays forbidden. The standing answer is no. CoS publishes the listing from [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) after `main` has this pack and GitHub Release `v0.1.0` has the zip. Polar organization: **Suthirth solutions**.
 
 ## Code review
 
 - CR#1: [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
 - CR#2: [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
 - CR#3: [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
-- 4th CR packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). Next is LaunchGate APPROVE before squash-merge.
+- 4th CR packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). Historical. The detector is already on `main`.
 
 ## Where the reviews live
 

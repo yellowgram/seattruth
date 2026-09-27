@@ -2,7 +2,7 @@
 
 Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. This file is the operator packet for that product. It does not contain a Checkout URL.
 
-This 0.1.1 pack is a license fence only. Do not change the Polar product, the price, or the zip attachment. Do not unlist the product. Soft-WTP stays off. `seattruth-0.1.0.zip` stays the file on the product. Tag `v0.1.0` is not rewritten.
+This 0.1.1 pack is the source-available license fence. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Do not unlist the product. The price stays founding **$79** then **$99** on this same SKU. Soft-WTP stays off. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. They are not what Polar currently delivers. Tag `v0.1.0` is not rewritten.
 
 Polar organization and seller: **Suthirth solutions**. `LICENSE`, `docs/COMMERCIAL_GRANT.md`, and `docs/STATUS.md` name the same organization.
 
@@ -16,9 +16,9 @@ Polar organization and seller: **Suthirth solutions**. `LICENSE`, `docs/COMMERCI
 | Admin | https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753 |
 | Checkout price now | **$79** founding, one-time, this SKU |
 | After the first 10 organizations | Raise this same SKU to **$99** once. One product. Do not add a second product. |
-| Zip on the product | `seattruth-0.1.0.zip` is attached. Do not replace it from this pack |
-| GitHub Release | `v0.1.0` exists and carries that zip. Do not rewrite that tag |
-| Repository pack | `release/seattruth-0.1.1.zip`. Tag `v0.1.1`. Not a Polar attachment change |
+| Zip on the product | `seattruth-0.1.1.zip` is attached. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` |
+| GitHub Release | `v0.1.1` carries that zip. Tag `v0.1.0` is not rewritten and still carries `seattruth-0.1.0.zip` as the sealed prior distribution |
+| Repository pack | `release/seattruth-0.1.1.zip`. Tag `v0.1.1`. This is the file Polar delivers |
 | License | Source-available under PolyForm Noncommercial 1.0.0. Commercial use is the Suthirth Commercial Grant. Not an OSI-approved license |
 | Soft-WTP | Off. No Soft-WTP coupon. |
 | GitHub benefit | Off. Enabling it was blocked (sudo / mobile). Known ops limit. |
@@ -36,12 +36,14 @@ Buyers reach the purchase path from [www.yellowgram.dev](https://www.yellowgram.
 
 **Description:**
 
+Source-available kit (zip + docs). You run this. yellowgram does not operate a hosted endpoint for this SKU. Polar delivers seattruth-0.1.1.zip (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). There is no managed, always-on cloud service in this purchase.
+
 SeatTruth is a read-only check between two billing rails, Stripe and Polar, and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
 1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false.
 2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
 
-A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. Delivery on this product stays the versioned zip `seattruth-0.1.0.zip` (attached on this product and on GitHub Release `v0.1.0`) plus private repository access to `yellowgram/seattruth` when that access is granted outside Polar's GitHub benefit. The repository also contains `seattruth-0.1.1.zip` for tag `v0.1.1`. That file is not an instruction to replace the Polar attachment. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller: Suthirth solutions. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off.
+A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. The attached file is `seattruth-0.1.1.zip`. Private repository access to `yellowgram/seattruth` is separate, and only when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller: Suthirth solutions. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA.
 
 ## Price, refund, license, support
 
@@ -56,13 +58,27 @@ A match is silence. The kit does not charge, refund, open Checkout, write `is_pr
 | License | Source-available under PolyForm Noncommercial 1.0.0 (`LICENSE`). Not an OSI-approved license. Commercial use is the Suthirth Commercial Grant (`docs/COMMERCIAL_GRANT.md`). Seller: Suthirth solutions |
 | Support | Email hello@yellowgram.dev. English. No concierge. Boundary in `SUPPORT.md` |
 | Contact site | https://www.yellowgram.dev |
-| Delivery | Zip `seattruth-0.1.0.zip` stays on the Polar product and on GitHub Release `v0.1.0`. Repository pack `release/seattruth-0.1.1.zip` is tag `v0.1.1` and is not a replacement of that attachment. Private repo `yellowgram/seattruth` is not granted by the Polar GitHub benefit |
+| Delivery | Zip `seattruth-0.1.1.zip` is what Polar delivers. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution, not the current Polar delivery. Private repo `yellowgram/seattruth` is not granted by the Polar GitHub benefit |
 
 The kit does not recommend end-customer refunds. Case 2 is provider status `canceled` only.
 
 ## Zip
 
-### Polar attachment (unchanged)
+### Polar delivery
+
+| Item | Value |
+| --- | --- |
+| File | `release/seattruth-0.1.1.zip` |
+| Tag | `v0.1.1` |
+| SHA-256 | `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` |
+| Prefix inside the zip | `seattruth-0.1.1/` |
+| Entry mtime | `2026-09-26T00:00:00Z` |
+| Zip comment | `seattruth-0.1.1` |
+| Build | `npm run pack:release` |
+| On Polar | Attached. This is the file Polar delivers |
+| On GitHub | Release `v0.1.1` asset |
+
+### Prior distribution (sealed)
 
 | Item | Value |
 | --- | --- |
@@ -70,20 +86,8 @@ The kit does not recommend end-customer refunds. Case 2 is provider status `canc
 | Tag | `v0.1.0` |
 | Prefix inside the zip | `seattruth-0.1.0/` |
 | Zip comment | `seattruth-0.1.0` |
-| On Polar | Attached to the listed product. Do not replace it from this pack |
+| On Polar | Not the current delivery |
 | On GitHub | Release `v0.1.0` asset. Do not rewrite that tag |
-
-### Repository pack 0.1.1
-
-| Item | Value |
-| --- | --- |
-| File | `release/seattruth-0.1.1.zip` |
-| Tag | `v0.1.1` |
-| Prefix inside the zip | `seattruth-0.1.1/` |
-| Entry mtime | `2026-09-26T00:00:00Z` |
-| Zip comment | `seattruth-0.1.1` |
-| Build | `npm run pack:release` |
-| On Polar | Not attached. This prep does not change the product attachment |
 
 ### Omit contract
 
@@ -100,23 +104,23 @@ The kit does not recommend end-customer refunds. Case 2 is provider status `canc
 
 ## Checksum paste line
 
-The lowercase SHA-256 of each zip is in [CHECKSUMS.md](CHECKSUMS.md). GitHub Release `v0.1.0` already carries `seattruth-0.1.0.zip`. Tag `v0.1.1` carries `seattruth-0.1.1.zip`. This packet does not copy the hex.
+The lowercase SHA-256 of `seattruth-0.1.1.zip` is `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Both zips are listed in [CHECKSUMS.md](CHECKSUMS.md). GitHub Release `v0.1.1` carries `seattruth-0.1.1.zip`. Tag `v0.1.0` carries `seattruth-0.1.0.zip` as the sealed prior distribution.
 
 ## Ops record
 
 Done:
 
 1. This pack is on `main`.
-2. GitHub Release `v0.1.0` exists. `seattruth-0.1.0.zip` is the release asset. The SHA-256 lives in [CHECKSUMS.md](CHECKSUMS.md).
+2. GitHub Release `v0.1.0` exists. `seattruth-0.1.0.zip` is that release asset and is the sealed prior distribution. The SHA-256 lives in [CHECKSUMS.md](CHECKSUMS.md).
 3. One SKU is listed under **Suthirth solutions**. Product ID `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Checkout is the founding **$79** one-time.
-4. `seattruth-0.1.0.zip` is attached on that Polar product.
+4. `seattruth-0.1.1.zip` is attached on that Polar product. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`.
 5. Soft-WTP is off. There is no Soft-WTP coupon.
 6. The **14-day** refund window is in the listing copy.
 
 Still operator work:
 
 1. After the first 10 organizations, raise this same SKU from **$79** to **$99**. Do not create a second product. Do not add a Soft-WTP coupon.
-2. Leave the GitHub benefit off while sudo / mobile blocks it. That is a known ops limit. The zip on the product and on GitHub Release `v0.1.0` is the file buyers get from the listing. Do not swap it for `seattruth-0.1.1.zip` from this prep.
+2. Leave the GitHub benefit off while sudo / mobile blocks it. That is a known ops limit. The zip buyers get from the listing is `seattruth-0.1.1.zip`. Tag `v0.1.0` stays sealed and is not rewritten.
 3. Keep **14 days** in the listing copy. Polar has no per-product refund toggle to set.
 4. Keep Checkout URLs out of the README, `BUYER_START_HERE`, and other buyer-facing files.
 

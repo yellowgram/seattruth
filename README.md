@@ -1,8 +1,10 @@
 # SeatTruth
 
+Source-available kit (zip + docs). You run this. yellowgram does not operate a hosted endpoint for this SKU. Polar delivers seattruth-0.1.1.zip (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). There is no managed, always-on cloud service in this purchase. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA. See [BUYER_START_HERE.md](BUYER_START_HERE.md).
+
 SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
-This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.1** ships the zip and its SHA-256. Tag `v0.1.0` and `release/seattruth-0.1.0.zip` stay as they were. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
+This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.1** ships the zip and its SHA-256. Tag `v0.1.0` and `release/seattruth-0.1.0.zip` stay as they were. They are the sealed prior distribution, not the zip Polar currently delivers. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
 
 ## What it is
 
@@ -34,7 +36,7 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 **$99 once** per organization. That is a one-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is **14 days**. The kit does not recommend end-customer refunds.
 
-The current zip is [release/seattruth-0.1.1.zip](release/seattruth-0.1.1.zip). The SHA-256 values are in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip) is unchanged and remains the file attached on the Polar product. SeatTruth is for sale via Polar at this locked price. The first 10 organizations are **$79 once** on that SKU; the SKU is **$99 once** after that. Soft-WTP stays off. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
+The current zip is [release/seattruth-0.1.1.zip](release/seattruth-0.1.1.zip). Polar delivers that file. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. The other SHA-256 values are in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip) is the sealed prior distribution. Tag `v0.1.0` is not rewritten. That zip is not what Polar currently delivers. SeatTruth is for sale via Polar at this locked price. The first 10 organizations are **$79 once** on that SKU; the SKU is **$99 once** after that. Soft-WTP stays off. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.
 
 ## Contact
 
@@ -79,7 +81,7 @@ npm run compare -- --dry-run
 
 ## Status
 
-The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.1** is this pack. Version **0.1.0** remains the Polar attachment and is not rewritten. The Polar listing is live. This pack does not change that listing, its price, or its zip attachment. Soft-WTP stays off. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. [docs/STATUS.md](docs/STATUS.md).
+The detector is on `main` (pull request #5) and is read-only. The price lock is pull request #6. Version **0.1.1** is this pack. Polar delivers `seattruth-0.1.1.zip`. Version **0.1.0** is the sealed prior distribution and is not rewritten. It is not the current Polar attachment. The Polar listing is live. The price is unchanged. Soft-WTP stays off. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. [docs/STATUS.md](docs/STATUS.md).
 
 ## License
 

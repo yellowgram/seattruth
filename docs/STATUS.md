@@ -1,6 +1,6 @@
 # Status
 
-Updated 2026-09-27. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. GitHub Release `v0.1.0` exists and still carries `seattruth-0.1.0.zip`. That tag and that zip are not rewritten. The Polar product, price, and zip attachment are unchanged by the 0.1.1 license fence. Soft-WTP stays off. This repository does not contain a Checkout URL.
+Updated 2026-09-27. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` still carries `seattruth-0.1.0.zip`. That tag and that zip are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. The price is unchanged. Soft-WTP stays off. This repository does not contain a Checkout URL.
 
 | Item | State |
 | --- | --- |
@@ -16,11 +16,11 @@ Updated 2026-09-27. The detector is on `main`. Implement pull request #5 is merg
 | Detector | On `main`. Read-only. Dry-run does not call the network. `--live` reads Stripe, Polar, and Postgres and can post to Slack. |
 | `npm test` | Smoke test plus fixtures for P26, P27, and P28. Export names still ban charge, write, and fix APIs. |
 | GitHub Action `compare` | Daily cron is live when `SEATTRUTH_MAPPING_YAML` is set. If that secret is unset, the schedule skips and exits 0. That skip is not an entitlement pass. Manual dispatch stays dry-run unless the operator turns that off. A live dispatch fails if the mapping secret is unset. Secrets are not in the workflow file. A green dry-run is not an entitlement pass. |
-| Polar listing | **Listed.** CoS confirmed. Organization **Suthirth solutions**. Product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Admin: https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753. Checkout is the founding **$79** one-time on this SKU. Raise the same SKU to **$99** after the first 10 organizations. Zip `seattruth-0.1.0.zip` stays attached. GitHub Release `v0.1.0` exists and is not rewritten. Soft-WTP is off (no coupon). GitHub benefit is off (sudo / mobile blocked; known ops limit). Polar has no per-product refund toggle; **14 days** is in the listing copy. The 0.1.1 license fence does not change this listing, the price, or the attachment. No Checkout URL in this repo. |
+| Polar listing | **Listed.** CoS confirmed. Organization **Suthirth solutions**. Product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Admin: https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753. Checkout is the founding **$79** one-time on this SKU. Raise the same SKU to **$99** after the first 10 organizations. Polar delivers zip `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` exists and is not rewritten; it carries the sealed prior zip `seattruth-0.1.0.zip`, which is not the current Polar delivery. Soft-WTP is off (no coupon). GitHub benefit is off (sudo / mobile blocked; known ops limit). Polar has no per-product refund toggle; **14 days** is in the listing copy. No Checkout URL in this repo. |
 | License | Source-available under PolyForm Noncommercial 1.0.0 ([../LICENSE](../LICENSE)). Not an OSI-approved license. Commercial use is the Suthirth Commercial Grant ([COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md)). Seller: **Suthirth solutions**. |
-| Versioned zip | Current pack `release/seattruth-0.1.1.zip`, built by `npm run pack:release`. Prior zip `release/seattruth-0.1.0.zip` is unchanged. |
-| SHA-256 | [CHECKSUMS.md](CHECKSUMS.md). Lowercase hex of each zip's bytes. |
-| `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the Polar attachment `v0.1.0` and the repository pack `v0.1.1`. The hex stays in the checksum file. |
+| Versioned zip | Polar delivers `release/seattruth-0.1.1.zip`, built by `npm run pack:release`. Prior zip `release/seattruth-0.1.0.zip` is the sealed prior distribution and is not rewritten. |
+| SHA-256 | Polar delivery `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` for `seattruth-0.1.1.zip`. Both zips are in [CHECKSUMS.md](CHECKSUMS.md). |
+| `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the Polar delivery `seattruth-0.1.1.zip` and the sealed prior tag `v0.1.0`. |
 | Package version | `0.1.1`, private. License field `LicenseRef-PolyForm-Noncommercial-1.0.0`. |
 | Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. The live checkout is that founding **$79**. Raise the same SKU to **$99** after those 10. Not negotiable. Soft-WTP stays forbidden. No Soft-WTP coupon. |
 | Refund window | Locked. **14 days**, stated in the listing copy. Polar has no per-product refund toggle. The kit does not recommend end-customer refunds. |
@@ -34,7 +34,7 @@ The design and code gates that produced the detector are finished. Ordinary gate
 3. **Implement PR.** Merged. Pull request #5. The detector is on `main`.
 4. **CR×3.** Done on that implement work. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md), [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md), [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md).
 5. **Price and refund.** Locked on pull request #6.
-6. **Polar listing.** Founder typed go-live on 2026-09-26. CoS confirmed the product is listed. GitHub Release `v0.1.0` exists. `seattruth-0.1.0.zip` stays attached on the Polar product. The 0.1.1 pack does not replace that attachment.
+6. **Polar listing.** Founder typed go-live on 2026-09-26. CoS confirmed the product is listed. Polar delivers `seattruth-0.1.1.zip` (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). GitHub Release `v0.1.0` exists and is not rewritten. `seattruth-0.1.0.zip` is the sealed prior distribution, not the current Polar delivery.
 
 A green CI run is not what listed the product. This repository does not contain a Checkout URL.
 

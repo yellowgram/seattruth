@@ -1,5 +1,7 @@
 # SeatTruth
 
+Source-available kit (zip + docs). You run this. yellowgram does not operate a hosted endpoint for this SKU. Polar delivers seattruth-x.y.z.zip. There is no managed, always-on cloud service in this purchase. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA. See [BUYER_START_HERE.md](BUYER_START_HERE.md).
+
 SeatTruth is a read-only check between two billing rails (Stripe and Polar) and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
 This repository is the read-only detector. A dry-run is not a clean bill of health. Version **0.1.1** ships the zip and its SHA-256. Tag `v0.1.0` and `release/seattruth-0.1.0.zip` stay as they were. SeatTruth is for sale via Polar. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link.

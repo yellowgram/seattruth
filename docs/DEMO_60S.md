@@ -2,7 +2,7 @@
 
 **This clip is the product.** One continuous take. Stripe and Polar in the same clip. Not two provider demos.
 
-**Script only until the founder films and approves it.** This repo has no video.
+**Script only.** This repo has no video. SeatTruth (the product agent) films the screen and captions take after LaunchGate SR APPROVE. LaunchGate runs FR after the mp4 and the srt land. The founder does not film. The founder still owns Polar go-live and distribution decisions.
 
 ## Kill criterion
 
@@ -45,15 +45,14 @@ Ids are invented. They are not customers. The rows behind those lines:
 
 ## Locked captions / VO (burn first)
 
-Burn these on the same take. Do not cut away.
+Burn these on the same take, in this order. It is the proof-line order. Do not cut away.
 
-1. Stripe and Polar, one compare. Not a Stripe-only screenshot.
+1. Dry-run. The detector is in. This is not an all-clear. No charges. No entitlement changes.
 2. Paid on Stripe, `is_pro` false. That is `paid_locked_out`.
 3. Canceled on Polar, `is_pro` true. That is `canceled_still_entitled`.
 4. Paid, and `is_pro` true, is silence. No finding.
-5. Dry-run means the detector is in. It is not an all-clear.
-6. Read-only. No charges. No auto-fix.
-7. www.yellowgram.dev · hello@yellowgram.dev
+5. Read-only compare. No charges. No auto-fix.
+6. www.yellowgram.dev or hello@yellowgram.dev.
 
 ## Price and CTA
 
@@ -71,4 +70,4 @@ CTA, if the take ends on one: [www.yellowgram.dev](https://www.yellowgram.dev) o
 
 ## Not in this file
 
-No recording yet. No live keys. No Polar checkout. Soft-WTP off. The purchase-refund window stays 14 days. This clip is not that refund. Do not change the Polar listing. Do not reseal a release zip. Do not create a version tag.
+No recording in this repo yet. SeatTruth films the take after LaunchGate SR APPROVE. The founder does not film. No live keys. No Polar checkout. Soft-WTP off. The purchase-refund window stays 14 days. This clip is not that refund. Do not change the Polar listing. Do not reseal a release zip. Do not create a version tag.

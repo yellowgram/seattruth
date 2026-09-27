@@ -25,13 +25,13 @@ The path an operator can finish from the docs. The dry-run prefix works without 
 - [ ] Operator creates a Postgres role with `SELECT` on the mapped relation only.
 - [ ] Operator stores the four secrets and the mapping path in GitHub Actions. The Slack webhook is one of those secrets. It is not written into the workflow file.
 - [ ] A manual live dispatch posts to Slack only for a finding, a non-zero ambiguous count, or a failed classification. It does not post a daily all-clear (P24, P30).
-- [ ] The daily cron repeats that live run. Exit code is non-zero when `allClear` is false. That red Actions check is the failure signal (P30).
+- [ ] The daily cron repeats that live run once `SEATTRUTH_MAPPING_YAML` is set. Exit code is non-zero when `allClear` is false. That red Actions check is the failure signal (P30). An unset mapping secret skips the schedule instead of failing it.
 
 ## 2. Safe defaults
 
 - [x] CLI defaults to dry-run. Live mode is opt-in.
 - [x] The compare workflow file does not contain secret values. The live steps read GitHub Actions secrets.
-- [x] Dispatch stays dry-run unless the operator sets the live input. A missing live secret fails the job.
+- [x] Dispatch stays dry-run unless the operator sets the live input. A live dispatch fails when `SEATTRUTH_MAPPING_YAML` is unset. The daily schedule exits 0 and skips the compare when that secret is unset. That skip is not an all-clear. After the mapping secret is set, a missing database URL, a missing credential on an enabled rail, or a missing Slack webhook when a post is required still fails the job.
 - [x] A missing credential or a Stripe secret key is refused. A failed read is not an all-clear.
 - [x] A Stripe secret key (`sk_`) is refused.
 - [x] `.env.example` and `mapping.example.yaml` contain placeholders, not live ids.
@@ -97,7 +97,7 @@ Distribution is the private GitHub repo `yellowgram/seattruth` plus the versione
 - [x] Workflow permissions are `contents: read`.
 - [ ] The operator owns the Slack app and the webhook. yellowgram is not in that workspace.
 - [x] A finding alert, an ambiguous-count line, and a run-error alert are different first lines, so a channel can be skimmed. Copy follows P6, P24, and P25. Deliberate skips are not listed per user.
-- [x] Dry-run versus live follows P30. A green dry-run is not an entitlement pass. The daily cron is live, and `workflow_dispatch` stays dry unless the operator sets a live input. Dry-run does not call providers, the database, or Slack.
+- [x] Dry-run versus live follows P30. A green dry-run is not an entitlement pass. The daily cron is live when `SEATTRUTH_MAPPING_YAML` is set, and `workflow_dispatch` stays dry unless the operator sets a live input. Dry-run does not call providers, the database, or Slack. An unset mapping secret makes the schedule skip those calls and exit 0. That green check is not an entitlement pass.
 - [x] Slack webhook URLs are GitHub Actions secrets. They are rotated in the same order as provider keys: create the new webhook, update the GitHub secret, run one live dispatch after the detector exists, then revoke the old webhook. Never write the URL into the workflow file, a log, an Issue, or a Slack message body (P23).
 - [x] Key rotation order is specified, and not automated. Create the new restricted key first. Update the GitHub Actions secret. After the detector exists, run one live dispatch. Then revoke the old key in the Stripe or Polar UI. Do not put the new key in git, Issues, or Slack. If a key lands in a log, rotate it. The kit must not log credential values (P23).
 - [x] Cron failure visibility is a red GitHub Actions check when the job exits non-zero, plus whatever failure mail the operator already gets from GitHub. A quiet Slack channel is not proof the cron ran, and it is not proof entitlements match. The kit does not send a daily all-clear Slack message (P24, P30). It does not add a second pager. A repeated finding is shown again the next day. Snooze is refused.
@@ -174,4 +174,4 @@ The 4th DR packet submitted this list. LaunchGate approved it on pull request #4
 
 ## Done means
 
-The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path. A green dry-run is not an all-clear. Section 5 is closed for 0.1.0: the zip, the SHA-256, and `POLAR_DELIVERABLES` are real, the Polar listing is listed, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.
+The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. An unset mapping secret skips that cron with exit 0, and that skip is not an all-clear. A green dry-run is not an all-clear. Section 5 is closed for 0.1.0: the zip, the SHA-256, and `POLAR_DELIVERABLES` are real, the Polar listing is listed, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.

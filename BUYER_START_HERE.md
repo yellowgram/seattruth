@@ -23,7 +23,7 @@ The detector is already in this repository. A live run still needs your keys. A 
 3. One Postgres view or table that already has `user id`, `is_pro`, `seats`, and the provider customer and subscription ids you use. Map a user id that is not an email address. Seats may be an integer, a bigint, or null. Null is not zero.
 4. A database role that can `SELECT` that relation and cannot change it.
 5. A Slack incoming webhook on `https://hooks.slack.com/…` for a channel your operators already watch.
-6. GitHub Actions secrets for those values, plus `SEATTRUTH_MAPPING_YAML`. The workflow file names those secrets and does not contain the values. The daily cron is the live path. A manual dispatch stays a dry-run unless you set `dry_run` to false. Until the secrets exist, a live job fails. That failure is not an all-clear.
+6. GitHub Actions secrets for those values, plus `SEATTRUTH_MAPPING_YAML`. The workflow file names those secrets and does not contain the values. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. A manual dispatch stays a dry-run unless you set `dry_run` to false. If that mapping secret is unset, the schedule skips and exits 0. That skip is not an all-clear. A manual live dispatch fails if the mapping secret is missing. After the mapping secret is set, a missing database URL, a missing credential on an enabled rail, or a missing Slack webhook when a post is required still fails the job.
 
 ## How to read a result
 

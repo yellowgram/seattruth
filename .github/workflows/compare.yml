@@ -1,5 +1,9 @@
 # Scheduled read-only compare.
-# The daily cron is live. workflow_dispatch stays dry-run unless dry_run is false.
+# The daily cron runs live when SEATTRUTH_MAPPING_YAML is set.
+# If that secret is unset, the schedule exits 0 and does not compare.
+# That skip is not an all-clear. See scripts/live-compare-gate.sh.
+# workflow_dispatch stays dry-run unless dry_run is false.
+# A live dispatch with the mapping secret unset fails the job.
 # Secrets are not written into this file. A green dry-run is not an all-clear.
 # See docs/MVP_SCOPE.md and docs/STATUS.md.
 
@@ -25,30 +29,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Prepare live compare
+        id: live_mapping
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        env:
+          SEATTRUTH_MAPPING_YAML: ${{ secrets.SEATTRUTH_MAPPING_YAML }}
+          SEATTRUTH_EVENT_NAME: ${{ github.event_name }}
+        run: bash scripts/live-compare-gate.sh
+
       - uses: actions/setup-node@v4
+        if: success() && steps.live_mapping.outputs.skip != 'true'
         with:
           node-version: "20"
           cache: npm
 
-      - run: npm ci
+      - name: Install
+        if: success() && steps.live_mapping.outputs.skip != 'true'
+        run: npm ci
 
       - name: Dry-run compare
-        if: github.event_name == 'workflow_dispatch' && inputs.dry_run != false
+        if: success() && github.event_name == 'workflow_dispatch' && inputs.dry_run != false
         run: npm run compare -- --dry-run
 
-      - name: Write mapping for live compare
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
-        env:
-          SEATTRUTH_MAPPING_YAML: ${{ secrets.SEATTRUTH_MAPPING_YAML }}
-        run: |
-          if [ -z "$SEATTRUTH_MAPPING_YAML" ]; then
-            echo "Missing SEATTRUTH_MAPPING_YAML secret."
-            exit 1
-          fi
-          printf '%s\n' "$SEATTRUTH_MAPPING_YAML" > mapping.yaml
-
       - name: Live compare
-        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        if: success() && steps.live_mapping.outputs.skip != 'true' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false))
         env:
           STRIPE_RESTRICTED_KEY: ${{ secrets.STRIPE_RESTRICTED_KEY }}
           POLAR_RESTRICTED_TOKEN: ${{ secrets.POLAR_RESTRICTED_TOKEN }}

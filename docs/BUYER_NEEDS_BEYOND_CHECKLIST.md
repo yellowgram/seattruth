@@ -52,7 +52,7 @@ Asking well does not put these in the backlog. These answers are explicit. They 
 | "Send the `UPDATE`, I will run it." | Refused by P24. |
 | "Price SeatTruth as a cut of the revenue the finding saved." | Soft-WTP. Refused. The price is **$99 once** per organization (first 10 at **$79 once**). It is not a negotiation. |
 | "Add Chargebee or Autumn. Same idea, one more key." | Refused. That scope change is founder-only, and the design answer is no. |
-| "Should we refund this end customer?" | Refused by P24. The SeatTruth refund window is a founder decision and is not advice about the operator's customer. |
+| "Should we refund this end customer?" | Refused by P24. The SeatTruth refund window is **14 days** for the kit purchase. It is not advice about the operator's customer. |
 | "We'll put the row in a private GitHub Issue so you can fix it." | Refused. Support is email. Private Issues are not readable as a support desk, and they are the wrong place for keys and customer ids. |
 | "Add an ignore-trials switch per customer." | Refused in DR#3. The trial split is one written rule (P25), not a snooze list. |
 | "Only alert when the pro price is the active one." | Refused. That is plan drift (P29). Any `active` subscription counts as paid, including an add-on. |

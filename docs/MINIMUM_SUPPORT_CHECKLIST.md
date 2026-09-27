@@ -169,7 +169,7 @@ This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 - Detector implemented on this branch. Squash-merge still waits on the 4th code review.
 
-The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**). This section does not rewrite that input. The refund window is still unset.
+The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**) and the refund window at **14 days**. This section does not rewrite that input.
 
 ## Done means
 

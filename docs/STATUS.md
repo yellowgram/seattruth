@@ -20,7 +20,7 @@ Updated 2026-09-26. **This pull request is the implement PR.** LaunchGate approv
 | Versioned zip, SHA-256, `POLAR_DELIVERABLES` | Absent. This PR does not add them. |
 | Package version | `0.0.0`, private. Not a release. |
 | Price | Locked. **$99 once** per organization (one-time, not monthly). Optional launch hook: first 10 at **$79 once**. Not negotiable. Soft-WTP stays forbidden. Nothing to buy until the zip exists; the Polar listing stays dark. |
-| Refund window | Unset. Founder (via CoS) sets it. The kit does not recommend end-customer refunds. |
+| Refund window | Locked. **14 days**. The kit does not recommend end-customer refunds. |
 
 ## Cadence
 
@@ -43,9 +43,8 @@ A green CI run on this pull request is not the 4th code-review approval, and it 
 
 ## Founder (via CoS)
 
-The founder is not in the ordinary CR path. The price is locked at **$99 once** per organization (first 10 at **$79 once**). Founder (via CoS) still decides only:
+The founder is not in the ordinary CR path. The price is locked at **$99 once** per organization (first 10 at **$79 once**). The refund window is locked at **14 days**. Founder (via CoS) still decides only:
 
-- refund window
 - Polar listing go-live
 - Soft-WTP (the standing answer is no)
 - spending money

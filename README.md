@@ -32,7 +32,7 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 ## Price
 
-**$99 once** per organization. That is a one-time purchase, not a monthly fee. Optional launch hook: the first 10 organizations at **$79 once**. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is still unset.
+**$99 once** per organization. That is a one-time purchase, not a monthly fee. Optional launch hook: the first 10 organizations at **$79 once**. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is **14 days**.
 
 There is nothing to buy here today. The Polar listing stays dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are real.
 

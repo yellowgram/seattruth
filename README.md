@@ -32,7 +32,9 @@ Teams that want a qualification call, an audit PDF, or a monitor priced for hund
 
 ## Price
 
-Self-serve, in the band **$49–99 per month**, once there is a real deliverable to sell. The exact number inside that band is a founder (via CoS) decision. It does not block the design reviews. There is nothing to buy here today.
+**$99 once** per organization. That is a one-time purchase, not a monthly fee. Optional launch hook: the first 10 organizations at **$79 once**. The number is locked. It is not negotiable. Soft-WTP stays forbidden. The refund window is still unset.
+
+There is nothing to buy here today. The Polar listing stays dark until a versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are real.
 
 ## Contact
 

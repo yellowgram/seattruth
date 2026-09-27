@@ -47,7 +47,7 @@ The path an operator can finish from the docs. The dry-run prefix works without 
 
 An operator should not need a call to learn the boundary.
 
-- [x] [../README.md](../README.md) states what the product is, the price band, the hard outs, and the contact.
+- [x] [../README.md](../README.md) states what the product is, the locked one-time price, the hard outs, and the contact.
 - [x] [../BUYER_START_HERE.md](../BUYER_START_HERE.md) is the front door.
 - [x] [MVP_SCOPE.md](MVP_SCOPE.md) is the rule list. Superseded P-rules stay visible. Active rules after DR#3 are P6, P7, P11, P17–P24, and P25–P30.
 - [x] [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md) records public claims and leaves unknowns unmarked as facts. DR#3 did not add metrics.
@@ -87,7 +87,7 @@ The zip, the SHA-256, and `POLAR_DELIVERABLES` **stay absent**. This checklist d
 - [ ] Email support does not cover: changing the operator's webhook, editing `is_pro`, interpreting a partial refund, writing a custom SQL join, sending an `UPDATE` "for convenience", or joining the operator's Slack.
 - [ ] The only invoice yellowgram sends is for SeatTruth itself, to an organization that bought it. No cold invoices. No invoices for the operator's end customers.
 - [ ] The kit never creates a charge, a refund, or a Checkout session.
-- [ ] Price, when a listing exists, is a published number in the $49–99 band. No pay-what-you-want. No "reply with what you'd pay." No discount because the first week of alerts was noisy.
+- [ ] Price, when a listing exists, is **$99 once** per organization. Optional launch hook: the first 10 at **$79 once**. Not monthly. No pay-what-you-want. No "reply with what you'd pay." No discount because the first week of alerts was noisy. No negotiation off the locked number.
 
 ## 7. Ops for Slack and cron
 
@@ -169,7 +169,7 @@ This is the input list for LaunchGate. The decision request is [DESIGN_REVIEW_DR
 - Price and refund window unset. Founder (via CoS) owns those, plus Polar go-live, Soft-WTP, spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
 - Detector implemented on this branch. Squash-merge still waits on the 4th code review.
 
-The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
+The 4th DR packet submitted this list. LaunchGate approved it on pull request #4. This section is that input, not a second approval. The ask text is in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). Founder later locked the price at **$99 once** per organization (first 10 at **$79 once**). This section does not rewrite that input. The refund window is still unset.
 
 ## Done means
 

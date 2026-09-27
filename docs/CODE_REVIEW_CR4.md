@@ -50,3 +50,5 @@ These are known limits, not a third detect case. Rejecting one is REQUEST CHANGE
 ## What this review is not
 
 A green CI check is not this approval. This file is not LaunchGate's answer. Soft-WTP remains no. The exact price inside $49–99 and the refund window stay unset.
+
+**Later price lock.** This review left the price unset inside that monthly band. It did not set the price. Founder later locked **$99 once** per organization, optional first 10 at **$79 once**. The refund window is still unset.

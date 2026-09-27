@@ -50,14 +50,14 @@ Asking well does not put these in the backlog. These answers are explicit. They 
 | A guarantee that a green run means nobody is locked out. | `allClear` has a narrow definition (P30). A green dry-run does not count. Trials can be green. `past_due` cannot. The license states the rest. |
 | "Snooze this customer" or "stop repeating the same row." | Hiding a repeat is an ignore list. The next day's alert is the product. |
 | "Send the `UPDATE`, I will run it." | Refused by P24. |
-| "Price SeatTruth as a cut of the revenue the finding saved." | Soft-WTP. Refused. The band is $49–99. The exact number is a founder (via CoS) decision, not a negotiation. |
+| "Price SeatTruth as a cut of the revenue the finding saved." | Soft-WTP. Refused. The price is **$99 once** per organization (first 10 at **$79 once**). It is not a negotiation. |
 | "Add Chargebee or Autumn. Same idea, one more key." | Refused. That scope change is founder-only, and the design answer is no. |
 | "Should we refund this end customer?" | Refused by P24. The SeatTruth refund window is a founder decision and is not advice about the operator's customer. |
 | "We'll put the row in a private GitHub Issue so you can fix it." | Refused. Support is email. Private Issues are not readable as a support desk, and they are the wrong place for keys and customer ids. |
 | "Add an ignore-trials switch per customer." | Refused in DR#3. The trial split is one written rule (P25), not a snooze list. |
 | "Only alert when the pro price is the active one." | Refused. That is plan drift (P29). Any `active` subscription counts as paid, including an add-on. |
 | "Send an all-clear Slack message so we know the cron ran." | Refused (P24, P30). A red GitHub Actions check is the failure signal. An all-clear post is false comfort and a step toward "just clear these." |
-| "Discount this month if the first week is noisy." | Soft-WTP. Refused. The price is a published number in the band, or it is unset. It is not a mood. |
+| "Discount this month if the first week is noisy." | Soft-WTP. Refused. The price is the published one-time number (**$99 once**, or **$79 once** for the first 10). It is not a mood. |
 | "We'll add you as a collaborator on the private repo so you can patch `is_pro`." | Refused. Support is email. A repo seat is not a license to write the product database. |
 
 ## What the buyer still has to own

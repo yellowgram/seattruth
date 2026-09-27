@@ -420,17 +420,26 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   assert.match(polar, /v0\.1\.0/);
   assert.match(polar, /seattruth-0\.1\.1\.zip/);
   assert.match(polar, /v0\.1\.1/);
+  assert.match(polar, /8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6/);
   assert.doesNotMatch(polar, /buy\.polar\.sh/i);
-  assert.doesNotMatch(polar, /[0-9a-f]{64}/);
+  assert.doesNotMatch(polar, /Not attached/);
+  assert.doesNotMatch(polar, /does not change the product attachment/);
+  assert.doesNotMatch(polar, /stays the file on the product/);
 
   const readme = readFileSync(path.join(root, "README.md"), "utf8");
   assert.match(readme, /source-available/);
   assert.match(readme, /PolyForm Noncommercial/);
   assert.match(readme, /not an OSI-approved license/);
+  assert.match(readme, /You run this/);
+  assert.match(readme, /does not operate a hosted endpoint/);
+  assert.match(readme, /8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6/);
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
   assert.doesNotMatch(readme, /nothing to buy/i);
   assert.doesNotMatch(readme, /open[- ]source/i);
   assert.doesNotMatch(readme, /\bMIT\b/);
+  assert.doesNotMatch(readme, /seattruth-x\.y\.z/);
+  assert.doesNotMatch(readme, /remains the Polar attachment/);
+  assert.doesNotMatch(readme, /remains the file attached/);
 
   const priorZip = path.join(root, "release/seattruth-0.1.0.zip");
   const priorHex = createHash("sha256").update(readFileSync(priorZip)).digest("hex");
@@ -445,8 +454,13 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   const checksums = readFileSync(path.join(root, "docs/CHECKSUMS.md"), "utf8");
   assert.match(checksums, new RegExp(hex));
   assert.match(checksums, new RegExp(priorHex));
-  assert.doesNotMatch(polar, new RegExp(hex));
+  assert.equal(hex, "8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6");
+  assert.match(polar, new RegExp(hex));
   assert.doesNotMatch(polar, new RegExp(priorHex));
+
+  const changelog = readFileSync(path.join(root, "CHANGELOG.md"), "utf8");
+  assert.match(changelog, /founding \*\*\$79\*\* → \*\*\$99\*\*/);
+  assert.doesNotMatch(changelog, /founding to standard/);
 
   const names = execFileSync("unzip", ["-Z1", zipPath], { encoding: "utf8" })
     .split("\n")

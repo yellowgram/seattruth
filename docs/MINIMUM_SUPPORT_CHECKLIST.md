@@ -2,7 +2,7 @@
 
 **Checklist v3.** DR#1 shipped v1. DR#2 shipped v2. DR#3 shipped this v3 text. The v1→v2 log is section 8. The v2→v3 log is section 9. The 4th DR did not publish a v4. The LaunchGate packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 
-**0.1.1 pack.** The versioned zip, its SHA-256, and `POLAR_DELIVERABLES` are in the tree. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant. PolyForm Noncommercial 1.0.0 is not an OSI-approved license. `release/seattruth-0.1.0.zip` and tag `v0.1.0` are unchanged. Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed. The Polar listing, price, and zip attachment are unchanged. Soft-WTP stays off. This checklist does not add a Checkout URL.
+**0.1.1 pack.** Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. The SHA-256 file and `POLAR_DELIVERABLES` are in the tree. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant. PolyForm Noncommercial 1.0.0 is not an OSI-approved license. `release/seattruth-0.1.0.zip` and tag `v0.1.0` are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed. The price is unchanged. Soft-WTP stays off. This checklist does not add a Checkout URL.
 
 The detector is on `main` (pull request #5). Section 10 was the input list for the 4th DR. See [STATUS.md](STATUS.md).
 
@@ -76,8 +76,8 @@ Distribution is the private GitHub repo `yellowgram/seattruth` plus the versione
 - [x] The current pack is `release/seattruth-0.1.1.zip`, built with the real detector.
 - [x] SHA-256 of each zip is recorded as lowercase hex of the file bytes in [CHECKSUMS.md](CHECKSUMS.md).
 - [x] The zip does not contain `.env`, `mapping.yaml`, or `node_modules`.
-- [x] [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) names the Polar attachment `seattruth-0.1.0.zip` and the tag `v0.1.0`, and the repository pack `release/seattruth-0.1.1.zip` and the tag `v0.1.1`. The SHA-256 paste line is in [CHECKSUMS.md](CHECKSUMS.md), not copied into the packet.
-- [x] Polar listing is listed (CoS confirmed). GitHub Release `v0.1.0` exists and `seattruth-0.1.0.zip` stays attached on the Polar product. This license fence does not change the listing, the price, or that attachment. No Checkout URL in the repo, the README, or the CLI help. The purchase path from this repo is https://www.yellowgram.dev or hello@yellowgram.dev.
+- [x] [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) names the Polar delivery `seattruth-0.1.1.zip` (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`) and the sealed prior tag `v0.1.0`. The SHA-256 lines for both zips are in [CHECKSUMS.md](CHECKSUMS.md).
+- [x] Polar listing is listed (CoS confirmed). Polar delivers `seattruth-0.1.1.zip`. GitHub Release `v0.1.0` exists and is not rewritten. `seattruth-0.1.0.zip` is the sealed prior distribution, not the current Polar delivery. The price is unchanged. No Checkout URL in the repo, the README, or the CLI help. The purchase path from this repo is https://www.yellowgram.dev or hello@yellowgram.dev.
 
 ## 6. Support and money boundary
 
@@ -175,4 +175,4 @@ The 4th DR packet submitted this list. LaunchGate approved it on pull request #4
 
 ## Done means
 
-The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. An unset mapping secret skips that cron with exit 0, and that skip is not an all-clear. A green dry-run is not an all-clear. Section 5 is closed for 0.1.1: the current zip, the SHA-256 file, and `POLAR_DELIVERABLES` are real, `release/seattruth-0.1.0.zip` is unchanged, the Polar listing is listed with that 0.1.0 attachment, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.
+The scaffold portion is done when `npm test` passes and the docs match the boxes above. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. An unset mapping secret skips that cron with exit 0, and that skip is not an all-clear. A green dry-run is not an all-clear. Section 5 is closed for 0.1.1: the current zip, the SHA-256 file, and `POLAR_DELIVERABLES` are real, Polar delivers `seattruth-0.1.1.zip`, `release/seattruth-0.1.0.zip` is the sealed prior distribution, and the README has no Checkout URL. Operator setup boxes in section 1 stay open until an operator fills their own keys.

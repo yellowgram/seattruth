@@ -135,7 +135,7 @@ done < <(find release -maxdepth 1 -type f -name 'seattruth-*.zip' | sort)
 cat > "$checksum_rel" <<EOF
 # Checksums
 
-SHA-256 of each versioned zip, lowercase hex of the zip bytes. \`npm run pack:release\` writes the current package version first and keeps lines for older \`release/seattruth-*.zip\` files still in the tree. Do not edit the hex by hand. Do not rewrite an older zip. [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) points here and does not copy the hex.
+SHA-256 of each versioned zip, lowercase hex of the zip bytes. \`npm run pack:release\` writes the current package version first and keeps lines for older \`release/seattruth-*.zip\` files still in the tree. Do not edit the hex by hand. Do not rewrite an older zip. Polar delivers \`seattruth-${version}.zip\`. [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) records that live delivery SHA and points here for both zips.
 
 \`\`\`
 ${hex}  ${zip_rel}

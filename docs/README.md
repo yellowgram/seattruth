@@ -1,6 +1,6 @@
 # SeatTruth docs
 
-The detector is on `main` and is read-only. Version **0.1.1** is source-available under the PolyForm Noncommercial License 1.0.0, with commercial use in the Suthirth Commercial Grant. PolyForm Noncommercial 1.0.0 is not an OSI-approved license. The 0.1.1 zip, the SHA-256 file, and the Polar packet are in the tree. `release/seattruth-0.1.0.zip` and tag `v0.1.0` are unchanged, and that zip stays the Polar attachment. Founder typed go-live on 2026-09-26. CoS confirmed the Polar listing is listed. This pack does not change the listing, the price, or the attachment. Soft-WTP stays off. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. Implement pull request #5 is merged.
+The detector is on `main` and is read-only. Version **0.1.1** is source-available under the PolyForm Noncommercial License 1.0.0, with commercial use in the Suthirth Commercial Grant. PolyForm Noncommercial 1.0.0 is not an OSI-approved license. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. The SHA-256 file and the Polar packet are in the tree. `release/seattruth-0.1.0.zip` and tag `v0.1.0` are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. Founder typed go-live on 2026-09-26. CoS confirmed the Polar listing is listed. The price is unchanged. Soft-WTP stays off. DR#1–#3 are pull requests #1–#3. LaunchGate approved the 4th DR on pull request #4. Implement pull request #5 is merged.
 
 | Doc | What it decides |
 | --- | --- |
@@ -9,8 +9,8 @@ The detector is on `main` and is read-only. Version **0.1.1** is source-availabl
 | [DESIGN_REVIEW_DR2.md](DESIGN_REVIEW_DR2.md) | The three adversarial passes inside the DR#2 PR, and the deltas they forced. |
 | [DESIGN_REVIEW_DR3.md](DESIGN_REVIEW_DR3.md) | The three adversarial passes inside the DR#3 PR, and the deltas they forced. |
 | [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md) | 4th DR gate packet. The APPROVE or REQUEST CHANGES ask for LaunchGate. |
-| [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) | Support checklist v3. Section 5 records the 0.1.0 zip. Delta logs from v1 and v2 stay historical. |
-| [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) | Operator packet for the listed Polar SKU. No Checkout URL. Listing, price, and attachment unchanged. |
+| [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md) | Support checklist v3. Section 5 records the zip Polar delivers and the sealed prior zip. Delta logs from v1 and v2 stay historical. |
+| [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) | Operator packet for the listed Polar SKU. No Checkout URL. Polar delivers `seattruth-0.1.1.zip`. |
 | [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md) | Suthirth Commercial Grant for SeatTruth. Seller: Suthirth solutions. |
 | [CHECKSUMS.md](CHECKSUMS.md) | Lowercase SHA-256 of `release/seattruth-0.1.1.zip` and the unchanged `release/seattruth-0.1.0.zip`. |
 | [BUYER_NEEDS_BEYOND_CHECKLIST.md](BUYER_NEEDS_BEYOND_CHECKLIST.md) | Buyer needs v3. Auto-fix and Soft-WTP are refused, including the DR#3 variants. |

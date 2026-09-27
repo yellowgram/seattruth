@@ -42,6 +42,21 @@ hello@yellowgram.dev
 
 Prefer [www.yellowgram.dev](https://www.yellowgram.dev).
 
+## Quick start
+
+Node.js 20 or newer. `npm run demo` is the sealed fixture demo. It does not read live Stripe, Polar, Slack, or database keys. Soft-WTP stays off.
+
+```bash
+npm ci
+npm run demo
+```
+
+A dry-run is not a clean bill of health. This sealed demo is not an all-clear.
+
+Watch demo: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).
+
+The proof lines are in [docs/DEMO_60S.md](docs/DEMO_60S.md). `npm run demo` is `npm run demo:60s`.
+
 ## Run
 
 Node.js 20 or newer.
@@ -60,7 +75,7 @@ npm run compare -- --dry-run
 
 ## Docs
 
-[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.1 note is [CHANGELOG.md](CHANGELOG.md).
+[docs/README.md](docs/README.md) is the index. Operators start at [BUYER_START_HERE.md](BUYER_START_HERE.md). The fixture clip is [docs/DEMO_60S.md](docs/DEMO_60S.md) (`npm run demo`). Support email is [SUPPORT.md](SUPPORT.md). The 0.1.1 note is [CHANGELOG.md](CHANGELOG.md).
 
 ## Status
 

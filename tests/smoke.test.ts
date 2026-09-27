@@ -421,6 +421,9 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   assert.match(polar, /seattruth-0\.1\.1\.zip/);
   assert.match(polar, /v0\.1\.1/);
   assert.match(polar, /8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6/);
+  assert.match(polar, /You run this/);
+  assert.doesNotMatch(polar, /0\.1\.0 stays attached/);
+  assert.doesNotMatch(polar, /Do not replace it from this pack/);
   assert.doesNotMatch(polar, /buy\.polar\.sh/i);
   assert.doesNotMatch(polar, /Not attached/);
   assert.doesNotMatch(polar, /does not change the product attachment/);

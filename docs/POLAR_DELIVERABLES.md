@@ -36,12 +36,14 @@ Buyers reach the purchase path from [www.yellowgram.dev](https://www.yellowgram.
 
 **Description:**
 
+Source-available kit (zip + docs). You run this. yellowgram does not operate a hosted endpoint for this SKU. Polar delivers seattruth-0.1.1.zip (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). There is no managed, always-on cloud service in this purchase.
+
 SeatTruth is a read-only check between two billing rails, Stripe and Polar, and the product database fields `is_pro` and seats. It reports two disagreements. The operator decides what to do about them.
 
 1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false.
 2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
 
-A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. Delivery on this product is the versioned zip `seattruth-0.1.1.zip` (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`) plus private repository access to `yellowgram/seattruth` when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. They are not what Polar currently delivers. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller: Suthirth solutions. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off.
+A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. The attached file is `seattruth-0.1.1.zip`. Private repository access to `yellowgram/seattruth` is separate, and only when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller: Suthirth solutions. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA.
 
 ## Price, refund, license, support
 

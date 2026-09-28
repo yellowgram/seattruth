@@ -1,6 +1,6 @@
 # Status
 
-Updated 2026-09-27. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` still carries `seattruth-0.1.0.zip`. That tag and that zip are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. The price is unchanged. Soft-WTP stays off. This repository does not contain a Checkout URL.
+Updated 2026-09-28. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` still carries `seattruth-0.1.0.zip`. That tag and that zip are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. The price is unchanged. This repository does not contain a Checkout URL. Buy path: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).
 
 | Item | State |
 | --- | --- |
@@ -16,13 +16,13 @@ Updated 2026-09-27. The detector is on `main`. Implement pull request #5 is merg
 | Detector | On `main`. Read-only. Dry-run does not call the network. `--live` reads Stripe, Polar, and Postgres and can post to Slack. |
 | `npm test` | Smoke test plus fixtures for P26, P27, and P28. Export names still ban charge, write, and fix APIs. |
 | GitHub Action `compare` | Daily cron is live when `SEATTRUTH_MAPPING_YAML` is set. If that secret is unset, the schedule skips and exits 0. That skip is not an entitlement pass. Manual dispatch stays dry-run unless the operator turns that off. A live dispatch fails if the mapping secret is unset. Secrets are not in the workflow file. A green dry-run is not an entitlement pass. |
-| Polar listing | **Listed.** CoS confirmed. Polar organization (dashboard) **Suthirth solutions** (not renamed this week). Legal seller: Suthirth Solutions, operating as yellowgram. Product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Admin: https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753. Checkout is the founding **$79** one-time on this SKU. Raise the same SKU to **$99** after the first 10 organizations. Polar delivers zip `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` exists and is not rewritten; it carries the sealed prior zip `seattruth-0.1.0.zip`, which is not the current Polar delivery. Soft-WTP is off (no coupon). GitHub benefit is off (sudo / mobile blocked; known ops limit). Polar has no per-product refund toggle; **14 days** is in the listing copy. No Checkout URL in this repo. |
+| Polar listing | **Listed.** CoS confirmed. Polar organization (dashboard) **Suthirth solutions** (not renamed this week). Legal seller: Suthirth Solutions, operating as yellowgram. Product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Admin: https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753. Checkout is the founding **$79** one-time on this SKU. Raise the same SKU to **$99** after the first 10 organizations. Polar delivers zip `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` exists and is not rewritten; it carries the sealed prior zip `seattruth-0.1.0.zip`, which is not the current Polar delivery. GitHub benefit is off (sudo / mobile blocked; known ops limit). Polar has no per-product refund toggle; **14 days** is in the listing copy. No Checkout URL in this repo. |
 | License | Source-available under PolyForm Noncommercial 1.0.0 ([../LICENSE](../LICENSE)). Not an OSI-approved license. Commercial use is the SeatTruth commercial grant ([COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md)). Legal seller: **Suthirth Solutions, operating as yellowgram**. |
 | Versioned zip | Polar delivers `release/seattruth-0.1.1.zip`, built by `npm run pack:release`. Prior zip `release/seattruth-0.1.0.zip` is the sealed prior distribution and is not rewritten. |
 | SHA-256 | Polar delivery `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` for `seattruth-0.1.1.zip`. Both zips are in [CHECKSUMS.md](CHECKSUMS.md). |
 | `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the Polar delivery `seattruth-0.1.1.zip` and the sealed prior tag `v0.1.0`. |
 | Package version | `0.1.1`, private. License field `LicenseRef-PolyForm-Noncommercial-1.0.0`. |
-| Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. The live checkout is that founding **$79**. Raise the same SKU to **$99** after those 10. Not negotiable. Soft-WTP stays forbidden. No Soft-WTP coupon. |
+| Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. The live checkout is that founding **$79**. Raise the same SKU to **$99** after those 10. Not negotiable. No coupons. |
 | Refund window | Locked. **14 days**, stated in the listing copy. Polar has no per-product refund toggle. The kit does not recommend end-customer refunds. |
 
 ## Cadence
@@ -43,7 +43,7 @@ A green CI run is not what listed the product. This repository does not contain 
 - Two detect cases only: `paid_locked_out` and `canceled_still_entitled`, matching the P26 and P28 summaries LaunchGate approved.
 - Active rules: P6, P7, P11, P17–P24, P25–P30. No new rule ids.
 - P2 notes are implemented and written in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md): Polar scope `subscriptions:read`, the Stripe invoice-and-charge refund recipe, the P28 fixture table, and the Stripe and Polar pagination contracts.
-- Hard locks stay closed: no auto-fix, no Soft-WTP, no Chargebee, no Autumn. No Checkout URL in the repo.
+- Hard locks stay closed: no auto-fix, no coupons, no Chargebee, no Autumn. No Checkout URL in the repo.
 
 ## Founder (via CoS)
 
@@ -52,7 +52,7 @@ The founder is not in the ordinary CR path. The price is locked at **$99 once** 
 - spending money
 - scope that becomes Chargebee, Autumn, or auto-fix
 
-Soft-WTP stays forbidden. The standing answer is no, and there is no Soft-WTP coupon. The Polar GitHub benefit is off because sudo / mobile blocked enabling it. That is a known ops limit. Operator notes, the product id, and the admin URL are in [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Polar organization (dashboard; not renamed this week): **Suthirth solutions**. Legal seller: **Suthirth Solutions, operating as yellowgram**. People buying from this repository start at [www.yellowgram.dev](https://www.yellowgram.dev) or hello@yellowgram.dev.
+Soft-WTP stays forbidden (standing answer: no coupons / no cold invoices). The Polar GitHub benefit is off because sudo / mobile blocked enabling it. That is a known ops limit. Operator notes, the product id, and the admin URL are in [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Polar organization (dashboard; not renamed this week): **Suthirth solutions**. Legal seller: **Suthirth Solutions, operating as yellowgram**. Buy path: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) or hello@yellowgram.dev.
 
 ## Code review
 
@@ -72,4 +72,4 @@ Soft-WTP stays forbidden. The standing answer is no, and there is no Soft-WTP co
 
 hello@yellowgram.dev
 
-Prefer [www.yellowgram.dev](https://www.yellowgram.dev).
+Prefer [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).

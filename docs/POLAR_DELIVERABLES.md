@@ -2,7 +2,10 @@
 
 Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. This file is the operator packet for that product. It does not contain a Checkout URL.
 
-This 0.1.1 pack is the source-available license fence. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Do not unlist the product. The price stays founding **$79** then **$99** on this same SKU. Soft-WTP stays off. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. They are not what Polar currently delivers. Tag `v0.1.0` is not rewritten.
+This 0.1.1 pack is the source-available license fence. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Do not unlist the product. The price stays founding **$79** then **$99** on this same SKU. Coupons and cold invoices stay off. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. They are not what Polar currently delivers. Tag `v0.1.0` is not rewritten.
+
+Live attachment re-checked 2026-09-28 (America/New_York): product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753` downloadable file id `2c3270fa-312a-4d82-9ab2-bf1e157a2d55` is `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`.
+
 
 Polar organization (dashboard; not renamed this week): **Suthirth solutions**. Legal seller: **Suthirth Solutions, operating as yellowgram**. `LICENSE`, `docs/COMMERCIAL_GRANT.md`, and `docs/STATUS.md` name the same organization.
 
@@ -20,11 +23,11 @@ Polar organization (dashboard; not renamed this week): **Suthirth solutions**. L
 | GitHub Release | `v0.1.1` carries that zip. Tag `v0.1.0` is not rewritten and still carries `seattruth-0.1.0.zip` as the sealed prior distribution |
 | Repository pack | `release/seattruth-0.1.1.zip`. Tag `v0.1.1`. This is the file Polar delivers |
 | License | Source-available under PolyForm Noncommercial 1.0.0. Commercial use is the SeatTruth commercial grant. Not an OSI-approved license |
-| Soft-WTP | Off. No Soft-WTP coupon. |
+| Coupons / cold invoices | Forbidden. No coupon. |
 | GitHub benefit | Off. Enabling it was blocked (sudo / mobile). Known ops limit. |
 | Refund | Polar has no per-product refund toggle. **14 days** is stated in the listing copy. |
 
-Buyers reach the purchase path from [www.yellowgram.dev](https://www.yellowgram.dev) or hello@yellowgram.dev. Keep Checkout URLs out of the README, `BUYER_START_HERE`, and other buyer-facing files.
+Buyers reach the purchase path from [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) or hello@yellowgram.dev. Keep Checkout URLs out of the README, `BUYER_START_HERE`, and other buyer-facing files.
 
 ## Paste-ready listing draft
 
@@ -32,7 +35,7 @@ Buyers reach the purchase path from [www.yellowgram.dev](https://www.yellowgram.
 
 **Price:** Locked at **$99 once** per organization. The live checkout is the founding **$79** one-time on this same SKU. After the first 10 organizations, raise this SKU to **$99**. One product. One SKU. Not a monthly fee.
 
-**Founding note, same SKU:** The first 10 organizations pay $79 once. Do not create a second Polar product. Do not create a Soft-WTP coupon. Do not send a cold invoice.
+**Founding note, same SKU:** The first 10 organizations pay $79 once. Do not create a second Polar product. Do not create a coupon. Do not send a cold invoice.
 
 **Description:**
 
@@ -43,7 +46,7 @@ SeatTruth is a read-only check between two billing rails, Stripe and Polar, and 
 1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false.
 2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
 
-A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. The attached file is `seattruth-0.1.1.zip`. Private repository access to `yellowgram/seattruth` is separate, and only when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the SeatTruth commercial grant in `docs/COMMERCIAL_GRANT.md`. Legal seller: Suthirth Solutions, operating as yellowgram. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA.
+A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. The attached file is `seattruth-0.1.1.zip`. Private repository access to `yellowgram/seattruth` is separate, and only when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the SeatTruth commercial grant in `docs/COMMERCIAL_GRANT.md`. Legal seller: Suthirth Solutions, operating as yellowgram. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Coupons and cold invoices stay off. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA.
 
 ## Price, refund, license, support
 
@@ -53,7 +56,7 @@ A match is silence. The kit does not charge, refund, open Checkout, write `is_pr
 | Live checkout | **$79 once**, founding, this SKU, until the first 10 organizations |
 | Launch hook | First 10 organizations at **$79 once**, on this same SKU, then raise the SKU to **$99** |
 | Refund | **14 days**, stated in the listing copy. Polar has no per-product refund toggle |
-| Soft-WTP / cold invoices | Forbidden. Soft-WTP is off. No Soft-WTP coupon |
+| Coupons / cold invoices | Forbidden. No coupon |
 | GitHub benefit | Off. Known ops limit: sudo / mobile blocked enabling it |
 | License | Source-available under PolyForm Noncommercial 1.0.0 (`LICENSE`). Not an OSI-approved license. Commercial use is the SeatTruth commercial grant (`docs/COMMERCIAL_GRANT.md`). Legal seller: Suthirth Solutions, operating as yellowgram |
 | Support | Email hello@yellowgram.dev. English. No concierge. Boundary in `SUPPORT.md` |
@@ -114,16 +117,16 @@ Done:
 2. GitHub Release `v0.1.0` exists. `seattruth-0.1.0.zip` is that release asset and is the sealed prior distribution. The SHA-256 lives in [CHECKSUMS.md](CHECKSUMS.md).
 3. One SKU is listed under Polar org **Suthirth solutions** (dashboard name unchanged this week). Product ID `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Checkout is the founding **$79** one-time.
 4. `seattruth-0.1.1.zip` is attached on that Polar product. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`.
-5. Soft-WTP is off. There is no Soft-WTP coupon.
+5. Coupons and cold invoices are off. There is no coupon.
 6. The **14-day** refund window is in the listing copy.
 
 Still operator work:
 
-1. After the first 10 organizations, raise this same SKU from **$79** to **$99**. Do not create a second product. Do not add a Soft-WTP coupon.
+1. After the first 10 organizations, raise this same SKU from **$79** to **$99**. Do not create a second product. Do not add a coupon.
 2. Leave the GitHub benefit off while sudo / mobile blocks it. That is a known ops limit. The zip buyers get from the listing is `seattruth-0.1.1.zip`. Tag `v0.1.0` stays sealed and is not rewritten.
 3. Keep **14 days** in the listing copy. Polar has no per-product refund toggle to set.
 4. Keep Checkout URLs out of the README, `BUYER_START_HERE`, and other buyer-facing files.
 
 ## Hard outs that stay closed
 
-No auto-fix. No Chargebee. No Autumn. No Soft-WTP. No cold invoices. No writes to Stripe, Polar, or `is_pro`.
+No auto-fix. No Chargebee. No Autumn. No coupons. No cold invoices. No writes to Stripe, Polar, or `is_pro`.

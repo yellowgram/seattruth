@@ -1,6 +1,6 @@
 # Buyer start here
 
-SeatTruth 0.1.1 is the read-only detector in this private repository, plus the versioned zip [release/seattruth-0.1.1.zip](release/seattruth-0.1.1.zip). Polar delivers that zip. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip) is the sealed prior distribution and is not rewritten. You run it with your own keys. SeatTruth is for sale via Polar: **$99 once** per organization, with the first 10 organizations at **$79 once**. Soft-WTP stays off. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link. The SHA-256 values are in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). Commercial use is the [Suthirth Commercial Grant](docs/COMMERCIAL_GRANT.md). Seller: Suthirth solutions.
+SeatTruth 0.1.1 is the read-only detector in this private repository, plus the versioned zip [release/seattruth-0.1.1.zip](release/seattruth-0.1.1.zip). Polar delivers that zip. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip) is the sealed prior distribution and is not rewritten. You run it with your own keys. SeatTruth is for sale via Polar: **$99 once** per organization, with the first 10 organizations at **$79 once**. Soft-WTP stays off. To buy, use [www.yellowgram.dev](https://www.yellowgram.dev) or email hello@yellowgram.dev. This page is not a Checkout link. The SHA-256 values are in [docs/CHECKSUMS.md](docs/CHECKSUMS.md). Commercial use is the [SeatTruth commercial grant](docs/COMMERCIAL_GRANT.md). Legal seller: Suthirth Solutions, operating as yellowgram.
 
 Contact: hello@yellowgram.dev · prefer [www.yellowgram.dev](https://www.yellowgram.dev)
 
@@ -76,7 +76,7 @@ If a row looks wrong, a person on your team changes your product, using your own
 | [docs/BUYER_NEEDS_BEYOND_CHECKLIST.md](docs/BUYER_NEEDS_BEYOND_CHECKLIST.md) | Needs that will not be in the first kit. |
 | [docs/STATUS.md](docs/STATUS.md) | Where the work actually is. |
 | [LICENSE](LICENSE) | Source-available under PolyForm Noncommercial 1.0.0. Not an OSI-approved license. |
-| [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md) | Suthirth Commercial Grant for one organization. Seller: Suthirth solutions. |
+| [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md) | SeatTruth commercial grant for one organization. Legal seller: Suthirth Solutions, operating as yellowgram. |
 
 ## Support
 

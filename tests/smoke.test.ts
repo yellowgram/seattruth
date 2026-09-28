@@ -380,6 +380,7 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   assert.equal(pkg.license, "LicenseRef-PolyForm-Noncommercial-1.0.0");
   assert.notEqual(pkg.license, "MIT");
   assert.equal(existsSync(path.join(root, "scripts/pack-release.sh")), true);
+  assert.equal(existsSync(path.join(root, "SECURITY.md")), true);
 
   const licenseBytes = readFileSync(path.join(root, "LICENSE"));
   assert.equal(createHash("sha256").update(licenseBytes).digest("hex"), LICENSE_SHA256);
@@ -415,8 +416,12 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   assert.match(polar, /14 days/);
   assert.match(polar, /Suthirth solutions/);
   assert.match(polar, /CHECKSUMS\.md/);
-  assert.match(polar, /Soft-WTP/);
+  assert.match(polar, /coupon|cold invoices/i);
+  assert.doesNotMatch(polar, /Soft-WTP/);
   assert.match(polar, /PolyForm Noncommercial/);
+  const status = readFileSync(path.join(root, "docs/STATUS.md"), "utf8");
+  assert.equal((status.match(/Soft-WTP/g) || []).length, 1);
+  assert.match(status, /Soft-WTP stays forbidden/);
   assert.match(polar, /seattruth-0\.1\.0\.zip/);
   assert.match(polar, /v0\.1\.0/);
   assert.match(polar, /seattruth-0\.1\.1\.zip/);
@@ -437,6 +442,9 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   assert.match(readme, /You run this/);
   assert.match(readme, /does not operate a hosted endpoint/);
   assert.match(readme, /8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6/);
+  assert.match(readme, /yellowgram\.dev\/seattruth/);
+  assert.match(readme, /Paid delta/);
+  assert.match(readme, /SECURITY\.md/);
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
   assert.doesNotMatch(readme, /nothing to buy/i);
   assert.doesNotMatch(readme, /open[- ]source/i);

@@ -363,9 +363,9 @@ test("committed examples contain placeholders and no live secrets", () => {
 const POLYFORM_NC_BODY_SHA256 =
   "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8";
 const LICENSE_SHA256 =
-  "dce3fbcf6775643262bef46400f8074628acc296ce71e617add633c48f17d6b5";
+  "a2ea7ebf20864cc635b26d396e1f830203a155dda4a7f8d213e696deb0fbe580";
 const COMMERCIAL_GRANT_SHA256 =
-  "1afd4c72876d36a306352bd7ab403b227277dbfacfd5c7a15844a11d6163ea08";
+  "afcad55c0e520f75828636cf0ef7c85d0e9ce65f2ccc9541fbf915fc18edce3b";
 const V010_ZIP_SHA256 =
   "abda9333e0ac6b2af3ff71439b0f275f8bcf7aff2fefb99b8d9d0b0870eccb2b";
 
@@ -393,14 +393,15 @@ test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
   assert.match(header, /www\.yellowgram\.dev/);
   assert.match(header, /docs\/COMMERCIAL_GRANT\.md/);
   assert.match(header, /source-available = true/);
-  assert.match(header, /Suthirth Commercial Grant/);
+  assert.match(header, /SeatTruth commercial grant/);
+  assert.match(header, /Suthirth Solutions, operating as yellowgram/);
   const body = license.slice(markerAt);
   assert.equal(createHash("sha256").update(body).digest("hex"), POLYFORM_NC_BODY_SHA256);
 
   const grantBytes = readFileSync(path.join(root, "docs/COMMERCIAL_GRANT.md"));
   assert.equal(createHash("sha256").update(grantBytes).digest("hex"), COMMERCIAL_GRANT_SHA256);
   const grant = grantBytes.toString("utf8");
-  assert.match(grant, /Suthirth solutions/);
+  assert.match(grant, /Suthirth Solutions, operating as yellowgram/);
   assert.match(grant, /\$99 once per organization/);
   assert.match(grant, /9aab6e67-3533-44d1-aa0b-bfdaf6dbc753/);
   assert.match(grant, /no included Issues SLA/);

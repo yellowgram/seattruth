@@ -85,4 +85,4 @@ The detector is on `main` (pull request #5) and is read-only. The price lock is 
 
 ## License
 
-SeatTruth is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE). PolyForm Noncommercial 1.0.0 is not an OSI-approved license. Commercial production use requires a paid [Suthirth Commercial Grant](docs/COMMERCIAL_GRANT.md) from Suthirth solutions. Seller: Suthirth solutions. Contact hello@yellowgram.dev.
+SeatTruth is source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE). PolyForm Noncommercial 1.0.0 is not an OSI-approved license. Commercial production use requires a paid [SeatTruth commercial grant](docs/COMMERCIAL_GRANT.md) from Suthirth Solutions, operating as yellowgram. Legal seller: Suthirth Solutions, operating as yellowgram. Contact hello@yellowgram.dev.

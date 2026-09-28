@@ -4,14 +4,14 @@ Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **li
 
 This 0.1.1 pack is the source-available license fence. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Do not unlist the product. The price stays founding **$79** then **$99** on this same SKU. Soft-WTP stays off. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. They are not what Polar currently delivers. Tag `v0.1.0` is not rewritten.
 
-Polar organization and seller: **Suthirth solutions**. `LICENSE`, `docs/COMMERCIAL_GRANT.md`, and `docs/STATUS.md` name the same organization.
+Polar organization (dashboard; not renamed this week): **Suthirth solutions**. Legal seller: **Suthirth Solutions, operating as yellowgram**. `LICENSE`, `docs/COMMERCIAL_GRANT.md`, and `docs/STATUS.md` name the same organization.
 
 ## Listed product
 
 | Item | Value |
 | --- | --- |
 | State | **Listed.** CoS confirmed. |
-| Organization | **Suthirth solutions** |
+| Polar organization (dashboard; not renamed this week) | **Suthirth solutions** |
 | Product ID | `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753` |
 | Admin | https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753 |
 | Checkout price now | **$79** founding, one-time, this SKU |
@@ -19,7 +19,7 @@ Polar organization and seller: **Suthirth solutions**. `LICENSE`, `docs/COMMERCI
 | Zip on the product | `seattruth-0.1.1.zip` is attached. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` |
 | GitHub Release | `v0.1.1` carries that zip. Tag `v0.1.0` is not rewritten and still carries `seattruth-0.1.0.zip` as the sealed prior distribution |
 | Repository pack | `release/seattruth-0.1.1.zip`. Tag `v0.1.1`. This is the file Polar delivers |
-| License | Source-available under PolyForm Noncommercial 1.0.0. Commercial use is the Suthirth Commercial Grant. Not an OSI-approved license |
+| License | Source-available under PolyForm Noncommercial 1.0.0. Commercial use is the SeatTruth commercial grant. Not an OSI-approved license |
 | Soft-WTP | Off. No Soft-WTP coupon. |
 | GitHub benefit | Off. Enabling it was blocked (sudo / mobile). Known ops limit. |
 | Refund | Polar has no per-product refund toggle. **14 days** is stated in the listing copy. |
@@ -43,7 +43,7 @@ SeatTruth is a read-only check between two billing rails, Stripe and Polar, and 
 1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false.
 2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
 
-A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. The attached file is `seattruth-0.1.1.zip`. Private repository access to `yellowgram/seattruth` is separate, and only when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller: Suthirth solutions. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA.
+A match is silence. The kit does not charge, refund, open Checkout, write `is_pro`, or auto-fix. The attached file is `seattruth-0.1.1.zip`. Private repository access to `yellowgram/seattruth` is separate, and only when that access is granted outside Polar's GitHub benefit. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution. English email support at hello@yellowgram.dev. There is no concierge and no qualification call. SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. Commercial use is the SeatTruth commercial grant in `docs/COMMERCIAL_GRANT.md`. Legal seller: Suthirth Solutions, operating as yellowgram. The kit does not recommend refunds of an operator's end customers. The 14-day refund window is for the SeatTruth purchase and is stated in this listing copy. Soft-WTP stays off. Uptime of the process you run is yours. Email support is best-effort, and there is no SLA.
 
 ## Price, refund, license, support
 
@@ -55,7 +55,7 @@ A match is silence. The kit does not charge, refund, open Checkout, write `is_pr
 | Refund | **14 days**, stated in the listing copy. Polar has no per-product refund toggle |
 | Soft-WTP / cold invoices | Forbidden. Soft-WTP is off. No Soft-WTP coupon |
 | GitHub benefit | Off. Known ops limit: sudo / mobile blocked enabling it |
-| License | Source-available under PolyForm Noncommercial 1.0.0 (`LICENSE`). Not an OSI-approved license. Commercial use is the Suthirth Commercial Grant (`docs/COMMERCIAL_GRANT.md`). Seller: Suthirth solutions |
+| License | Source-available under PolyForm Noncommercial 1.0.0 (`LICENSE`). Not an OSI-approved license. Commercial use is the SeatTruth commercial grant (`docs/COMMERCIAL_GRANT.md`). Legal seller: Suthirth Solutions, operating as yellowgram |
 | Support | Email hello@yellowgram.dev. English. No concierge. Boundary in `SUPPORT.md` |
 | Contact site | https://www.yellowgram.dev |
 | Delivery | Zip `seattruth-0.1.1.zip` is what Polar delivers. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Tag `v0.1.0` and `seattruth-0.1.0.zip` are the sealed prior distribution, not the current Polar delivery. Private repo `yellowgram/seattruth` is not granted by the Polar GitHub benefit |
@@ -112,7 +112,7 @@ Done:
 
 1. This pack is on `main`.
 2. GitHub Release `v0.1.0` exists. `seattruth-0.1.0.zip` is that release asset and is the sealed prior distribution. The SHA-256 lives in [CHECKSUMS.md](CHECKSUMS.md).
-3. One SKU is listed under **Suthirth solutions**. Product ID `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Checkout is the founding **$79** one-time.
+3. One SKU is listed under Polar org **Suthirth solutions** (dashboard name unchanged this week). Product ID `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Checkout is the founding **$79** one-time.
 4. `seattruth-0.1.1.zip` is attached on that Polar product. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`.
 5. Soft-WTP is off. There is no Soft-WTP coupon.
 6. The **14-day** refund window is in the listing copy.

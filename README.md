@@ -13,7 +13,7 @@ The read-only detector: one organization, one mapping file, restricted keys, a s
 1. Paid on an applicable rail, no applicable rail ambiguous, and `is_pro` false.
 2. Status `canceled` on every applicable rail, and `is_pro` true. A Polar refund is not this case. Stripe `active` with any refund is not this case.
 
-A match is silence. A dry-run is not an all-clear. The kit does not charge, write `is_pro`, or auto-fix.
+A match is silence. A dry-run is not an all-clear. The kit does not charge, write `is_pro`, or auto-fix. Limits a green run still does not prove: [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md).
 
 ## What stays out
 
@@ -61,7 +61,7 @@ npm run compare -- --dry-run
 
 ## Docs
 
-[docs/README.md](docs/README.md) is the index. Operators: [BUYER_START_HERE.md](BUYER_START_HERE.md). Fixture clip: [docs/DEMO_60S.md](docs/DEMO_60S.md). Support: [SUPPORT.md](SUPPORT.md). Security reports: [SECURITY.md](SECURITY.md). Status: [docs/STATUS.md](docs/STATUS.md). Changelog: [CHANGELOG.md](CHANGELOG.md).
+[docs/README.md](docs/README.md) is the index. Operators: [BUYER_START_HERE.md](BUYER_START_HERE.md). What a run will not catch: [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md). Fixture clip: [docs/DEMO_60S.md](docs/DEMO_60S.md). Support: [SUPPORT.md](SUPPORT.md). Security reports: [SECURITY.md](SECURITY.md). Status: [docs/STATUS.md](docs/STATUS.md). Changelog: [CHANGELOG.md](CHANGELOG.md).
 
 ## Status
 

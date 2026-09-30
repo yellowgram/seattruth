@@ -1,6 +1,8 @@
 # Status
 
-Updated 2026-09-28. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` still carries `seattruth-0.1.0.zip`. That tag and that zip are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. The price is unchanged. This repository does not contain a Checkout URL. Buy path: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).
+Updated 2026-09-30. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` still carries `seattruth-0.1.0.zip`. That tag and that zip are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. The price is unchanged. This repository does not contain a Checkout URL. Buy path: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).
+
+`main` tip and the Polar pin are different commits. The relationship is in [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md) and below. This note does not attach a zip or cut a tag.
 
 | Item | State |
 | --- | --- |
@@ -20,9 +22,9 @@ Updated 2026-09-28. The detector is on `main`. Implement pull request #5 is merg
 | License | Source-available under PolyForm Noncommercial 1.0.0 ([../LICENSE](../LICENSE)). Not an OSI-approved license. Commercial use is the SeatTruth commercial grant ([COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md)). Legal seller: **Suthirth Solutions, operating as yellowgram**. |
 | Versioned zip | Polar delivers `release/seattruth-0.1.1.zip`, built by `npm run pack:release`. Prior zip `release/seattruth-0.1.0.zip` is the sealed prior distribution and is not rewritten. |
 | SHA-256 | Polar delivery `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` for `seattruth-0.1.1.zip`. Both zips are in [CHECKSUMS.md](CHECKSUMS.md). |
-| `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the Polar delivery `seattruth-0.1.1.zip` and the sealed prior tag `v0.1.0`. |
+| `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the Polar delivery `seattruth-0.1.1.zip`, the sealed prior tag `v0.1.0`, and the `main` tip versus Polar pin SHAs. |
 | Package version | `0.1.1`, private. License field `LicenseRef-PolyForm-Noncommercial-1.0.0`. |
-| Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. The live checkout is that founding **$79**. Raise the same SKU to **$99** after those 10. Not negotiable. No coupons. |
+| Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. The live checkout is that founding **$79**. Raise the same SKU to **$99** after those 10. That raise is still open ops. Buyer-facing copy stays the founding **$79** until it happens. Not negotiable. No coupons. |
 | Refund window | Locked. **14 days**, stated in the listing copy. Polar has no per-product refund toggle. The kit does not recommend end-customer refunds. |
 
 ## Cadence
@@ -37,6 +39,24 @@ The design and code gates that produced the detector are finished. Ordinary gate
 6. **Polar listing.** Founder typed go-live on 2026-09-26. CoS confirmed the product is listed. Polar delivers `seattruth-0.1.1.zip` (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). GitHub Release `v0.1.0` exists and is not rewritten. `seattruth-0.1.0.zip` is the sealed prior distribution, not the current Polar delivery.
 
 A green CI run is not what listed the product. This repository does not contain a Checkout URL.
+
+The gates above finished the detector on `main`. The next product-code change uses the same cadence again and does not collapse it. Standing rule: [../CONTRIBUTING.md](../CONTRIBUTING.md). A collapsed DR×3 or CR×3 is a fail.
+
+## Tip and Polar pin
+
+Recorded 2026-09-30. `main` is ahead of the commit Polar delivers. Checklist: [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md). Issue: https://github.com/yellowgram/seattruth/issues/16
+
+| | |
+| --- | --- |
+| `main` tip | `26b6df062bdf9914df8cefd75fa006e38ba623ae` |
+| Polar pin | tag `v0.1.1` at `ceb3da6d73250e4602e47af4797e0870891a4640` |
+| Zip | `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` |
+
+The zip and the tag are the pin. They are not a pack of `main` tip. Six commits sit on tip only. Observed the same day: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) names that zip and that SHA-256. It does not name `main` tip. The page matches the Polar pin. The founding-price raise (**$79** to **$99** on this SKU after 10 organizations) is still open. This file does not change the listing price.
+
+## Parked
+
+Chargebee, Autumn, Paddle, auto-fix, hosted history, a webhook receiver, suggested SQL, and snooze stay out. The marker is [issue #18](https://github.com/yellowgram/seattruth/issues/18) and the parked list in [MVP_SCOPE.md](MVP_SCOPE.md). This file does not build them.
 
 ## Scope that shipped
 
@@ -67,6 +87,10 @@ Soft-WTP stays forbidden (standing answer: no coupons / no cold invoices). The P
 - 4th DR packet: [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
 - P2 notes: [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
 - Checklist v3: [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md).
+- Atomic ship pin: [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md).
+- Limits a buyer can misread: [WHAT_THIS_WILL_NOT_CATCH.md](WHAT_THIS_WILL_NOT_CATCH.md).
+- One live org, boxes open: [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md).
+- Next product-code cadence: [../CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Contact
 

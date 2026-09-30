@@ -26,6 +26,7 @@ The path an operator can finish from the docs. The dry-run prefix works without 
 - [ ] Operator stores the four secrets and the mapping path in GitHub Actions. The Slack webhook is one of those secrets. It is not written into the workflow file.
 - [ ] A manual live dispatch posts to Slack only for a finding, a non-zero ambiguous count, or a failed classification. It does not post a daily all-clear (P24, P30).
 - [ ] The daily cron repeats that live run once `SEATTRUTH_MAPPING_YAML` is set. Exit code is non-zero when `allClear` is false. That red Actions check is the failure signal (P30). An unset mapping secret skips the schedule instead of failing it.
+- [ ] One live org is proved on [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md): mapping secret, restricted keys, a `SELECT` role, Slack, and cron. Those boxes stay open. This checklist does not claim the proof is done.
 
 ## 2. Safe defaults
 
@@ -56,6 +57,7 @@ An operator should not need a call to learn the boundary.
 - [x] [../LICENSE](../LICENSE) is the fleet header plus the PolyForm Noncommercial License 1.0.0. [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md) is the Suthirth Commercial Grant for SeatTruth. Seller: Suthirth solutions. SeatTruth is source-available. PolyForm Noncommercial 1.0.0 is not an OSI-approved license.
 - [x] [../SUPPORT.md](../SUPPORT.md) is the email boundary. English, no concierge, and no end-customer refund advice.
 - [x] A short first live run note is in [../BUYER_START_HERE.md](../BUYER_START_HERE.md). The ids are invented. It shows a finding, an ambiguous count, and a failed read, and it does not say which change to make.
+- [x] [WHAT_THIS_WILL_NOT_CATCH.md](WHAT_THIS_WILL_NOT_CATCH.md) states limits a buyer can misread as revenue assurance. Links from the README and from `BUYER_START_HERE`.
 
 ## 4. CI
 

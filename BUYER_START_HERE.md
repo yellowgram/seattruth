@@ -22,7 +22,7 @@ You run the kit inside your own GitHub repository and your own database. yellowg
 
 ## What a live run needs
 
-The detector is already in this repository. A live run still needs your keys. A dry-run does not.
+The detector is already in this repository. A live run still needs your keys. A dry-run does not. The one-org proof checklist is [docs/LIVE_OPERATOR_LOOP.md](docs/LIVE_OPERATOR_LOOP.md). Those boxes are open. This page does not claim that proof is done.
 
 1. A Stripe restricted key (`rk_`) with read access only: Subscriptions, Invoices, and Charges. Secret keys (`sk_`) are refused. Or leave the Stripe rail disabled with `customer_id: null`.
 2. A Polar Organization Access Token with `subscriptions:read` only, or leave the Polar rail disabled the same way. Create it in the Polar organization settings. Overview: https://polar.sh/docs/integrate/oat
@@ -30,6 +30,8 @@ The detector is already in this repository. A live run still needs your keys. A 
 4. A database role that can `SELECT` that relation and cannot change it.
 5. A Slack incoming webhook on `https://hooks.slack.com/…` for a channel your operators already watch.
 6. GitHub Actions secrets for those values, plus `SEATTRUTH_MAPPING_YAML`. The workflow file names those secrets and does not contain the values. The daily cron is the live path once `SEATTRUTH_MAPPING_YAML` is set. A manual dispatch stays a dry-run unless you set `dry_run` to false. If that mapping secret is unset, the schedule skips and exits 0. That skip is not an all-clear. A manual live dispatch fails if the mapping secret is missing. After the mapping secret is set, a missing database URL, a missing credential on an enabled rail, or a missing Slack webhook when a post is required still fails the job.
+
+Limits a green run still does not prove: [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md).
 
 ## How to read a result
 
@@ -74,6 +76,7 @@ If a row looks wrong, a person on your team changes your product, using your own
 
 | Read | Why |
 | --- | --- |
+| [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md) | Active means paid, an empty relation can all-clear, a Polar refund is not canceled, dry-run and a skipped schedule are not an all-clear. |
 | [docs/DEMO_60S.md](docs/DEMO_60S.md) | One-command fixture clip. Stripe and Polar in the same take. No live keys. |
 | [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) | What the two cases are, and the active rules after DR#3. |
 | [docs/MINIMUM_SUPPORT_CHECKLIST.md](docs/MINIMUM_SUPPORT_CHECKLIST.md) | What "supported" means, including the 0.1.1 zip. |

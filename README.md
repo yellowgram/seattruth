@@ -4,7 +4,7 @@ Source-available kit (zip + docs). You run this. yellowgram does not operate a h
 
 Polar delivers **`seattruth-0.1.1.zip`** (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). Tag `v0.1.0` / `release/seattruth-0.1.0.zip` stay sealed as the prior GitHub Release only. They are not what Polar delivers now.
 
-Buy: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) or hello@yellowgram.dev. This repository has no Checkout URL. Start here as an operator: [BUYER_START_HERE.md](BUYER_START_HERE.md).
+Product page (Paid catalog demoted 2026-09-30; Polar checkout stays quiet): [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) or hello@yellowgram.dev. This repository has no Checkout URL. Soft-WTP off. Start here as an operator: [BUYER_START_HERE.md](BUYER_START_HERE.md).
 
 ## What it is
 

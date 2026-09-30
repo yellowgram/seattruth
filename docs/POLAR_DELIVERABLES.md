@@ -6,6 +6,19 @@ This 0.1.1 pack is the source-available license fence. Polar delivers `seattruth
 
 Live attachment re-checked 2026-09-28 (America/New_York): product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753` downloadable file id `2c3270fa-312a-4d82-9ab2-bf1e157a2d55` is `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`.
 
+## Tip versus Polar pin
+
+Recorded 2026-09-30. These are different commits. Write both here and in [STATUS.md](STATUS.md) whenever they diverge. The ship checklist is [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md). This file does not attach a zip and does not cut a tag.
+
+| | |
+| --- | --- |
+| `main` tip | `26b6df062bdf9914df8cefd75fa006e38ba623ae` |
+| Polar pin tag | `v0.1.1` |
+| Polar pin commit | `ceb3da6d73250e4602e47af4797e0870891a4640` |
+| Zip Polar delivers | `seattruth-0.1.1.zip` |
+| SHA-256 | `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` |
+
+`v0.1.1` is an ancestor of `main`. Six commits sit on tip only. The attached zip is the pin, not a pack of `main` tip. Observed the same day: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) names that zip and that SHA-256. It does not name `main` tip.
 
 Polar organization (dashboard; not renamed this week): **Suthirth solutions**. Legal seller: **Suthirth Solutions, operating as yellowgram**. `LICENSE`, `docs/COMMERCIAL_GRANT.md`, and `docs/STATUS.md` name the same organization.
 
@@ -122,7 +135,7 @@ Done:
 
 Still operator work:
 
-1. After the first 10 organizations, raise this same SKU from **$79** to **$99**. Do not create a second product. Do not add a coupon.
+1. After the first 10 organizations, raise this same SKU from **$79** to **$99**. That raise is still open. Do not rewrite buyer-facing copy to a live **$99** checkout before it happens. Do not create a second product. Do not add a coupon. Checklist: [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md).
 2. Leave the GitHub benefit off while sudo / mobile blocks it. That is a known ops limit. The zip buyers get from the listing is `seattruth-0.1.1.zip`. Tag `v0.1.0` stays sealed and is not rewritten.
 3. Keep **14 days** in the listing copy. Polar has no per-product refund toggle to set.
 4. Keep Checkout URLs out of the README, `BUYER_START_HERE`, and other buyer-facing files.

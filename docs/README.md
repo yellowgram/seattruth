@@ -21,7 +21,11 @@ The detector is on `main` and is read-only. Version **0.1.1** is source-availabl
 | [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md) | CR#2, operator safety. P0/P1 fixes and deferred P2 limits. |
 | [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md) | CR#3, buyer path. P0/P1 fixes and deferred P2 limits. |
 | [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md) | 4th code-review gate packet. Ask is APPROVE squash-merge or REQUEST CHANGES. |
-| [STATUS.md](STATUS.md) | Detector on `main`. Polar listing listed. 0.1.1 pack. 0.1.0 zip untouched. |
+| [STATUS.md](STATUS.md) | Detector on `main`. Polar listing listed. 0.1.1 pack. 0.1.0 zip untouched. `main` tip versus Polar pin. |
+| [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md) | Zip, tag, and yellowgram.dev pin ship as one. Founding-price raise stays open. |
+| [WHAT_THIS_WILL_NOT_CATCH.md](WHAT_THIS_WILL_NOT_CATCH.md) | Buyer limits: any active is paid, empty relation, Polar refund, dry-run, no hosted endpoint. |
+| [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md) | One live org. Mapping secret, restricted keys, SELECT role, Slack, cron. Boxes stay open. |
+| [../CONTRIBUTING.md](../CONTRIBUTING.md) | Product-code cadence DR×3 → LaunchGate DR4 → implement → CR×3 → LaunchGate CR4 → squash-merge. |
 
 Front door for an operator: [../BUYER_START_HERE.md](../BUYER_START_HERE.md).
 

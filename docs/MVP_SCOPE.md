@@ -210,6 +210,19 @@ Parked. Not promised. The 4th DR packet does not move these into scope. A later 
 
 Deduped or snoozed alerts are not parked. They are refused. A repeated finding stays visible.
 
+## Parked — issue #18
+
+Founder park, 2026-09-30. This is a marker, not a build. Do not implement the list without a founder (via CoS) greenlight. Issue: https://github.com/yellowgram/seattruth/issues/18
+
+- Chargebee, Autumn, and Paddle as rails.
+- Auto-fix, entitlement writes, charges, and Checkout inside the kit.
+- Hosted buyer history, and a managed always-on service. You run the kit. yellowgram does not operate a hosted endpoint for this SKU.
+- A webhook receiver.
+- Suggested SQL, or alert copy that says to set `is_pro`.
+- An ignore list or snooze. Snooze stays refused (P24). It is not a later feature.
+
+A still read-only slice (seat-quantity inequality, or a CSV of the same alert fields) reopens only when a paying operator asks and founder (via CoS) greenlights. Kill criterion 5 is unchanged.
+
 ## Accepted limits for the 4th DR
 
 These stay in the design on purpose. They are not silent.

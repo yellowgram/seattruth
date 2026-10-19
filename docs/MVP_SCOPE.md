@@ -7,12 +7,11 @@
 The gates below are finished. The detector on `main` is that implement work.
 
 1. **DR×3.** Done. DR#1, DR#2, and DR#3 are separate pull requests. This file's rules are the DR#3 text.
-2. **4th DR → LaunchGate APPROVE.** Done, before the implement PR. The packet is [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
+2. **4th DR → LaunchGate APPROVE.** Done, before the implement PR. The packet is in the git history.
 3. **Implement PR.** Done. Pull request #5 is merged. The detector is on `main`.
 4. **CR×3.** Done on that implement work.
-5. **Price and refund.** Locked on pull request #6.
 
-The price is locked at **$99 once** per organization (first 10 at **$79 once**, one SKU). The refund window is locked at **14 days**. Founder typed Polar **go-live** on 2026-09-26. CoS confirmed the Polar listing is listed. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. The **0.1.1** pack is source-available under the PolyForm Noncommercial License 1.0.0, with commercial use in the Suthirth Commercial Grant. That license is not an OSI-approved license. Tag `v0.1.0` and `release/seattruth-0.1.0.zip` are not rewritten. They are the sealed prior distribution, not the zip Polar currently delivers. This repo has no Checkout URL. Soft-WTP stays forbidden. Founder (via CoS) still decides spending money, and scope that becomes Chargebee, Autumn, or auto-fix.
+SeatTruth is MIT licensed from 0.2.0 and is no longer sold.
 
 SeatTruth compares Stripe and Polar, read-only, with one product database. The product fields in view are `is_pro` and seats. The kit is restricted keys, one mapping file, a GitHub Action on a cron, and a Slack alert.
 
@@ -137,43 +136,16 @@ The shape of a live run:
 
 Cadence is daily. Hourly monitoring is a different product.
 
-## Price
-
-**$99 once** per organization. One-time purchase, not a monthly fee. Launch hook: the first 10 organizations at **$79 once**, on the same SKU. Self-serve, one organization. Global English buyers. No sales call. The current repository zip is `release/seattruth-0.1.1.zip`. Polar delivers that file. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. `release/seattruth-0.1.0.zip` is unchanged. It is the sealed prior distribution, not the current Polar delivery. The SHA-256 values are in [CHECKSUMS.md](CHECKSUMS.md). The operator packet is [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Commercial use is [COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md). Seller: Suthirth solutions. Founder typed go-live on 2026-09-26. CoS confirmed the Polar listing is listed. SeatTruth is for sale via Polar. The purchase path from this repo is [www.yellowgram.dev](https://www.yellowgram.dev) or hello@yellowgram.dev. There is no Checkout URL in this repo. Soft-WTP stays off.
-
-Soft-WTP is a hard out: public "what would you pay" tests, fake-door checkout, pay-what-you-want, and cold invoices. The locked number is not a negotiation. The refund window is **14 days**. Neither figure is a survey or a LaunchGate substitute. The kit does not recommend refunding an end customer (P24).
-
 ## Kill criteria
 
 Stop the product, or refuse the request, when any of these is true:
 
 1. The 4th DR shows one of the two cases cannot be decided without a write, a fuzzy match, or a guessed schema. Drop the case in that review. Do not widen the product to save it. DR#2 and DR#3 did not drop a case.
-2. The buyer being served wants a qualification call, an executive PDF, or pricing aimed at large subscription counts. That is a different business. Decline.
+2. The operator being served wants a qualification call, an executive PDF, or large-subscription-count monitoring. That is a different project. Decline.
 3. The implementation cannot keep the smoke test's ban on charge, write, and fix exports.
 4. Most support demand is "change my webhook" or "fix this row." The kit does not do that work. If that is the demand, the product is the wrong shape.
-5. A named entitlement reconciler (DriftExact, ProdVerdict, Venwai, or EntitleGuard) ships a maintained Polar read against a product database, at a self-serve price near the locked **$99 once**, before SeatTruth has an operator. Reconsider. Do not answer by adding audit features or auto-fix. RevReclaim already names Polar for billing-leak scans and markets auto-fix. That product does not close this gap.
-6. LaunchGate does not approve the 4th DR. Separately, the founder (via CoS) refuses a reserved decision: spending money, or scope that becomes Chargebee, Autumn, or auto-fix. Soft-WTP stays refused. The price is already locked at **$99 once** (first 10 at **$79 once**). The refund window is already locked at **14 days**. Founder typed Polar go-live on 2026-09-26.
-
-## Differentiation
-
-Public skim **2026-09-26**. Sources, prices, and unknowns: [COMPETITIVE_SKIM.md](COMPETITIVE_SKIM.md). DR#2 and DR#3 did not re-price those pages and did not add metrics. The Polar entitlement gap stands as published there. Polar's refund doc was read for P26. That is Polar's own API behavior, not a competitor closing the gap.
-
-The **Polar ↔ product-database entitlement reconciler** gap is open among the named peers:
-
-- **DriftExact, Venwai, and EntitleGuard** are Stripe-only on the pages reviewed.
-- **ProdVerdict** is Stripe and Paddle. The public README does not mention Polar.
-- **RevReclaim** does name Polar. It is a different product: billing-leak hygiene, and paid plans market auto-fix.
-
-**SeatTruth's public wedge** is **$99 once** per organization (optional first 10 at **$79 once**), **Stripe and Polar**, read-only, **no auto-fix**. It moved from a monthly $49–99 band to that one-time price.
-
-Closest shapes, from those same pages:
-
-- **DriftExact** is the closest mid-market peer. Read-only, no auto-fix, published **£399–£1,500+/mo**, best-fit copy around **500+** active Stripe subscriptions. Qualification-gated. That buyer is kill criterion 2.
-- **ProdVerdict** is the closest indie peer. Access contract, GitHub Actions, Slack, no write-back described. Pro Cloud is about **$39/project/mo** in the changelog. prodverdict.com returned **503** (deployment paused) during the skim, so that price was not re-checked on a live pricing page.
-
-Venwai ($29/mo after beta, up to 500 subscriptions) and EntitleGuard (monitoring beta $79/mo) are the indie monthly prices from that skim. Neither shows Polar. SeatTruth's own price is the one-time lock above.
-
-This is a gap in published materials. It is not a claim about roadmaps, revenue, customer counts, or accuracy. Polar having a subscription status enum is not a competitor shipping this reconcile.
+5. Another maintained tool ships a read-only Polar read against a product database that covers these two cases. Reconsider. Do not answer by adding audit features or auto-fix.
+6. Scope that becomes Chargebee, Autumn, or auto-fix is refused.
 
 ## Out
 
@@ -182,20 +154,17 @@ Hard outs for the life of this positioning:
 - Charges, refunds, Checkout, customer portal, invoices created by the kit.
 - Writes to Stripe, Polar, or the product database.
 - Auto-fix, suggested SQL, and "set `is_pro`" copy (P24).
-- Soft-WTP and cold invoices.
 - Plan-name drift, duplicate-customer findings as a product feature, orphan customers, seat-count inequality.
 - Treating `past_due`, trials, `unpaid`, disputes, refunds, or `cancel_at_period_end` as case 1 or case 2. Trials are a deliberate skip. The others stay ambiguous (P26).
 - Paddle, Chargebee, Autumn, or any processor besides Stripe and Polar. Adding one is a founder (via CoS) scope change, and DR#2's answer is no.
-- A webhook receiver, or intercepting the buyer's webhooks.
-- Hosting buyer customer rows on yellowgram infrastructure.
+- A webhook receiver, or intercepting the operator's webhooks.
+- Hosting operator customer rows on yellowgram infrastructure.
 - Enterprise audit PDFs, qualification calls, SOC-report packaging.
 - A Stripe mirror or warehouse.
 - An LLM in the compare path. Fuzzy matching. Schema guessing.
 - Email, name, or card data in Slack.
-- A Checkout URL in this repository. Polar delivers `seattruth-0.1.1.zip`. The 0.1.0 zip is the sealed prior distribution. `POLAR_DELIVERABLES` is real. The Polar listing is listed. SeatTruth is for sale via Polar. Soft-WTP and cold invoices stay out.
 - Exception lists, snooze, and "ack this user" state.
 - Support in languages other than English.
-- Reading GitHub Issues on a private buyer repo as the support channel.
 
 ## Later
 
@@ -216,12 +185,12 @@ Founder park, 2026-09-30. This is a marker, not a build. Do not implement the li
 
 - Chargebee, Autumn, and Paddle as rails.
 - Auto-fix, entitlement writes, charges, and Checkout inside the kit.
-- Hosted buyer history, and a managed always-on service. You run the kit. yellowgram does not operate a hosted endpoint for this SKU.
+- Hosted history, and a managed always-on service. You run the kit. yellowgram does not operate a hosted endpoint for it.
 - A webhook receiver.
 - Suggested SQL, or alert copy that says to set `is_pro`.
 - An ignore list or snooze. Snooze stays refused (P24). It is not a later feature.
 
-A still read-only slice (seat-quantity inequality, or a CSV of the same alert fields) reopens only when a paying operator asks and founder (via CoS) greenlights. Kill criterion 5 is unchanged.
+A still read-only slice (seat-quantity inequality, or a CSV of the same alert fields) reopens only when an operator asks and the maintainer agrees. Kill criterion 5 is unchanged.
 
 ## Accepted limits for the 4th DR
 
@@ -231,23 +200,4 @@ These stay in the design on purpose. They are not silent.
 - `trialing`, `incomplete`, and `incomplete_expired` do not block `allClear` (P25, P30). `past_due`, `paused`, and `unpaid` do.
 - There is no primary rail (P28). P15 is superseded.
 - A Polar refund does not classify the subscription. Status `canceled` does (P26).
-- The 0.1.0 zip is `release/seattruth-0.1.0.zip`. Its SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). That tag and zip are the sealed prior distribution. They are not what Polar currently delivers. Polar delivers `seattruth-0.1.1.zip`. The operator packet is [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Founder typed go-live on 2026-09-26. CoS confirmed the Polar listing is listed. GitHub Release `v0.1.0` exists and is not rewritten.
-- The 4th DR left the price and the refund window unset. Founder later locked **$99 once** per organization (first 10 at **$79 once**) and a **14-day** refund window, then typed Polar go-live on 2026-09-26. Those locks did not come from the 4th DR.
 
-## 4th DR packet
-
-LaunchGate approved the 4th DR on pull request #4 at `eed8afdb210a46e489b5815b5261f8574f906336`. The ask and the limits are in [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md). The implement work is on `main` (pull request #5). This file does not add a rule id. CR×3 is done. The 4th code-review packet remains [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). It is not an open gate for the detector that is already on `main`.
-
-## Read path
-
-These are the P2 notes from [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md). They do not add a detect case.
-
-- **Polar scope.** `subscriptions:read` only, cited above. Order and refund endpoints are not called.
-- **Stripe refunds.** For `active` subscriptions, paginate `GET /v1/invoices?subscription={id}&expand[]=data.charge` until `has_more` is false. A `ch_…` id is loaded with `GET /v1/charges/{id}`. Any charge with `amount_refunded > 0` or `refunded: true` makes that subscription ambiguous. If a paid invoice has no readable charge, the subscription is ambiguous, not paid. Sources: [list invoices](https://docs.stripe.com/api/invoices/list), [expanding objects](https://docs.stripe.com/api/expanding_objects), [charge object](https://docs.stripe.com/api/charges/object).
-- **P27 Stripe.** `GET /v1/subscriptions?status=all&limit=100`, following `has_more` and `starting_after`. A truncated page is `stripe_incomplete_read` or `stripe_http_*`, and those ids are not compared.
-- **P27 Polar.** `GET /v1/subscriptions?limit=100&page={n}` with no status filter. Complete means pages `1..pagination.max_page` and the item count equals `pagination.total_count`.
-- **P28 fixtures.** The cross-rail table in the acceptance notes is what `tests/rules.test.ts` locks.
-
-## Runtime behavior
-
-Dry-run (`compareReadOnly`, the CLI default) returns `implemented: true`, `allClear: false`, and does not read providers, Postgres, or Slack. `--live` follows the P30 exit table: `0` when `allClear` is true, `2` when the run finished with findings or ambiguous users, `1` on a run error. The earlier scaffold refusal of `--live` with exit 2 is retired. Slack is posted only for a finding, a non-zero ambiguous count, or a run error. The smoke test still locks the export surface against charge, write, and fix names. `MappingDocument` requires `schema`. Polar delivers `seattruth-0.1.1.zip`. The 0.1.0 zip remains in the tree as the sealed prior distribution. Its SHA-256 is in [CHECKSUMS.md](CHECKSUMS.md). [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md) is in the tree.

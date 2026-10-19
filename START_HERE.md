@@ -1,17 +1,13 @@
-# Buyer start here
+# Start here
 
-SeatTruth **0.1.1** is the read-only detector in this private repository, plus the versioned zip [release/seattruth-0.1.1.zip](release/seattruth-0.1.1.zip). **Polar delivers that zip.** SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. [release/seattruth-0.1.0.zip](release/seattruth-0.1.0.zip) is the sealed prior GitHub Release only and is not rewritten. You run it with your own keys.
+SeatTruth is the read-only detector in this repository, MIT licensed. Install it with `npm install seattruth` or clone the repository. You run it with your own keys. Releases before 0.2.0 were published under the previous license; see [release/README.md](release/README.md).
 
-Price: **$99 once** per organization; first 10 at **$79 once** on the same SKU. Buy: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) or hello@yellowgram.dev. This page is not a Checkout link. Digests: [docs/CHECKSUMS.md](docs/CHECKSUMS.md).
-
-**Paid delta:** PolyForm Noncommercial 1.0.0 alone does not grant commercial production use. A paid purchase is the [SeatTruth commercial grant](docs/COMMERCIAL_GRANT.md) for one organization and the named tag. Legal seller: Suthirth Solutions, operating as yellowgram.
-
-Contact: hello@yellowgram.dev · prefer [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth)
+Contact: hello@yellowgram.dev
 
 
 ## You are the operator
 
-You run the kit inside your own GitHub repository and your own database. yellowgram does not host your customer rows, and yellowgram does not join your Slack workspace. The only money relationship with yellowgram is the one-time SeatTruth purchase. The tool never charges your customers, and it does not recommend refunds of those customers. The **14-day** refund window is for the SeatTruth purchase only.
+You run the kit inside your own GitHub repository and your own database. yellowgram does not host your customer rows, and yellowgram does not join your Slack workspace. There is no money relationship with yellowgram. The tool never charges your customers, and it does not recommend refunds of those customers.
 
 ## What you can do today
 
@@ -68,7 +64,6 @@ Any `active` subscription counts as paid, including quantity 0 and any price. Th
 - Change `is_pro`, seats, or a subscription.
 - Tell you the SQL to "fix" a row.
 - Certify that your billing is correct.
-- Sell you an audit engagement.
 
 If a row looks wrong, a person on your team changes your product, using your own process.
 
@@ -79,14 +74,11 @@ If a row looks wrong, a person on your team changes your product, using your own
 | [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md) | Active means paid, an empty relation can all-clear, a Polar refund is not canceled, dry-run and a skipped schedule are not an all-clear. |
 | [docs/DEMO_60S.md](docs/DEMO_60S.md) | One-command fixture clip. Stripe and Polar in the same take. No live keys. |
 | [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) | What the two cases are, and the active rules after DR#3. |
-| [docs/MINIMUM_SUPPORT_CHECKLIST.md](docs/MINIMUM_SUPPORT_CHECKLIST.md) | What "supported" means, including the 0.1.1 zip. |
-| [SUPPORT.md](SUPPORT.md) | Email boundary. No concierge. |
+| [SUPPORT.md](SUPPORT.md) | Best-effort, no SLA. |
 | [SECURITY.md](SECURITY.md) | Private vulnerability reports. Do not post exploits in Issues. |
-| [docs/BUYER_NEEDS_BEYOND_CHECKLIST.md](docs/BUYER_NEEDS_BEYOND_CHECKLIST.md) | Needs that will not be in the first kit. |
 | [docs/STATUS.md](docs/STATUS.md) | Where the work actually is. |
-| [LICENSE](LICENSE) | Source-available under PolyForm Noncommercial 1.0.0. Not an OSI-approved license. |
-| [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md) | SeatTruth commercial grant for one organization. Legal seller: Suthirth Solutions, operating as yellowgram. |
+| [LICENSE](LICENSE) | MIT. |
 
 ## Support
 
-English email to hello@yellowgram.dev. The boundary of that support is in the minimum-support checklist. There is no concierge, and there is no call required to understand the kit.
+Best-effort GitHub Issues or email to hello@yellowgram.dev. No SLA, no concierge, and no call required to understand the kit.

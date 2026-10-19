@@ -354,143 +354,59 @@ test("committed examples contain placeholders and no live secrets", () => {
   const readme = readFileSync(path.join(root, "README.md"), "utf8");
   assert.match(readme, /read-only/i);
   assert.match(readme, /auto-fix/i);
-  assert.match(readme, /Soft-WTP|cold invoices/);
+  assert.match(readme, /\bMIT\b/);
   assert.match(readme, /hello@yellowgram\.dev/);
   assert.match(readme, /www\.yellowgram\.dev/);
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
 });
 
-const POLYFORM_NC_BODY_SHA256 =
-  "ffcca38841adb694b6f380647e15f17c446a4d1656fed51a1e2041d064c94cc8";
-const LICENSE_SHA256 =
-  "a2ea7ebf20864cc635b26d396e1f830203a155dda4a7f8d213e696deb0fbe580";
-const COMMERCIAL_GRANT_SHA256 =
-  "afcad55c0e520f75828636cf0ef7c85d0e9ce65f2ccc9541fbf915fc18edce3b";
 const V010_ZIP_SHA256 =
   "abda9333e0ac6b2af3ff71439b0f275f8bcf7aff2fefb99b8d9d0b0870eccb2b";
+const V011_ZIP_SHA256 =
+  "8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6";
 
-test("0.1.1 pack script, Polar packet, and checksum match the zip", () => {
+test("0.2.0 is MIT, publishable, and historical zips are unchanged", () => {
   const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")) as {
     version: string;
-    private: boolean;
+    private?: boolean;
     license: string;
+    homepage: string;
+    main: string;
+    bin: Record<string, string>;
   };
-  assert.equal(pkg.version, "0.1.1");
-  assert.equal(pkg.private, true);
-  assert.equal(pkg.license, "LicenseRef-PolyForm-Noncommercial-1.0.0");
-  assert.notEqual(pkg.license, "MIT");
-  assert.equal(existsSync(path.join(root, "scripts/pack-release.sh")), true);
+  assert.equal(pkg.version, "0.2.0");
+  assert.equal(pkg.private, undefined);
+  assert.equal(pkg.license, "MIT");
+  assert.equal(pkg.homepage, "https://www.yellowgram.dev/oss");
+  assert.equal(pkg.main, "dist/src/index.js");
+  assert.equal(pkg.bin.seattruth, "dist/src/cli.js");
   assert.equal(existsSync(path.join(root, "SECURITY.md")), true);
+  assert.equal(existsSync(path.join(root, "docs/COMMERCIAL_GRANT.md")), false);
 
-  const licenseBytes = readFileSync(path.join(root, "LICENSE"));
-  assert.equal(createHash("sha256").update(licenseBytes).digest("hex"), LICENSE_SHA256);
-  const license = licenseBytes.toString("utf8");
-  const marker = "# PolyForm Noncommercial License 1.0.0\n";
-  const markerAt = license.indexOf(marker);
-  assert.ok(markerAt > 0);
-  const header = license.slice(0, markerAt);
-  assert.match(header, /Required Notice: Copyright yellowgram \(https:\/\/www\.yellowgram\.dev\)/);
-  assert.match(header, /hello@yellowgram\.dev/);
-  assert.match(header, /www\.yellowgram\.dev/);
-  assert.match(header, /docs\/COMMERCIAL_GRANT\.md/);
-  assert.match(header, /source-available = true/);
-  assert.match(header, /SeatTruth commercial grant/);
-  assert.match(header, /Suthirth Solutions, operating as yellowgram/);
-  const body = license.slice(markerAt);
-  assert.equal(createHash("sha256").update(body).digest("hex"), POLYFORM_NC_BODY_SHA256);
-
-  const grantBytes = readFileSync(path.join(root, "docs/COMMERCIAL_GRANT.md"));
-  assert.equal(createHash("sha256").update(grantBytes).digest("hex"), COMMERCIAL_GRANT_SHA256);
-  const grant = grantBytes.toString("utf8");
-  assert.match(grant, /Suthirth Solutions, operating as yellowgram/);
-  assert.match(grant, /\$99 once per organization/);
-  assert.match(grant, /9aab6e67-3533-44d1-aa0b-bfdaf6dbc753/);
-  assert.match(grant, /no included Issues SLA/);
-  assert.match(grant, /Soft-WTP/);
-  assert.doesNotMatch(grant, /buy\.polar\.sh/i);
-
-  const polar = readFileSync(path.join(root, "docs/POLAR_DELIVERABLES.md"), "utf8");
-  assert.match(polar, /go-live/);
-  assert.match(polar, /\$99/);
-  assert.match(polar, /\$79/);
-  assert.match(polar, /14 days/);
-  assert.match(polar, /Suthirth solutions/);
-  assert.match(polar, /CHECKSUMS\.md/);
-  assert.match(polar, /coupon|cold invoices/i);
-  assert.doesNotMatch(polar, /Soft-WTP/);
-  assert.match(polar, /PolyForm Noncommercial/);
-  const status = readFileSync(path.join(root, "docs/STATUS.md"), "utf8");
-  assert.equal((status.match(/Soft-WTP/g) || []).length, 1);
-  assert.match(status, /Soft-WTP stays forbidden/);
-  assert.match(polar, /seattruth-0\.1\.0\.zip/);
-  assert.match(polar, /v0\.1\.0/);
-  assert.match(polar, /seattruth-0\.1\.1\.zip/);
-  assert.match(polar, /v0\.1\.1/);
-  assert.match(polar, /8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6/);
-  assert.match(polar, /You run this/);
-  assert.doesNotMatch(polar, /0\.1\.0 stays attached/);
-  assert.doesNotMatch(polar, /Do not replace it from this pack/);
-  assert.doesNotMatch(polar, /buy\.polar\.sh/i);
-  assert.doesNotMatch(polar, /Not attached/);
-  assert.doesNotMatch(polar, /does not change the product attachment/);
-  assert.doesNotMatch(polar, /stays the file on the product/);
+  const license = readFileSync(path.join(root, "LICENSE"), "utf8");
+  assert.match(license, /^MIT License\n\nCopyright \(c\) 2026 yellowgram\n/);
+  assert.match(license, /Permission is hereby granted, free of charge/);
+  assert.doesNotMatch(license, /PolyForm/i);
 
   const readme = readFileSync(path.join(root, "README.md"), "utf8");
-  assert.match(readme, /source-available/);
-  assert.match(readme, /PolyForm Noncommercial/);
-  assert.match(readme, /not an OSI-approved license/);
   assert.match(readme, /You run this/);
   assert.match(readme, /does not operate a hosted endpoint/);
-  assert.match(readme, /8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6/);
-  assert.match(readme, /yellowgram\.dev\/seattruth/);
-  assert.match(readme, /Paid delta/);
+  assert.match(readme, /previous license/);
+  assert.match(readme, /Part of yellowgram open source tools: https:\/\/www\.yellowgram\.dev\/oss/);
   assert.match(readme, /SECURITY\.md/);
   assert.doesNotMatch(readme, /buy\.polar\.sh/i);
-  assert.doesNotMatch(readme, /nothing to buy/i);
-  assert.doesNotMatch(readme, /open[- ]source/i);
-  assert.doesNotMatch(readme, /\bMIT\b/);
-  assert.doesNotMatch(readme, /seattruth-x\.y\.z/);
-  assert.doesNotMatch(readme, /remains the Polar attachment/);
-  assert.doesNotMatch(readme, /remains the file attached/);
-
-  const priorZip = path.join(root, "release/seattruth-0.1.0.zip");
-  const priorHex = createHash("sha256").update(readFileSync(priorZip)).digest("hex");
-  assert.equal(priorHex, V010_ZIP_SHA256);
-  const priorComment = execFileSync("unzip", ["-z", priorZip], { encoding: "utf8" });
-  assert.match(priorComment, /seattruth-0\.1\.0/);
-
-  const zipPath = path.join(root, "release/seattruth-0.1.1.zip");
-  const hex = createHash("sha256").update(readFileSync(zipPath)).digest("hex");
-  assert.match(hex, /^[0-9a-f]{64}$/);
-  assert.notEqual(hex, priorHex);
-  const checksums = readFileSync(path.join(root, "docs/CHECKSUMS.md"), "utf8");
-  assert.match(checksums, new RegExp(hex));
-  assert.match(checksums, new RegExp(priorHex));
-  assert.equal(hex, "8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6");
-  assert.match(polar, new RegExp(hex));
-  assert.doesNotMatch(polar, new RegExp(priorHex));
+  assert.doesNotMatch(readme, /PolyForm|commercial grant|source-available/i);
 
   const changelog = readFileSync(path.join(root, "CHANGELOG.md"), "utf8");
-  assert.match(changelog, /founding \*\*\$79\*\* → \*\*\$99\*\*/);
-  assert.doesNotMatch(changelog, /founding to standard/);
+  assert.match(changelog, /Relicensed to MIT; no longer sold/);
 
-  const names = execFileSync("unzip", ["-Z1", zipPath], { encoding: "utf8" })
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0);
-  assert.ok(names.some((name) => name.endsWith("/.env.example")));
-  assert.ok(names.some((name) => name.endsWith("/mapping.example.yaml")));
-  assert.ok(names.some((name) => name.endsWith("/LICENSE")));
-  assert.ok(names.some((name) => name.endsWith("/docs/COMMERCIAL_GRANT.md")));
-  for (const name of names) {
-    assert.equal(name.includes("node_modules"), false, name);
-    assert.equal(name.includes("CHECKSUMS.md"), false, name);
-    assert.equal(name.includes("/release/"), false, name);
-    assert.equal(/(^|\/)\.env$/.test(name), false, name);
-    assert.equal(name.endsWith("/.env.local"), false, name);
-    assert.equal(/(^|\/)mapping\.yaml$/.test(name), false, name);
-  }
-
-  const comment = execFileSync("unzip", ["-z", zipPath], { encoding: "utf8" });
-  assert.match(comment, /seattruth-0\.1\.1/);
+  const priorZip = path.join(root, "release/seattruth-0.1.0.zip");
+  assert.equal(createHash("sha256").update(readFileSync(priorZip)).digest("hex"), V010_ZIP_SHA256);
+  const zipPath = path.join(root, "release/seattruth-0.1.1.zip");
+  assert.equal(createHash("sha256").update(readFileSync(zipPath)).digest("hex"), V011_ZIP_SHA256);
+  const checksums = readFileSync(path.join(root, "docs/CHECKSUMS.md"), "utf8");
+  assert.match(checksums, new RegExp(V010_ZIP_SHA256));
+  assert.match(checksums, new RegExp(V011_ZIP_SHA256));
+  assert.match(execFileSync("unzip", ["-z", priorZip], { encoding: "utf8" }), /seattruth-0\.1\.0/);
+  assert.match(execFileSync("unzip", ["-z", zipPath], { encoding: "utf8" }), /seattruth-0\.1\.1/);
 });

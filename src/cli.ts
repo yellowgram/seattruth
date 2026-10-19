@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+#!/usr/bin/env node
+import { readFileSync, realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 import { compareReadOnly, runLiveCompare } from "./compare.js";
@@ -144,7 +145,14 @@ function isDirectRun(): boolean {
   if (!entry) {
     return false;
   }
-  return import.meta.url === pathToFileURL(entry).href;
+  if (import.meta.url === pathToFileURL(entry).href) {
+    return true;
+  }
+  try {
+    return import.meta.url === pathToFileURL(realpathSync(entry)).href;
+  } catch {
+    return false;
+  }
 }
 
 if (isDirectRun()) {

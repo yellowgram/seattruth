@@ -17,10 +17,12 @@ The next product change starts this cadence again. It does not skip LaunchGate.
 
 ## Taste-gate
 
-Non-trivial public work, SDK work, and docs that change a contract get an architect draft, then a harsh exemplary-bar review, before anyone calls them done. Contract here means price, license, the detect cases, or what all-clear means.
+Non-trivial public work, SDK work, and docs that change a contract get an architect draft, then a harsh exemplary-bar review, before anyone calls them done. Contract here means the license, the detect cases, or what all-clear means.
 
-Docs-only process notes may land without a full DR×3 when they do not change the detector, the compare path, the rules, or provider behavior, and they do not change that contract. [docs/SHIP_ATOMIC_PIN.md](docs/SHIP_ATOMIC_PIN.md), [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md), [docs/LIVE_OPERATOR_LOOP.md](docs/LIVE_OPERATOR_LOOP.md), and the park marker in [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) are that kind of note.
+Docs-only process notes may land without a full DR×3 when they do not change the detector, the compare path, the rules, or provider behavior, and they do not change that contract. [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHAT_THIS_WILL_NOT_CATCH.md), [docs/LIVE_OPERATOR_LOOP.md](docs/LIVE_OPERATOR_LOOP.md), and the park marker in [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md) are that kind of note.
 
 ## Out
 
-This file does not authorize a hosted endpoint or an SLA. You run the kit. yellowgram does not operate a hosted endpoint for this SKU. This repository has no Checkout URL.
+This file does not authorize a hosted endpoint or an SLA. You run the kit. yellowgram does not operate a hosted endpoint for it.
+
+Contributions are accepted under the MIT License ([LICENSE](LICENSE)).

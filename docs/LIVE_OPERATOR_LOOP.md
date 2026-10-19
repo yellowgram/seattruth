@@ -2,7 +2,7 @@
 
 Prove one organization on a live run. This file is the checklist. It does not contain secrets. It does not say a live org has been proved. The boxes stay open until an operator checks them on a real org (yellowgram or a friendly org).
 
-You run the kit in your own GitHub repository and your own database. yellowgram does not operate a hosted endpoint for this SKU and does not join the Slack workspace.
+You run the kit in your own GitHub repository and your own database. yellowgram does not operate a hosted endpoint for it and does not join the Slack workspace.
 
 Read [WHAT_THIS_WILL_NOT_CATCH.md](WHAT_THIS_WILL_NOT_CATCH.md) before treating a green check as revenue assurance. A dry-run, and a schedule that skips because `SEATTRUTH_MAPPING_YAML` is unset, are not an all-clear.
 

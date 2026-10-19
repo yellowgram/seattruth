@@ -14,6 +14,6 @@ If that page says reporting is turned off, email hello@yellowgram.dev instead. D
 
 ## Support is a different path
 
-[SUPPORT.md](SUPPORT.md) is best-effort English email for kit questions. That path is not a penetration-test retainer and not permission to post exploit details while a private report is pending.
+[SUPPORT.md](SUPPORT.md) is best-effort help for kit questions. That path is not a penetration-test retainer and not permission to post exploit details while a private report is pending.
 
-Entitlement correctness in your production is yours. The public [license](LICENSE) is PolyForm Noncommercial 1.0.0 (source-available; OSI-approved license = false) and has no warranty. Commercial production use is the Suthirth Commercial Grant in [docs/COMMERCIAL_GRANT.md](docs/COMMERCIAL_GRANT.md). Seller: Suthirth solutions. Contact: hello@yellowgram.dev. This policy does not add auto-fix, hosted reconcile, or a warranty that a comparison is correct.
+Entitlement correctness in your production is yours. SeatTruth is MIT licensed ([LICENSE](LICENSE)) and has no warranty. This policy does not add auto-fix, hosted reconcile, or a warranty that a comparison is correct.

@@ -1,99 +1,17 @@
-# Status
+# SeatTruth — STATUS
 
-Updated 2026-09-30. The detector is on `main`. Implement pull request #5 is merged. The price lock is pull request #6. This tree is the **0.1.1** pack. Founder typed **go-live** on 2026-09-26. CoS confirmed the Polar listing is **listed**. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` still carries `seattruth-0.1.0.zip`. That tag and that zip are the sealed prior distribution and are not rewritten. They are not what Polar currently delivers. The price is unchanged. This repository does not contain a Checkout URL. Buy path: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).
-
-`main` tip and the Polar pin are different commits. The relationship is in [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md) and below. This note does not attach a zip or cut a tag.
+**Updated:** 2026-10-19
 
 | Item | State |
 | --- | --- |
-| DR#1 | Done. https://github.com/yellowgram/seattruth/pull/1 |
-| DR#2 | Done. https://github.com/yellowgram/seattruth/pull/2 |
-| DR#3 | Done. https://github.com/yellowgram/seattruth/pull/3 |
-| 4th DR | Approved. https://github.com/yellowgram/seattruth/pull/4 at `eed8afdb210a46e489b5815b5261f8574f906336` |
-| Implement PR | **Merged.** https://github.com/yellowgram/seattruth/pull/5. The detector is on `main`. |
-| CR#1 | **Done.** Expert A, billing path. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md). |
-| CR#2 | **Done.** Expert B, operator safety. [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md). |
-| CR#3 | **Done.** Expert C, buyer path. [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md). |
-| 4th CR | Historical gate packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). It is not an open step. The detector from that implement work is already on `main`. |
-| Detector | On `main`. Read-only. Dry-run does not call the network. `--live` reads Stripe, Polar, and Postgres and can post to Slack. |
-| `npm test` | Smoke test plus fixtures for P26, P27, and P28. Export names still ban charge, write, and fix APIs. |
-| GitHub Action `compare` | Daily cron is live when `SEATTRUTH_MAPPING_YAML` is set. If that secret is unset, the schedule skips and exits 0. That skip is not an entitlement pass. Manual dispatch stays dry-run unless the operator turns that off. A live dispatch fails if the mapping secret is unset. Secrets are not in the workflow file. A green dry-run is not an entitlement pass. |
-| Polar listing | **Listed.** CoS confirmed. Polar organization (dashboard) **Suthirth solutions** (not renamed this week). Legal seller: Suthirth Solutions, operating as yellowgram. Product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`. Admin: https://polar.sh/dashboard/suthirth-solutions/products/9aab6e67-3533-44d1-aa0b-bfdaf6dbc753. Checkout is the founding **$79** one-time on this SKU. Raise the same SKU to **$99** after the first 10 organizations. Polar delivers zip `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. GitHub Release `v0.1.0` exists and is not rewritten; it carries the sealed prior zip `seattruth-0.1.0.zip`, which is not the current Polar delivery. GitHub benefit is off (sudo / mobile blocked; known ops limit). Polar has no per-product refund toggle; **14 days** is in the listing copy. No Checkout URL in this repo. |
-| License | Source-available under PolyForm Noncommercial 1.0.0 ([../LICENSE](../LICENSE)). Not an OSI-approved license. Commercial use is the SeatTruth commercial grant ([COMMERCIAL_GRANT.md](COMMERCIAL_GRANT.md)). Legal seller: **Suthirth Solutions, operating as yellowgram**. |
-| Versioned zip | Polar delivers `release/seattruth-0.1.1.zip`, built by `npm run pack:release`. Prior zip `release/seattruth-0.1.0.zip` is the sealed prior distribution and is not rewritten. |
-| SHA-256 | Polar delivery `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` for `seattruth-0.1.1.zip`. Both zips are in [CHECKSUMS.md](CHECKSUMS.md). |
-| `POLAR_DELIVERABLES` | [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Names the Polar delivery `seattruth-0.1.1.zip`, the sealed prior tag `v0.1.0`, and the `main` tip versus Polar pin SHAs. |
-| Package version | `0.1.1`, private. License field `LicenseRef-PolyForm-Noncommercial-1.0.0`. |
-| Price | Locked. **$99 once** per organization (one-time, not monthly). First 10 organizations at **$79 once**, one SKU. The live checkout is that founding **$79**. Raise the same SKU to **$99** after those 10. That raise is still open ops. Buyer-facing copy stays the founding **$79** until it happens. Not negotiable. No coupons. |
-| Refund window | Locked. **14 days**, stated in the listing copy. Polar has no per-product refund toggle. The kit does not recommend end-customer refunds. |
-
-## Cadence
-
-The design and code gates that produced the detector are finished. Ordinary gates did not wait on the founder. The Polar listing is listed. What remains on that SKU is the founding-price raise, not another design review.
-
-1. **DR×3.** Done. Pull requests #1, #2, and #3.
-2. **4th DR → LaunchGate APPROVE.** Done. Pull request #4.
-3. **Implement PR.** Merged. Pull request #5. The detector is on `main`.
-4. **CR×3.** Done on that implement work. [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md), [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md), [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md).
-5. **Price and refund.** Locked on pull request #6.
-6. **Polar listing.** Founder typed go-live on 2026-09-26. CoS confirmed the product is listed. Polar delivers `seattruth-0.1.1.zip` (SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`). GitHub Release `v0.1.0` exists and is not rewritten. `seattruth-0.1.0.zip` is the sealed prior distribution, not the current Polar delivery.
-
-A green CI run is not what listed the product. This repository does not contain a Checkout URL.
-
-The gates above finished the detector on `main`. The next product-code change uses the same cadence again and does not collapse it. Standing rule: [../CONTRIBUTING.md](../CONTRIBUTING.md). A collapsed DR×3 or CR×3 is a fail.
-
-## Tip and Polar pin
-
-Recorded 2026-09-30. `main` is ahead of the commit Polar delivers. Checklist: [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md). Issue: https://github.com/yellowgram/seattruth/issues/16
-
-| | |
-| --- | --- |
-| `main` tip | `26b6df062bdf9914df8cefd75fa006e38ba623ae` |
-| Polar pin | tag `v0.1.1` at `ceb3da6d73250e4602e47af4797e0870891a4640` |
-| Zip | `seattruth-0.1.1.zip`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` |
-
-The zip and the tag are the pin. They are not a pack of `main` tip. Six commits sit on tip only. Observed the same day: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) names that zip and that SHA-256. It does not name `main` tip. The page matches the Polar pin. The founding-price raise (**$79** to **$99** on this SKU after 10 organizations) is still open. This file does not change the listing price.
-
-## Parked
-
-Chargebee, Autumn, Paddle, auto-fix, hosted history, a webhook receiver, suggested SQL, and snooze stay out. The marker is [issue #18](https://github.com/yellowgram/seattruth/issues/18) and the parked list in [MVP_SCOPE.md](MVP_SCOPE.md). This file does not build them.
-
-## Scope that shipped
-
-- Two detect cases only: `paid_locked_out` and `canceled_still_entitled`, matching the P26 and P28 summaries LaunchGate approved.
-- Active rules: P6, P7, P11, P17–P24, P25–P30. No new rule ids.
-- P2 notes are implemented and written in [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md): Polar scope `subscriptions:read`, the Stripe invoice-and-charge refund recipe, the P28 fixture table, and the Stripe and Polar pagination contracts.
-- Hard locks stay closed: no auto-fix, no coupons, no Chargebee, no Autumn. No Checkout URL in the repo.
-
-## Founder (via CoS)
-
-The founder is not in the ordinary CR path. The price is locked at **$99 once** per organization (first 10 at **$79 once**, one SKU). The live checkout is the founding **$79**. Raise that same SKU to **$99** after the first 10 organizations. The refund window is locked at **14 days** and is stated in the listing copy. Polar has no per-product refund toggle. Founder typed Polar go-live on 2026-09-26. CoS confirmed the listing is listed. Founder (via CoS) still decides:
-
-- spending money
-- scope that becomes Chargebee, Autumn, or auto-fix
-
-Soft-WTP stays forbidden (standing answer: no coupons / no cold invoices). The Polar GitHub benefit is off because sudo / mobile blocked enabling it. That is a known ops limit. Operator notes, the product id, and the admin URL are in [POLAR_DELIVERABLES.md](POLAR_DELIVERABLES.md). Polar organization (dashboard; not renamed this week): **Suthirth solutions**. Legal seller: **Suthirth Solutions, operating as yellowgram**. Buy path: [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth) or hello@yellowgram.dev.
-
-## Code review
-
-- CR#1: [CODE_REVIEW_CR1.md](CODE_REVIEW_CR1.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
-- CR#2: [CODE_REVIEW_CR2.md](CODE_REVIEW_CR2.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
-- CR#3: [CODE_REVIEW_CR3.md](CODE_REVIEW_CR3.md). P0/P1 from that pass are fixed on this branch. Deferred limits are listed there.
-- 4th CR packet: [CODE_REVIEW_CR4.md](CODE_REVIEW_CR4.md). Historical. The detector is already on `main`.
-
-## Where the reviews live
+| Detector | On `main`. Read-only Stripe and Polar compare against product `is_pro` / seats. |
+| License | MIT from 0.2.0 ([../LICENSE](../LICENSE)). No longer sold. |
+| Package | `seattruth` 0.2.0, `bin` `seattruth`, `main` `dist/src/index.js`. |
+| Historical releases | `v0.1.0` and `v0.1.1` zips in `release/` were published under the previous license and are unchanged ([CHECKSUMS.md](CHECKSUMS.md)). |
+| Parked | Chargebee, Autumn, Paddle, auto-fix, hosted history, a webhook receiver, suggested SQL, and snooze stay out ([issue #18](https://github.com/yellowgram/seattruth/issues/18), [MVP_SCOPE.md](MVP_SCOPE.md)). |
 
 - Rules: [MVP_SCOPE.md](MVP_SCOPE.md).
-- 4th DR packet: [DESIGN_REVIEW_DR4.md](DESIGN_REVIEW_DR4.md).
-- P2 notes: [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
-- Checklist v3: [MINIMUM_SUPPORT_CHECKLIST.md](MINIMUM_SUPPORT_CHECKLIST.md).
-- Atomic ship pin: [SHIP_ATOMIC_PIN.md](SHIP_ATOMIC_PIN.md).
-- Limits a buyer can misread: [WHAT_THIS_WILL_NOT_CATCH.md](WHAT_THIS_WILL_NOT_CATCH.md).
-- One live org, boxes open: [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md).
-- Next product-code cadence: [../CONTRIBUTING.md](../CONTRIBUTING.md).
-
-## Contact
-
-hello@yellowgram.dev
-
-Prefer [www.yellowgram.dev/seattruth](https://www.yellowgram.dev/seattruth).
+- P2 follow-ups: [ACCEPTANCE_NOTES.md](ACCEPTANCE_NOTES.md).
+- Live proof: [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md).
+- Limits a reader can misread: [WHAT_THIS_WILL_NOT_CATCH.md](WHAT_THIS_WILL_NOT_CATCH.md).
+- Design reviews and code reviews from the 0.1.x cycle are in the git history.

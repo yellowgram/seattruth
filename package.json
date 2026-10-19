@@ -1,14 +1,25 @@
 {
   "name": "seattruth",
-  "version": "0.1.1",
-  "private": true,
+  "version": "0.2.0",
   "description": "Read-only Stripe and Polar entitlement drift detector for is_pro and seats.",
   "type": "module",
-  "license": "LicenseRef-PolyForm-Noncommercial-1.0.0",
-  "homepage": "https://www.yellowgram.dev",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "bin": {
+    "seattruth": "dist/src/cli.js"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "yellowgram",
+    "url": "https://www.yellowgram.dev"
+  },
+  "homepage": "https://www.yellowgram.dev/oss",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yellowgram/seattruth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yellowgram/seattruth/issues"
   },
   "engines": {
     "node": ">=20"
@@ -19,8 +30,7 @@
     "demo": "npm run demo:60s",
     "demo:60s": "npm run build && node dist/scripts/demo-60s.js",
     "test": "npm run build && node --test dist/tests/*.test.js",
-    "typecheck": "tsc --noEmit",
-    "pack:release": "bash scripts/pack-release.sh"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
@@ -30,5 +40,15 @@
   "dependencies": {
     "pg": "^8.23.0",
     "yaml": "^2.9.1"
-  }
+  },
+  "files": [
+    "dist/src",
+    "README.md",
+    "START_HERE.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    ".env.example",
+    "mapping.example.yaml",
+    "docs"
+  ]
 }

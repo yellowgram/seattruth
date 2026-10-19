@@ -52,15 +52,11 @@ Burn these on the same take, in this order. It is the proof-line order. Do not c
 3. Canceled on Polar, `is_pro` true. That is `canceled_still_entitled`.
 4. Paid, and `is_pro` true, is silence. No finding.
 5. Read-only compare. No charges. No auto-fix.
-6. www.yellowgram.dev or hello@yellowgram.dev.
+6. www.yellowgram.dev/oss or hello@yellowgram.dev.
 
-## Price and CTA
+## CTA
 
-Soft-WTP stays off. This file has no Polar Checkout URL.
-
-Say a price only if the take mentions one, and only this: **$99 once** per organization. The first 10 organizations are **$79 once**. The refund window is **14 days**. That window is the SeatTruth purchase, not an end-customer refund.
-
-CTA, if the take ends on one: [www.yellowgram.dev](https://www.yellowgram.dev) or hello@yellowgram.dev.
+CTA, if the take ends on one: [www.yellowgram.dev/oss](https://www.yellowgram.dev/oss) or the GitHub repository.
 
 ## If it does not fit in one clip
 
@@ -70,4 +66,4 @@ CTA, if the take ends on one: [www.yellowgram.dev](https://www.yellowgram.dev) o
 
 ## Not in this file
 
-No recording in this repo yet. SeatTruth films the take after LaunchGate SR APPROVE. The founder does not film. No live keys. No Polar checkout. Soft-WTP off. The purchase-refund window stays 14 days. This clip is not that refund. Do not change the Polar listing. Do not reseal a release zip. Do not create a version tag.
+No recording in this repo yet. SeatTruth films the take after LaunchGate SR APPROVE. The founder does not film. No live keys. Do not reseal a release zip. Do not create a version tag.

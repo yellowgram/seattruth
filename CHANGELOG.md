@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — 2026-10-19
+
+- Relicensed to MIT; no longer sold. `LICENSE` is the MIT License (Copyright (c) 2026 yellowgram). The commercial grant, Polar delivery packet, price and refund copy, release pack script, competitive skim, and design/code review packets were removed from the tree (they remain in git history). `BUYER_START_HERE.md` is now `START_HERE.md`.
+- npm entry points: `bin` `seattruth` → `dist/src/cli.js` and `main` `dist/src/index.js`. The CLI now resolves symlinked bin paths when deciding it was run directly; compare behavior is unchanged.
+- package.json: `license` MIT, no longer `private`, adds `homepage`, `bugs`, `author`, and `files`.
+- Tests: the PolyForm license and sales-copy assertions are replaced by MIT assertions. Historical zips are still checked byte-for-byte.
+- Releases before 0.2.0 were published under the previous license.
+
 ## 0.1.1 — 2026-09-27
 
 License fence. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Soft-WTP stays off.

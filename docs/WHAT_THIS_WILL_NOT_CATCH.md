@@ -1,6 +1,6 @@
 # What this will not catch
 
-SeatTruth reports two disagreements. It is not a certificate that revenue and access match. You run this. yellowgram does not operate a hosted endpoint for this SKU. The kit is read-only. It does not auto-fix, write `is_pro`, or charge.
+SeatTruth reports two disagreements. It is not a certificate that revenue and access match. You run this. yellowgram does not operate a hosted endpoint for it. The kit is read-only. It does not auto-fix, write `is_pro`, or charge.
 
 Rules: [MVP_SCOPE.md](MVP_SCOPE.md). A live proof, with boxes still open, is [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md).
 
@@ -22,4 +22,4 @@ Case 2 is provider status `canceled` on every applicable rail, with `is_pro` tru
 
 ## Read-only, and not a hosted service
 
-The kit does not charge, refund, open Checkout, write the product database, or auto-fix. There is no hosted compare endpoint in this purchase. Uptime of the job you run is yours. Email support at hello@yellowgram.dev is best-effort. There is no SLA.
+The kit does not charge, refund, open Checkout, write the product database, or auto-fix. There is no hosted compare endpoint. Uptime of the job you run is yours. Help via GitHub Issues or hello@yellowgram.dev is best-effort. There is no SLA.

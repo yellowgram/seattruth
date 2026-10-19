@@ -26,7 +26,6 @@ SeatTruth compares Stripe and Polar, read-only, with one product database. The p
 - GitHub Actions: daily cron (`0 6 * * *`) runs live when `SEATTRUTH_MAPPING_YAML` is set, and exits 0 without comparing when that secret is unset. That skip is not an entitlement pass. `workflow_dispatch` stays dry-run unless the operator sets the live input. A live dispatch with the mapping secret unset fails the job. Secrets stay in GitHub Actions, not in the workflow file. A green dry-run is not an entitlement pass (P30).
 - Slack incoming webhook on the operator's channel when a real run has a finding, a non-zero unclassified count, or a run error.
 - English docs and English alerts.
-- Self-serve price **$99 once** per organization. Launch hook: the first 10 organizations at **$79 once**, one SKU. Not monthly. The number is locked and not negotiable. The refund window is **14 days**. The versioned zip is in the tree. There is no Checkout URL in this repo.
 
 ## Detect cases
 

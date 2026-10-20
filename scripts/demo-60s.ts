@@ -16,7 +16,7 @@ import { buildSlackAlert } from "../src/slack.js";
 const WALL_LIMIT_MS = 60_000;
 
 const REQUIRED_LINES = [
-  "SeatTruth dry-run: detector is implemented. This is not an all-clear. No charges. No entitlement changes.",
+  "SeatTruth dry-run: no keys read, no network calls. This is not an all-clear. No charges. No entitlement changes.",
   "SeatTruth paid_locked_out user=user-locked provider=stripe customer=cus_demo_locked subscription=sub_demo_locked is_pro=false seats=2",
   "SeatTruth canceled_still_entitled user=user-canceled provider=polar customer=cus_demo_canceled subscription=sub_demo_canceled is_pro=true seats=1",
   "SeatTruth silence on match: user=user-paid-match stripe=paid polar=paid is_pro=true no finding",

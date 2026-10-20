@@ -40,7 +40,7 @@ function findingLine(finding: Finding): string {
 export function buildSlackAlert(result: CompareResult): SlackAlert {
   if (result.mode === "dry-run") {
     return {
-      text: "SeatTruth dry-run: detector is implemented. This is not an all-clear. No charges. No entitlement changes.",
+      text: "SeatTruth dry-run: no keys read, no network calls. This is not an all-clear. No charges. No entitlement changes.",
     };
   }
   const lines: string[] = [];

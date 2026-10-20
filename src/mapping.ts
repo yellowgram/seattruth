@@ -20,7 +20,7 @@ export function isIdentifier(value: string): boolean {
   return value.length >= 1 && value.length <= 63 && IDENT.test(value);
 }
 
-/** Quote only after isIdentifier. The value is never interpolated raw (P18). */
+/** Quote only after isIdentifier. The value is never interpolated raw. */
 export function quoteIdent(value: string): string {
   if (!isIdentifier(value)) {
     throw new MappingError("invalid_identifier");
@@ -35,7 +35,7 @@ function identField(value: unknown, code: string): string {
   return value;
 }
 
-/** YAML null disables a rail. An empty string is a config error (P21). */
+/** YAML null disables a rail. An empty string is a config error. */
 function railColumn(value: unknown, code: string): string | null {
   if (value === null) {
     return null;
@@ -133,7 +133,7 @@ export type ProductSelect = {
 };
 
 /**
- * One SELECT. Identifiers are validated then quoted. No other SQL (P18).
+ * One SELECT. Identifiers are validated then quoted. No other SQL.
  * The product subscription id is selected when mapped and is not a filter.
  */
 export function buildProductSelect(mapping: MappingDocument): ProductSelect {

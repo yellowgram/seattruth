@@ -223,7 +223,7 @@ test("live exit codes follow allClear and unknown flags do not dry-run", async (
     throw new Error("network");
   }) as typeof fetch;
   try {
-    assert.equal(await runCli(["--liv", "rk_live_SECRETVALUE"]), 1);
+    assert.equal(await runCli(["--liv", "rk_live_REPLACE_ME"]), 1);
     assert.deepEqual(errors, ["unknown_argument"]);
     assert.equal(called, false);
   } finally {

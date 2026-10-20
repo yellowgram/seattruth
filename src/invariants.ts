@@ -1,6 +1,6 @@
 /**
  * Permanent contract and the stub build flags.
- * Canonical product rules: docs/MVP_SCOPE.md
+ * Rules: docs/RULES.md
  *
  * Read-only. Never charge. Never mutate entitlements. Never auto-fix.
  */
@@ -33,7 +33,7 @@ export const BUILD = Object.freeze({
 export type ProviderId = "stripe" | "polar";
 
 /**
- * One subscription after P26. Deliberate skip is not "paid" and not "canceled".
+ * One classified subscription. Deliberate skip is not "paid" and not "canceled".
  * Ambiguous is not a finding.
  */
 export type SubscriptionBucket = "paid" | "canceled" | "deliberate_skip" | "ambiguous";
@@ -74,19 +74,19 @@ export type CompareResult = {
   implemented: boolean;
   /**
    * True only on a live implemented run with zero findings, zero errors,
-   * and unclassifiedUsers of 0. deliberateSkipUsers may be above zero (P30).
+   * and unclassifiedUsers of 0. deliberateSkipUsers may be above zero.
    */
   allClear: boolean;
   mode: "dry-run" | "live";
   findings: Finding[];
   /**
    * Ambiguous users. No case finding. A non-zero count forces allClear false.
-   * DR#3 rule P25. Not a run error.
+   * Not a run error.
    */
   unclassifiedUsers: number;
   /**
    * Users on a written non-case status such as trialing or incomplete.
-   * No case finding. Does not, by itself, force allClear false. DR#3 rule P25.
+   * No case finding. Does not, by itself, force allClear false. 
    */
   deliberateSkipUsers: number;
   errors: string[];

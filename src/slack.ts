@@ -2,8 +2,8 @@ import type { FetchLike } from "./http.js";
 import type { CompareResult, Finding } from "./invariants.js";
 
 /**
- * Slack text names the disagreement (P6, P24).
- * It does not say to change is_pro, and it does not include secrets (P23).
+ * Slack text names the disagreement.
+ * It does not say to change is_pro, and it does not include secrets.
  * Dry-run text is printed locally. It is not posted.
  * A live all-clear is not posted.
  */

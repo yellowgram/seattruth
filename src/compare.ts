@@ -12,9 +12,9 @@ import type { ClassifiedSubscription } from "./rules.js";
  * Read-only compare.
  *
  * 1. paid_locked_out — at least one applicable rail is paid, none are ambiguous,
- *    is_pro is false. A deliberate skip on another rail does not block (P28).
+ *    is_pro is false. A deliberate skip on another rail does not block.
  * 2. canceled_still_entitled — every applicable rail is status canceled,
- *    is_pro is true (P26, P28).
+ *    is_pro is true.
  *
  * Dry-run does not read the network. Live reads do not write.
  */

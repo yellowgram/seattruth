@@ -11,7 +11,7 @@ import { classifyStatus } from "../rules.js";
  * The OAT page says to select scopes in the token UI and does not list the strings:
  * https://polar.sh/docs/integrate/oat
  *
- * Pagination (P27): GET /v1/subscriptions?limit=100&page={n}
+ * Pagination: GET /v1/subscriptions?limit=100&page={n}
  * Response pagination.total_count and pagination.max_page.
  * A complete read is pages 1..max_page whose item count equals total_count.
  * Stopping early is a run error, not an empty customer.
@@ -19,7 +19,7 @@ import { classifyStatus } from "../rules.js";
  * The deprecated `active` query flag is not sent.
  *
  * Classification uses subscription status only. Order and refund objects are not read.
- * cancel_at_period_end does not change status active (P26).
+ * cancel_at_period_end does not change status active.
  */
 
 const POLAR_API = "https://api.polar.sh";

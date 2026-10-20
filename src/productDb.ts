@@ -6,8 +6,8 @@ import type { ProductRow } from "./invariants.js";
 /**
  * Read-only product database.
  *
- * One SELECT of the mapped columns on one schema and relation (P18, P19).
- * SQL NULL seats stay null. Booleans are not coerced (P11, P20).
+ * One SELECT of the mapped columns on one schema and relation.
+ * SQL NULL seats stay null. Booleans are not coerced.
  * A bigint or whole-number numeric seats value arrives as a digit string and is accepted when it is a safe integer.
  * Customer ids are trimmed so a padded character column still joins. A blank id does not apply.
  * Never UPDATE, INSERT, or DELETE.
@@ -67,7 +67,7 @@ function cellString(value: unknown): string | null {
   return trimmed === "" ? "" : trimmed;
 }
 
-/** is_pro stays null when the SQL value is not a real boolean (P11). */
+/** is_pro stays null when the SQL value is not a real boolean. */
 export function normalizeIsPro(value: unknown): boolean | null {
   if (value === true || value === false) {
     return value;

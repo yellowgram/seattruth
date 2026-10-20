@@ -5,7 +5,7 @@
 # workflow_dispatch stays dry-run unless dry_run is false.
 # A live dispatch with the mapping secret unset fails the job.
 # Secrets are not written into this file. A green dry-run is not an all-clear.
-# See docs/MVP_SCOPE.md and docs/STATUS.md.
+# Rules: docs/RULES.md.
 
 name: compare
 

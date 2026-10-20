@@ -14,7 +14,7 @@
 - **Latest-period refund rule.** Only the latest invoice of an active subscription is checked. A full refund or a dispute there is ambiguous; a partial refund, a refund on an older invoice, or a $0 invoice is paid. In 0.2.0 any refund ever, even a $1 goodwill refund years ago, kept a paying customer ambiguous forever and every run exiting 2.
 - **Pinned `Stripe-Version: 2025-02-24.acacia`.** Accounts whose default version is 2025-03-31 or later no longer return `invoice.charge`, which made every active subscription ambiguous.
 - **Rate limits.** HTTP 429 from Stripe or Polar is retried up to four times, honouring `Retry-After` (seconds or HTTP date, up to 60 s), else backing off 1–8 s.
-- **`past_due`, `unpaid`, `paused` are skipped** like trials instead of ambiguous, so a normal dunning queue does not fail every run. Live runs print `SeatTruth skipped_users=N` locally.
+- **`past_due` and `paused` are skipped** like trials instead of ambiguous, so a normal dunning queue does not fail every run (`unpaid` counts as canceled by default; see above). Live runs print `SeatTruth skipped_users=N` locally.
 - The dry-run line now reads `SeatTruth dry-run: no keys read, no network calls. This is not an all-clear. …` instead of reporting build status.
 - Docs: new README with a five-minute quickstart, limits and threat model; rules in plain words in `docs/RULES.md`. Internal planning docs (`MVP_SCOPE`, `ACCEPTANCE_NOTES`, `STATUS`, `LIVE_OPERATOR_LOOP`, `DEMO_60S`, `START_HERE`) and internal rule codes in comments and test names were removed. `SECURITY.md` no longer calls this a private repository.
 

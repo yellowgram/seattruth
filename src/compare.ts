@@ -107,10 +107,10 @@ export async function runLiveCompare(input: LiveCompareInput): Promise<CompareRe
     const readRows = input.readRows ?? ((databaseUrl, mappingPath) => readProductRows({ connectionString: databaseUrl, mappingPath }));
     const rows = await readRows(input.databaseUrl, input.mappingPath);
     const stripe = stripeEnabled
-      ? toClassified(await readStripeSnapshot({ restrictedKey: input.stripeKey, fetchImpl: input.fetchImpl }))
+      ? toClassified(await readStripeSnapshot({ restrictedKey: input.stripeKey, fetchImpl: input.fetchImpl, unpaid: mapping.statuses.unpaid }))
       : [];
     const polar = polarEnabled
-      ? toClassified(await readPolarSnapshot({ restrictedToken: input.polarToken, fetchImpl: input.fetchImpl }))
+      ? toClassified(await readPolarSnapshot({ restrictedToken: input.polarToken, fetchImpl: input.fetchImpl, unpaid: mapping.statuses.unpaid }))
       : [];
     return compareSnapshots({
       rows,

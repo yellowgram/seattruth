@@ -34,3 +34,9 @@ rails:
 entitlement:
   # v1 uses this field as the entitlement bit. seats is alert context.
   field: is_pro
+
+# Optional. How an `unpaid` subscription (payment retries exhausted) is judged.
+# canceled (default): Stripe's guidance is to revoke access, so is_pro=true is reported.
+# skip: your product keeps access while unpaid; treated like past_due.
+# statuses:
+#   unpaid: canceled

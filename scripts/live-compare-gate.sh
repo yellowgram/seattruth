@@ -4,7 +4,7 @@
 # Schedule with SEATTRUTH_MAPPING_YAML unset or blank: exit 0 and print a skip
 # line. That skip is not an all-clear. No mapping file is written.
 # Any other caller with the secret unset or blank: exit 1. An explicit live
-# workflow_dispatch uses that path so a buyer who opted into live sees the miss.
+# workflow_dispatch uses that path so a user who opted into live sees the miss.
 # Secret present: write it to mapping.yaml (or SEATTRUTH_MAPPING_OUT) and exit 0.
 #
 # Stripe, Polar, the database URL, and Slack are not this gate. A rail may be

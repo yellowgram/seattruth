@@ -14,14 +14,16 @@ For each row, a rail **applies** when that row's customer-id cell is not null. A
 | --- | --- |
 | `active` | **paid**, unless the Stripe refund rule below makes it ambiguous. `cancel_at_period_end` does not matter while it is still active. |
 | `canceled` | **canceled** |
+| `unpaid` | **canceled** (retries are exhausted; Stripe's guidance is to revoke access). With `statuses.unpaid: skip` in the mapping: **skipped** |
 | `trialing`, `incomplete`, `incomplete_expired` | **skipped** (not paid yet) |
-| `past_due`, `unpaid`, `paused` | **skipped** (payment trouble or a pause; products differ on access) |
+| `past_due`, `paused` | **skipped** (payment trouble or a pause; products differ on access) |
 | anything else, or missing | **ambiguous** |
 
 **Stripe refund rule (latest period).** For an `active` Stripe subscription, only its latest invoice is checked:
 
 - charge fully refunded (`refunded: true`, or `amount_refunded` ≥ `amount`) → ambiguous;
 - charge disputed (Stripe keeps `disputed: true` after the dispute is won or lost) → ambiguous;
+- invoice marked paid outside Stripe (`paid_out_of_band: true`, no charge) → paid;
 - partially refunded → paid;
 - `amount_paid` is 0 (100% coupon, paid from balance) → paid;
 - paid but the charge cannot be read, or no latest invoice → ambiguous.

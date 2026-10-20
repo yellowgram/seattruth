@@ -60,6 +60,9 @@ export function retryDelaySeconds(retryAfter: string | null, attempt: number, no
   return seconds > MAX_RETRY_AFTER_SECONDS ? null : seconds;
 }
 
+/** A provider that doesn't answer in this time is a failed read (exit 2), not a hung cron. */
+export const REQUEST_TIMEOUT_MS = 30_000;
+
 export async function getJson(
   fetchImpl: FetchLike,
   provider: string,
@@ -69,7 +72,7 @@ export async function getJson(
   for (let attempt = 0; ; attempt += 1) {
     let response: Response;
     try {
-      response = await fetchImpl(url, { method: "GET", redirect: "error", headers });
+      response = await fetchImpl(url, { method: "GET", redirect: "error", headers, signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
     } catch {
       throw new ProviderHttpError(provider, 0);
     }

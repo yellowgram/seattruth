@@ -123,7 +123,7 @@ export async function runCli(argv: readonly string[]): Promise<number> {
     console.log(LIVE_ALL_CLEAR_TEXT);
   }
   if (result.deliberateSkipUsers > 0) {
-    // Local stdout only: trials, unfinished first payments, past_due, unpaid, paused.
+    // Local stdout only: trials, unfinished first payments, past_due, paused (and unpaid with statuses.unpaid: skip).
     console.log(`SeatTruth skipped_users=${result.deliberateSkipUsers}`);
   }
 

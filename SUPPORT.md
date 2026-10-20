@@ -11,6 +11,6 @@ SeatTruth is MIT-licensed open source. There is no paid support, no support cont
 ## Out of bounds
 
 - Changing the operator's webhook, editing `is_pro`, or writing SQL.
-- Advice to refund an end customer. The kit does not recommend end-customer refunds.
+- Advice to refund an end customer. SeatTruth does not recommend end-customer refunds.
 - Keys or customer rows in an Issue. Never paste them.
 - Joining the operator's Slack, or a collaborator seat used to patch production data.

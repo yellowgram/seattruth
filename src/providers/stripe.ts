@@ -1,7 +1,7 @@
 import { IncompleteReadError, ProviderHttpError, getJson } from "../http.js";
 import type { FetchLike } from "../http.js";
 import type { ProviderSubscriptionSnapshot } from "../invariants.js";
-import { classifyStatus } from "../rules.js";
+import { classifyStatus, type UnpaidPolicy } from "../rules.js";
 import type { RefundSignal } from "../rules.js";
 
 /**
@@ -35,6 +35,7 @@ const MAX_PAGES = 10000;
 export type StripeReadInput = {
   restrictedKey: string;
   fetchImpl?: FetchLike;
+  unpaid?: UnpaidPolicy;
 };
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -102,6 +103,10 @@ async function refundSignalFromInvoice(
     return "unknown";
   }
   const sawCharge = signals.includes("none");
+  // Marked paid outside Stripe (bank transfer, cash): there is no charge to refund.
+  if (invoice.paid_out_of_band === true) {
+    return "none";
+  }
   const amountPaid = invoice.amount_paid;
   // Nothing was charged (a 100% coupon, or paid from the customer balance): nothing to refund.
   const paidInvoice = typeof amountPaid === "number" ? amountPaid > 0 : invoice.status === "paid";
@@ -261,7 +266,7 @@ export async function readStripeSnapshot(
       provider: "stripe",
       customerId,
       subscriptionId: id,
-      bucket: classifyStatus(status, refund),
+      bucket: classifyStatus(status, refund, input.unpaid),
     });
   }
   return snapshots;

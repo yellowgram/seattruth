@@ -22,9 +22,18 @@ const NOT_STARTED = new Set(["trialing", "incomplete", "incomplete_expired"]);
  * They are skipped like trials instead of being counted as unclassified, so a
  * normal dunning queue does not fail every run.
  */
-const PAYMENT_TROUBLE = new Set(["past_due", "unpaid", "paused"]);
+const PAYMENT_TROUBLE = new Set(["past_due", "paused"]);
 
-export function classifyStatus(status: string, refund: RefundSignal): SubscriptionBucket {
+/**
+ * `unpaid`: retries are exhausted. Stripe's guidance is to revoke access, so by default
+ * it is treated like `canceled`. `skip` treats it like `past_due` (mapping `statuses.unpaid`).
+ */
+export type UnpaidPolicy = "canceled" | "skip";
+
+export function classifyStatus(status: string, refund: RefundSignal, unpaid: UnpaidPolicy = "canceled"): SubscriptionBucket {
+  if (status === "unpaid") {
+    return unpaid === "skip" ? "deliberate_skip" : "canceled";
+  }
   if (status === "active") {
     if (refund === "refund" || refund === "unknown") {
       return "ambiguous";

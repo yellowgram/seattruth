@@ -119,6 +119,17 @@ test("Stripe active plus a refund on the latest invoice is ambiguous, and a read
   });
   assert.equal(clean?.bucket, "paid");
 
+  // Paid outside Stripe (bank transfer): no charge to refund, so it is paid, not ambiguous.
+  const outOfBand = await readWithInvoice({
+    id: "in_1",
+    object: "invoice",
+    status: "paid",
+    amount_paid: 2000,
+    paid_out_of_band: true,
+    charge: null,
+  });
+  assert.equal(outOfBand?.bucket, "paid");
+
   const unreadable = await readWithInvoice({
     id: "in_1",
     object: "invoice",
@@ -414,4 +425,14 @@ test("Retry-After accepts seconds and an HTTP date, and backs off without one", 
   assert.equal(retryDelaySeconds(null, 3), 8);
   assert.equal(retryDelaySeconds("61", 0), null);
   assert.equal(retryDelaySeconds("soon", 0), null);
+});
+
+test("provider reads carry a timeout signal", async () => {
+  let signal: unknown;
+  const fetchImpl = (async (_url: string, init?: RequestInit) => {
+    signal = init?.signal;
+    return new Response(JSON.stringify({ object: "list", data: [], has_more: false }), { status: 200, headers: { "content-type": "application/json" } });
+  }) as typeof fetch;
+  await readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl });
+  assert.ok(signal instanceof AbortSignal);
 });

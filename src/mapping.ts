@@ -117,11 +117,25 @@ export function parseMapping(raw: string): MappingDocument {
       },
     },
     entitlement: { field: "is_pro" },
+    statuses: { unpaid: unpaidPolicy(root.statuses) },
   };
   if (mapping.rails.stripe.customer_id === null && mapping.rails.polar.customer_id === null) {
     throw new MappingError("zero_enabled_rails");
   }
   return mapping;
+}
+
+function unpaidPolicy(statuses: unknown): "canceled" | "skip" {
+  if (statuses === undefined || statuses === null) return "canceled";
+  if (typeof statuses !== "object" || Array.isArray(statuses)) {
+    throw new MappingError("mapping_statuses");
+  }
+  const unpaid = (statuses as Record<string, unknown>).unpaid;
+  if (unpaid === undefined) return "canceled";
+  if (unpaid !== "canceled" && unpaid !== "skip") {
+    throw new MappingError("statuses_unpaid");
+  }
+  return unpaid;
 }
 
 export function loadMapping(path: string): MappingDocument {

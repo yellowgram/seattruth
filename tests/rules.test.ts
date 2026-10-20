@@ -37,7 +37,9 @@ test("status map ignores cancel_at_period_end and does not treat a Polar refund 
   assert.equal(classifyStatus("incomplete_expired", "none"), "deliberate_skip");
   assert.equal(classifyStatus("past_due", "none"), "deliberate_skip");
   assert.equal(classifyStatus("paused", "none"), "deliberate_skip");
-  assert.equal(classifyStatus("unpaid", "none"), "deliberate_skip");
+  // Stripe: revoke access on unpaid. Default canceled; the mapping can choose skip.
+  assert.equal(classifyStatus("unpaid", "none"), "canceled");
+  assert.equal(classifyStatus("unpaid", "none", "skip"), "deliberate_skip");
   assert.equal(classifyStatus("subscription.revoked", "none"), "ambiguous");
   assert.equal(classifyStatus("refunded", "none"), "ambiguous");
 });
@@ -316,4 +318,24 @@ test("empty relation can be all-clear and zero rails is a run error", () => {
   });
   assert.equal(none.allClear, false);
   assert.ok(none.errors.includes("zero_enabled_rails"));
+});
+
+test("an unpaid customer who still has is_pro is reported by default", () => {
+  const unpaid = compareSnapshots({
+    stripeEnabled: true,
+    polarEnabled: false,
+    rows: [row({ userId: "u9", isPro: true, stripeCustomerId: "cus_u" })],
+    stripe: [sub("stripe", "cus_u", "sub_unpaid", classifyStatus("unpaid", "none"))],
+    polar: [],
+  });
+  assert.deepEqual(unpaid.findings.map((f) => f.detectCase), ["canceled_still_entitled"]);
+  const skipped = compareSnapshots({
+    stripeEnabled: true,
+    polarEnabled: false,
+    rows: [row({ userId: "u9", isPro: true, stripeCustomerId: "cus_u" })],
+    stripe: [sub("stripe", "cus_u", "sub_unpaid", classifyStatus("unpaid", "none", "skip"))],
+    polar: [],
+  });
+  assert.equal(skipped.findings.length, 0);
+  assert.equal(skipped.deliberateSkipUsers, 1);
 });

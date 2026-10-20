@@ -1,7 +1,7 @@
 import { IncompleteReadError, ProviderHttpError, getJson } from "../http.js";
 import type { FetchLike } from "../http.js";
 import type { ProviderSubscriptionSnapshot } from "../invariants.js";
-import { classifyStatus } from "../rules.js";
+import { classifyStatus, type UnpaidPolicy } from "../rules.js";
 
 /**
  * Read-only Polar snapshot.
@@ -29,6 +29,7 @@ const MAX_PAGES = 10000;
 export type PolarReadInput = {
   restrictedToken: string;
   fetchImpl?: FetchLike;
+  unpaid?: UnpaidPolicy;
 };
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -122,7 +123,7 @@ export async function readPolarSnapshot(
       provider: "polar",
       customerId: customerId.trim(),
       subscriptionId,
-      bucket: classifyStatus(status, "none"),
+      bucket: classifyStatus(status, "none", input.unpaid),
     });
   }
   return snapshots;

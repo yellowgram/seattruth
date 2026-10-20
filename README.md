@@ -61,12 +61,12 @@ SeatTruth run_error=product_query_failed
 | `1` | Run error (bad mapping, unreadable provider, database failure, missing secret). Nothing was decided. |
 
 - **Ambiguous users** could not be classified safely (for example: a fully refunded or disputed latest Stripe invoice, a customer id with no subscriptions, `is_pro` that is not a real boolean). They block exit 0. They are a count, never a list.
-- **Skipped users** are in a trial, an unfinished first payment, `past_due`, `unpaid` or `paused`. Products differ on access during those states, so SeatTruth makes no claim. Printed locally, not posted to Slack.
+- **Skipped users** are in a trial, an unfinished first payment, `past_due` or `paused`. Products differ on access during those states, so SeatTruth makes no claim. Printed locally, not posted to Slack.
 - Alerts name the disagreement and the ids. They never say what to change.
 
 ## How it decides
 
-Each subscription gets one bucket: **paid** (`active`), **canceled** (`canceled`), **skipped** (trials, incomplete, `past_due`, `unpaid`, `paused`), or **ambiguous** (anything else). Per user and provider, paid wins; otherwise any ambiguity wins. A user with both a paid and a canceled provider is still paid. Full rules and the edge-case table: [docs/RULES.md](docs/RULES.md).
+Each subscription gets one bucket: **paid** (`active`), **canceled** (`canceled`, and `unpaid` unless your mapping sets `statuses.unpaid: skip`), **skipped** (trials, incomplete, `past_due`, `paused`), or **ambiguous** (anything else). Per user and provider, paid wins; otherwise any ambiguity wins. A user with both a paid and a canceled provider is still paid. Full rules and the edge-case table: [docs/RULES.md](docs/RULES.md).
 
 Stripe refunds follow a **latest-period rule**: only the subscription's latest invoice matters. A full refund or any dispute there (open, won or lost) makes the user ambiguous until the next invoice. A partial refund, or a refund on an older invoice, does not. A `$0` latest invoice (a 100% coupon) is paid.
 

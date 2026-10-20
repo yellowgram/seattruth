@@ -88,3 +88,9 @@ test("booleans and seats are not coerced", () => {
   assert.equal(padded.stripeCustomerId, "cus_pad");
   assert.equal(padded.polarCustomerId, "");
 });
+
+test("statuses.unpaid defaults to canceled, accepts skip, and refuses anything else", () => {
+  assert.equal(parseMapping(example).statuses.unpaid, "canceled");
+  assert.equal(parseMapping(example + "\nstatuses:\n  unpaid: skip\n").statuses.unpaid, "skip");
+  assert.throws(() => parseMapping(example + "\nstatuses:\n  unpaid: keep\n"), (e: unknown) => e instanceof MappingError && e.code === "statuses_unpaid");
+});

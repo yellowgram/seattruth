@@ -30,7 +30,8 @@
     "demo": "npm run demo:60s",
     "demo:60s": "npm run build && node dist/scripts/demo-60s.js",
     "test": "npm run build && node --test dist/tests/*.test.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepack": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",

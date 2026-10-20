@@ -39,6 +39,10 @@ export type MappingDocument = {
   entitlement: {
     field: "is_pro";
   };
+  /** How `unpaid` subscriptions are judged. Default `canceled` (Stripe: revoke access). */
+  statuses: {
+    unpaid: "canceled" | "skip";
+  };
 };
 
 export type ProductDbReadInput = {
@@ -143,7 +147,10 @@ export async function readProductRows(input: ProductDbReadInput): Promise<readon
   const client = new Client({ connectionString: input.connectionString });
   await client.connect();
   try {
+    // A read-only transaction, so the database refuses a write even if the role allows one.
+    await client.query("BEGIN READ ONLY");
     const result = await client.query(select.text);
+    await client.query("COMMIT");
     const stripeEnabled = mapping.rails.stripe.customer_id !== null;
     const polarEnabled = mapping.rails.polar.customer_id !== null;
     return result.rows.map((row: Record<string, unknown>) =>

@@ -17,7 +17,7 @@ A relation that was read successfully and returned no rows has nothing to disagr
 
 ## Dunning and pauses are skipped
 
-`past_due`, `unpaid` and `paused` are counted as skipped. If your product cuts access on `unpaid` and a user still has `is_pro = true`, SeatTruth does not report it.
+`past_due` and `paused` are counted as skipped. If your product cuts access on `past_due` and a user still has `is_pro = true`, SeatTruth does not report it. `unpaid` is treated as canceled unless the mapping sets `statuses.unpaid: skip`.
 
 ## Dry runs and skipped schedules
 

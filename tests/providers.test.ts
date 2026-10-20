@@ -4,10 +4,10 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { IncompleteReadError, ProviderHttpError } from "../src/http.js";
+import { IncompleteReadError, ProviderHttpError, RATE_LIMIT_RETRIES, retryDelaySeconds, setSleepForTests } from "../src/http.js";
 import type { FetchLike } from "../src/http.js";
 import { readPolarSnapshot } from "../src/providers/polar.js";
-import { readStripeSnapshot } from "../src/providers/stripe.js";
+import { STRIPE_API_VERSION, readStripeSnapshot } from "../src/providers/stripe.js";
 import { runLiveCompare } from "../src/compare.js";
 
 function jsonResponse(status: number, body: unknown): Response {
@@ -58,34 +58,30 @@ test("Stripe pagination failure is a run error and does not return a partial lis
   assert.equal(urls.some((url) => url.includes("starting_after=sub_1")), true);
 });
 
-test("Stripe active plus any refund is ambiguous, and a readable zero refund is paid", async () => {
+test("Stripe active plus a refund on the latest invoice is ambiguous, and a readable zero refund is paid", async () => {
   async function readWithInvoice(invoice: Record<string, unknown>, status = "active", extra: Record<string, unknown> = {}) {
     const fetchImpl: FetchLike = async (url, init) => {
       assert.equal(init?.method ?? "GET", "GET");
       const href = String(url);
-      assert.doesNotMatch(href, /\/v1\/refunds/);
-      if (href.includes("/v1/subscriptions")) {
-        assert.match(href, /status=all/);
-        return jsonResponse(200, {
-          object: "list",
-          has_more: false,
-          data: [
-            {
-              id: "sub_live",
-              object: "subscription",
-              status,
-              customer: "cus_1",
-              cancel_at_period_end: true,
-              quantity: 0,
-              ...extra,
-            },
-          ],
-        });
-      }
-      assert.match(href, /\/v1\/invoices/);
-      assert.match(href, /subscription=sub_live/);
-      assert.match(href, /data\.charge/);
-      return jsonResponse(200, { object: "list", has_more: false, data: [invoice] });
+      assert.match(href, /\/v1\/subscriptions/);
+      assert.match(href, /status=all/);
+      assert.match(decodeURIComponent(href), /expand\[\]=data\.latest_invoice\.charge/);
+      return jsonResponse(200, {
+        object: "list",
+        has_more: false,
+        data: [
+          {
+            id: "sub_live",
+            object: "subscription",
+            status,
+            customer: "cus_1",
+            cancel_at_period_end: true,
+            quantity: 0,
+            latest_invoice: invoice,
+            ...extra,
+          },
+        ],
+      });
     };
     const [snapshot] = await readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl });
     return snapshot;
@@ -98,6 +94,22 @@ test("Stripe active plus any refund is ambiguous, and a readable zero refund is 
     charge: { id: "ch_1", object: "charge", amount_refunded: 500, refunded: false },
   });
   assert.equal(refunded?.bucket, "ambiguous");
+
+  const partial = await readWithInvoice({
+    id: "in_1",
+    object: "invoice",
+    amount_paid: 2000,
+    charge: { id: "ch_1", object: "charge", amount: 2000, amount_refunded: 500, refunded: false },
+  });
+  assert.equal(partial?.bucket, "paid");
+
+  const full = await readWithInvoice({
+    id: "in_1",
+    object: "invoice",
+    amount_paid: 2000,
+    charge: { id: "ch_1", object: "charge", amount: 2000, amount_refunded: 2000, refunded: false },
+  });
+  assert.equal(full?.bucket, "ambiguous");
 
   const clean = await readWithInvoice({
     id: "in_1",
@@ -129,6 +141,45 @@ test("Stripe active plus any refund is ambiguous, and a readable zero refund is 
     "canceled"
   );
   assert.equal(canceled?.bucket, "canceled");
+
+  const free = await readWithInvoice({ id: "in_1", object: "invoice", status: "paid", amount_paid: 0, charge: null });
+  assert.equal(free?.bucket, "paid");
+
+  const noInvoice = await readWithInvoice(null as unknown as Record<string, unknown>);
+  assert.equal(noInvoice?.bucket, "ambiguous");
+});
+
+test("Stripe reads every subscription in one list call per page and pins the API version", async () => {
+  const urls: string[] = [];
+  const versions: Array<string | undefined> = [];
+  const fetchImpl: FetchLike = async (url, init) => {
+    const href = String(url);
+    urls.push(href);
+    versions.push((init?.headers as Record<string, string> | undefined)?.["Stripe-Version"]);
+    const page = href.includes("starting_after=") ? 2 : 1;
+    return jsonResponse(200, {
+      object: "list",
+      has_more: page === 1,
+      data: Array.from({ length: 100 }, (_, i) => ({
+        id: `sub_${page}_${i}`,
+        object: "subscription",
+        status: "active",
+        customer: `cus_${page}_${i}`,
+        latest_invoice: {
+          id: `in_${page}_${i}`,
+          object: "invoice",
+          status: "paid",
+          amount_paid: 1000,
+          charge: { id: `ch_${page}_${i}`, object: "charge", amount_refunded: 0, refunded: false, disputed: false },
+        },
+      })),
+    });
+  };
+  const snapshots = await readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl });
+  assert.equal(snapshots.length, 200);
+  assert.equal(urls.length, 2);
+  assert.ok(snapshots.every((snapshot) => snapshot.bucket === "paid"));
+  assert.deepEqual(versions, [STRIPE_API_VERSION, STRIPE_API_VERSION]);
 });
 
 test("an unexpanded Stripe charge id is read with GET and any refund stays ambiguous", async () => {
@@ -137,19 +188,19 @@ test("an unexpanded Stripe charge id is read with GET and any refund stays ambig
     assert.equal(init?.method ?? "GET", "GET");
     const href = String(url);
     urls.push(href);
-    assert.doesNotMatch(href, /\/v1\/refunds/);
     if (href.includes("/v1/subscriptions")) {
       return jsonResponse(200, {
         object: "list",
         has_more: false,
-        data: [{ id: "sub_live", object: "subscription", status: "active", customer: "cus_1" }],
-      });
-    }
-    if (href.includes("/v1/invoices")) {
-      return jsonResponse(200, {
-        object: "list",
-        has_more: false,
-        data: [{ id: "in_1", object: "invoice", status: "paid", amount_paid: 2000, charge: "ch_refunded1" }],
+        data: [
+          {
+            id: "sub_live",
+            object: "subscription",
+            status: "active",
+            customer: "cus_1",
+            latest_invoice: { id: "in_1", object: "invoice", status: "paid", amount_paid: 2000, charge: "ch_refunded1" },
+          },
+        ],
       });
     }
     assert.match(href, /\/v1\/charges\/ch_refunded1$/);
@@ -158,6 +209,50 @@ test("an unexpanded Stripe charge id is read with GET and any refund stays ambig
   const [snapshot] = await readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl });
   assert.equal(snapshot?.bucket, "ambiguous");
   assert.equal(urls.some((url) => url.includes("/v1/charges/ch_refunded1")), true);
+});
+
+test("a 429 is retried after Retry-After, and a long Retry-After fails the read", async () => {
+  const waits: number[] = [];
+  setSleepForTests(async (ms) => {
+    waits.push(ms);
+  });
+  try {
+    let calls = 0;
+    const fetchImpl: FetchLike = async () => {
+      calls += 1;
+      if (calls <= 2) {
+        return new Response("{}", { status: 429, headers: { "retry-after": "3" } });
+      }
+      return jsonResponse(200, {
+        object: "list",
+        has_more: false,
+        data: [{ id: "sub_1", object: "subscription", status: "canceled", customer: "cus_1" }],
+      });
+    };
+    const snapshots = await readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl });
+    assert.equal(snapshots.length, 1);
+    assert.equal(calls, 3);
+    assert.deepEqual(waits, [3000, 3000]);
+
+    const tooLong: FetchLike = async () => new Response("{}", { status: 429, headers: { "retry-after": "3600" } });
+    await assert.rejects(
+      () => readStripeSnapshot({ restrictedKey: "rk_test_REPLACE_ME", fetchImpl: tooLong }),
+      (error: unknown) => error instanceof ProviderHttpError && error.code === "stripe_http_429"
+    );
+
+    let polarCalls = 0;
+    const polar: FetchLike = async () => {
+      polarCalls += 1;
+      return new Response("{}", { status: 429 });
+    };
+    await assert.rejects(
+      () => readPolarSnapshot({ restrictedToken: "polar_oat_REPLACE_ME", fetchImpl: polar }),
+      (error: unknown) => error instanceof ProviderHttpError && error.code === "polar_http_429"
+    );
+    assert.equal(polarCalls, RATE_LIMIT_RETRIES + 1);
+  } finally {
+    setSleepForTests((ms) => new Promise((resolve) => setTimeout(resolve, ms)));
+  }
 });
 
 test("a repeated Stripe page is an incomplete read", async () => {
@@ -309,4 +404,14 @@ entitlement:
   assert.equal(result.unclassifiedUsers, 0);
   assert.equal(result.allClear, false);
   assert.ok(result.errors.includes("stripe_http_500"));
+});
+
+test("Retry-After accepts seconds and an HTTP date, and backs off without one", () => {
+  assert.equal(retryDelaySeconds("7", 0), 7);
+  const now = Date.parse("2026-10-19T12:00:00Z");
+  assert.equal(retryDelaySeconds("Mon, 19 Oct 2026 12:00:05 GMT", 0, now), 5);
+  assert.equal(retryDelaySeconds(null, 0), 1);
+  assert.equal(retryDelaySeconds(null, 3), 8);
+  assert.equal(retryDelaySeconds("61", 0), null);
+  assert.equal(retryDelaySeconds("soon", 0), null);
 });

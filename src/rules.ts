@@ -7,12 +7,22 @@ import type {
 } from "./invariants.js";
 
 /**
- * P26 status map. cancel_at_period_end does not change an active subscription.
- * Polar refunds are not an input. Stripe refund state is a separate argument.
+ * Status map (Stripe and Polar use the same strings). cancel_at_period_end does
+ * not change an active subscription. Polar refunds are not an input. Stripe
+ * refund state is a separate argument.
  */
 export type RefundSignal = "none" | "refund" | "unknown";
 
-const DELIBERATE = new Set(["trialing", "incomplete", "incomplete_expired"]);
+/** Not paid yet: trials and first payments that never completed. */
+const NOT_STARTED = new Set(["trialing", "incomplete", "incomplete_expired"]);
+
+/**
+ * Payment trouble or a pause on a live subscription. Products differ on whether
+ * these keep access (grace periods, dunning), so neither detect case applies.
+ * They are skipped like trials instead of being counted as unclassified, so a
+ * normal dunning queue does not fail every run.
+ */
+const PAYMENT_TROUBLE = new Set(["past_due", "unpaid", "paused"]);
 
 export function classifyStatus(status: string, refund: RefundSignal): SubscriptionBucket {
   if (status === "active") {
@@ -24,7 +34,7 @@ export function classifyStatus(status: string, refund: RefundSignal): Subscripti
   if (status === "canceled") {
     return "canceled";
   }
-  if (DELIBERATE.has(status)) {
+  if (NOT_STARTED.has(status) || PAYMENT_TROUBLE.has(status)) {
     return "deliberate_skip";
   }
   return "ambiguous";
@@ -32,7 +42,7 @@ export function classifyStatus(status: string, refund: RefundSignal): Subscripti
 
 export type RailState = "paid" | "canceled" | "deliberate_skip" | "ambiguous" | "absent";
 
-/** P28 rollup for one rail after a complete read. */
+/** rollup for one rail after a complete read. */
 export function rollupRail(buckets: readonly SubscriptionBucket[]): Exclude<RailState, "absent"> {
   if (buckets.length === 0) {
     return "ambiguous";

@@ -21,18 +21,18 @@ A dry-run is not an all-clear. Live mode reads Stripe, Polar, and Postgres and d
 Usage:
   seattruth --dry-run     Print a local notice and exit 0 (default)
   seattruth --help        Show this text
-  seattruth --live        Read-only compare. Exit 0, 2, or 1 per docs/MVP_SCOPE.md rule P30.
+  seattruth --live        Read-only compare. Exit 0, 2, or 1.
 
 Unknown flags exit 1 and do not run a compare.
 
-Docs: docs/MVP_SCOPE.md
+Docs: docs/RULES.md
 Contact: hello@yellowgram.dev
 `;
 
 const KNOWN_FLAGS = new Set(["--live", "--dry-run", "--help", "-h"]);
 const SAFE_LOG_CODE = /^(?:slack_[a-z0-9_]+|missing_slack_webhook|unknown_argument|compare_failed)$/;
 
-/** Local stdout only. Not posted to Slack. Not a certification (P30). */
+/** Local stdout only. Not posted to Slack. Not a certification. */
 export const LIVE_ALL_CLEAR_TEXT =
   "SeatTruth live run finished all-clear. Slack was not posted. Deliberate skips can be included. An empty relation can finish this way. This is not a certification.";
 
@@ -70,7 +70,7 @@ function loadEnvFile(): void {
   applyEnvText(text, process.env);
 }
 
-/** P30 live exit: 1 on a run error, 0 only when allClear, otherwise 2. */
+/** Live exit: 1 on a run error, 0 only when allClear, otherwise 2. */
 export function liveExitCode(allClear: boolean, errors: readonly string[]): number {
   if (errors.length > 0) {
     return 1;
@@ -121,6 +121,10 @@ export async function runCli(argv: readonly string[]): Promise<number> {
     console.log(alert.text);
   } else if (result.allClear) {
     console.log(LIVE_ALL_CLEAR_TEXT);
+  }
+  if (result.deliberateSkipUsers > 0) {
+    // Local stdout only: trials, unfinished first payments, past_due, unpaid, paused.
+    console.log(`SeatTruth skipped_users=${result.deliberateSkipUsers}`);
   }
 
   if (slackNeeded(result)) {

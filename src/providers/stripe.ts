@@ -7,25 +7,26 @@ import type { RefundSignal } from "../rules.js";
 /**
  * Read-only Stripe snapshot.
  *
- * Refund recipe (P26), cited 2026-09-26:
- * - List every subscription: GET /v1/subscriptions?status=all&limit=100
+ * One paginated list call per 100 subscriptions, account-wide:
+ *   GET /v1/subscriptions?status=all&limit=100&expand[]=data.latest_invoice.charge
  *   https://docs.stripe.com/api/subscriptions/list
- *   Complete when has_more is false. starting_after is the previous page's last id.
- *   https://docs.stripe.com/api/pagination
- * - For each status=active subscription, list its invoices:
- *   GET /v1/invoices?subscription={id}&limit=100&expand[]=data.charge
- *   https://docs.stripe.com/api/invoices/list (subscription filter)
  *   https://docs.stripe.com/api/expanding_objects (list expansions use the data. prefix)
- * - A charge with amount_refunded > 0 or refunded true is a refund.
- *   https://docs.stripe.com/api/charges/object
- * - There is no "latest charge" pick. Any refund makes the subscription ambiguous.
- * - If a paid invoice has no readable charge, the refund state is unknown, so the
- *   subscription is ambiguous, not paid.
- * - cancel_at_period_end is ignored while status is active.
- *   https://docs.stripe.com/api/subscriptions/object
+ * Every request sends Stripe-Version: STRIPE_API_VERSION, so the account's default
+ * API version cannot change the shapes read here. In that version an invoice has
+ * `charge`; `payments` is also honoured when present.
+ *
+ * Refunds use the latest-period rule: only the subscription's latest invoice
+ * counts. A full refund, or a dispute, on that invoice's charge makes an active
+ * subscription ambiguous. A partial refund leaves it paid. Refunds on earlier
+ * invoices are history and are ignored.
+ * A paid latest invoice whose charge cannot be read is ambiguous, not paid.
+ * cancel_at_period_end is ignored while status is active.
  *
  * Never charges, refunds, or writes. Secret keys (sk_) are refused before any request.
  */
+
+/** Pinned so the account's default API version cannot change the shapes read here. */
+export const STRIPE_API_VERSION = "2025-02-24.acacia";
 
 const STRIPE_API = "https://api.stripe.com";
 const PAGE_LIMIT = 100;
@@ -102,7 +103,8 @@ async function refundSignalFromInvoice(
   }
   const sawCharge = signals.includes("none");
   const amountPaid = invoice.amount_paid;
-  const paidInvoice = invoice.status === "paid" || (typeof amountPaid === "number" && amountPaid > 0);
+  // Nothing was charged (a 100% coupon, or paid from the customer balance): nothing to refund.
+  const paidInvoice = typeof amountPaid === "number" ? amountPaid > 0 : invoice.status === "paid";
   if (!sawCharge && paidInvoice) {
     return "unknown";
   }
@@ -126,23 +128,18 @@ function signalFromCharge(charge: unknown): RefundSignal | "absent" {
   if (record.refunded === true) {
     return "refund";
   }
-  if (typeof record.amount_refunded === "number" && record.amount_refunded > 0) {
-    return "refund";
-  }
   if (typeof record.amount_refunded !== "number") {
     return "unknown";
   }
-  return "none";
-}
-
-function combineRefundSignals(signals: readonly RefundSignal[]): RefundSignal {
-  if (signals.includes("refund")) {
-    return "refund";
+  if (record.amount_refunded === 0) {
+    return "none";
   }
-  if (signals.includes("unknown")) {
-    return "unknown";
+  // A partial refund (a goodwill credit) leaves the period paid. Only a full refund,
+  // or one we cannot size, makes the subscription ambiguous.
+  if (typeof record.amount === "number" && record.amount_refunded < record.amount) {
+    return "none";
   }
-  return "none";
+  return "refund";
 }
 
 async function stripeGet(
@@ -152,6 +149,7 @@ async function stripeGet(
 ): Promise<unknown> {
   return getJson(fetchImpl, "stripe", `${STRIPE_API}${pathAndQuery}`, {
     Authorization: `Bearer ${key}`,
+    "Stripe-Version": STRIPE_API_VERSION,
   });
 }
 
@@ -199,20 +197,24 @@ async function eachPage(
   throw new IncompleteReadError("stripe");
 }
 
-async function refundSignalForSubscription(
+/** Refund state of the subscription's latest invoice (the latest-period rule). */
+async function latestInvoiceSignal(
   fetchImpl: FetchLike,
   key: string,
-  subscriptionId: string
+  subscription: Record<string, unknown>
 ): Promise<RefundSignal> {
-  const query = new URLSearchParams();
-  query.set("subscription", subscriptionId);
-  query.append("expand[]", "data.charge");
-  const invoices = await eachPage(fetchImpl, key, "/v1/invoices", query);
-  const signals: RefundSignal[] = [];
-  for (const invoice of invoices) {
-    signals.push(await refundSignalFromInvoice(fetchImpl, key, invoice));
+  if (!("latest_invoice" in subscription)) {
+    return "unknown";
   }
-  return combineRefundSignals(signals);
+  const invoice = subscription.latest_invoice;
+  if (invoice === null) {
+    return "unknown";
+  }
+  const record = asRecord(invoice);
+  if (!record) {
+    return "unknown";
+  }
+  return refundSignalFromInvoice(fetchImpl, key, record);
 }
 
 export async function readStripeSnapshot(
@@ -232,6 +234,7 @@ export async function readStripeSnapshot(
   const fetchImpl = input.fetchImpl ?? fetch;
   const query = new URLSearchParams();
   query.set("status", "all");
+  query.append("expand[]", "data.latest_invoice.charge");
   let subscriptions: Record<string, unknown>[];
   try {
     subscriptions = await eachPage(fetchImpl, input.restrictedKey, "/v1/subscriptions", query);
@@ -252,7 +255,7 @@ export async function readStripeSnapshot(
     }
     let refund: RefundSignal = "none";
     if (status === "active") {
-      refund = await refundSignalForSubscription(fetchImpl, input.restrictedKey, id);
+      refund = await latestInvoiceSignal(fetchImpl, input.restrictedKey, subscription);
     }
     snapshots.push({
       provider: "stripe",

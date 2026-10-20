@@ -26,7 +26,7 @@ function sub(
   return { provider, customerId, subscriptionId, bucket };
 }
 
-test("P26 status map ignores cancel_at_period_end and does not treat a Polar refund as canceled", () => {
+test("status map ignores cancel_at_period_end and does not treat a Polar refund as canceled", () => {
   assert.equal(classifyStatus("active", "none"), "paid");
   assert.equal(classifyStatus("active", "refund"), "ambiguous");
   assert.equal(classifyStatus("active", "unknown"), "ambiguous");
@@ -35,14 +35,14 @@ test("P26 status map ignores cancel_at_period_end and does not treat a Polar ref
   assert.equal(classifyStatus("trialing", "none"), "deliberate_skip");
   assert.equal(classifyStatus("incomplete", "none"), "deliberate_skip");
   assert.equal(classifyStatus("incomplete_expired", "none"), "deliberate_skip");
-  assert.equal(classifyStatus("past_due", "none"), "ambiguous");
-  assert.equal(classifyStatus("paused", "none"), "ambiguous");
-  assert.equal(classifyStatus("unpaid", "none"), "ambiguous");
+  assert.equal(classifyStatus("past_due", "none"), "deliberate_skip");
+  assert.equal(classifyStatus("paused", "none"), "deliberate_skip");
+  assert.equal(classifyStatus("unpaid", "none"), "deliberate_skip");
   assert.equal(classifyStatus("subscription.revoked", "none"), "ambiguous");
   assert.equal(classifyStatus("refunded", "none"), "ambiguous");
 });
 
-test("P28 same-rail rollup lets paid win and treats a mixed skip plus cancel as ambiguous", () => {
+test("same-rail rollup lets paid win and treats a mixed skip plus cancel as ambiguous", () => {
   assert.equal(rollupRail([]), "ambiguous");
   assert.equal(rollupRail(["paid", "ambiguous"]), "paid");
   assert.equal(rollupRail(["deliberate_skip", "canceled"]), "ambiguous");
@@ -50,7 +50,7 @@ test("P28 same-rail rollup lets paid win and treats a mixed skip plus cancel as 
   assert.equal(rollupRail(["canceled", "canceled"]), "canceled");
 });
 
-test("P28 cross-rail edges", () => {
+test("cross-rail edges", () => {
   const stripeOnly = { stripeEnabled: true, polarEnabled: false };
   const both = { stripeEnabled: true, polarEnabled: true };
 
@@ -273,7 +273,7 @@ test("P28 cross-rail edges", () => {
   assert.equal(canceledAndNoPolarSub.allClear, false);
 });
 
-test("P17 duplicate customer ids exclude those users only", () => {
+test("duplicate customer ids exclude those users only", () => {
   const result = compareSnapshots({
     stripeEnabled: true,
     polarEnabled: false,

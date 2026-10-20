@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-10-19
+
+- **Stripe: one account-wide read.** Subscriptions are listed with `expand[]=data.latest_invoice.charge`, one call per 100 subscriptions. 0.2.0 listed every invoice of every active subscription (1 + N calls, plus one per unexpanded charge), which rate-limited large accounts.
+- **Latest-period refund rule.** Only the latest invoice of an active subscription is checked. A full refund or a dispute there is ambiguous; a partial refund, a refund on an older invoice, or a $0 invoice is paid. In 0.2.0 any refund ever, even a $1 goodwill refund years ago, kept a paying customer ambiguous forever and every run exiting 2.
+- **Pinned `Stripe-Version: 2025-02-24.acacia`.** Accounts whose default version is 2025-03-31 or later no longer return `invoice.charge`, which made every active subscription ambiguous.
+- **Rate limits.** HTTP 429 from Stripe or Polar is retried up to four times, honouring `Retry-After` (seconds or HTTP date, up to 60 s), else backing off 1–8 s.
+- **`past_due`, `unpaid`, `paused` are skipped** like trials instead of ambiguous, so a normal dunning queue does not fail every run. Live runs print `SeatTruth skipped_users=N` locally.
+- The dry-run line now reads `SeatTruth dry-run: no keys read, no network calls. This is not an all-clear. …` instead of reporting build status.
+- Docs: new README with a five-minute quickstart, limits and threat model; rules in plain words in `docs/RULES.md`. Internal planning docs (`MVP_SCOPE`, `ACCEPTANCE_NOTES`, `STATUS`, `LIVE_OPERATOR_LOOP`, `DEMO_60S`, `START_HERE`) and internal rule codes in comments and test names were removed. `SECURITY.md` no longer calls this a private repository.
+
 ## 0.2.0 — 2026-10-19
 
 - Relicensed to MIT; no longer sold. `LICENSE` is the MIT License (Copyright (c) 2026 yellowgram). The commercial grant, Polar delivery packet, price and refund copy, release pack script, competitive skim, and design/code review packets were removed from the tree (they remain in git history). `BUYER_START_HERE.md` is now `START_HERE.md`.
@@ -10,20 +20,12 @@
 
 ## 0.1.1 — 2026-09-27
 
-License fence. Polar delivers `seattruth-0.1.1.zip`. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`. Soft-WTP stays off.
-
-- SeatTruth is source-available under the PolyForm Noncommercial License 1.0.0. PolyForm Noncommercial 1.0.0 is not an OSI-approved license.
-- Commercial use is the Suthirth Commercial Grant in `docs/COMMERCIAL_GRANT.md`. Seller: Suthirth solutions. Support has no included Issues SLA. Refund follows the Polar listing. Price note: founding **$79** → **$99** (first 10 organizations at **$79 once**, then the same SKU at **$99 once** per organization; Polar product `9aab6e67-3533-44d1-aa0b-bfdaf6dbc753`). Soft-WTP stays off.
-- Price stays **$99 once** per organization after that founding window. The first 10 organizations stay **$79 once**. The refund window stays **14 days** for the SeatTruth purchase. Soft-WTP stays off.
-- New zip `release/seattruth-0.1.1.zip`. Tag `v0.1.1`. Polar delivers this zip. SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6`, also in `docs/CHECKSUMS.md`.
-- `release/seattruth-0.1.0.zip` and tag `v0.1.0` are unchanged. They are the sealed prior distribution. They are not what Polar currently delivers. This repository does not contain a Checkout URL. The purchase path is https://www.yellowgram.dev or hello@yellowgram.dev.
+License change only; detector behavior is unchanged from 0.1.0. Published under the previous license (PolyForm Noncommercial 1.0.0 with a separate commercial grant). Release zip `seattruth-0.1.1.zip`, tag `v0.1.1`, SHA-256 `8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6` (also in `docs/CHECKSUMS.md`).
 
 ## 0.1.0 — 2026-09-26
 
-First baseline of the read-only SeatTruth detector.
+First release of the read-only detector, under the previous license.
 
-- Dual-rail compare of Stripe and Polar against product `is_pro` and seats. Two findings only: `paid_locked_out` and `canceled_still_entitled`. A match is silence. A dry-run is not an all-clear.
-- No auto-fix, no writes to Stripe, Polar, or the product database, and no charges or Checkout inside the kit.
-- Price locked at **$99 once** per organization. The first 10 organizations are **$79 once** on the same SKU. Refund window **14 days**. Soft-WTP and cold invoices stay forbidden. The kit does not recommend end-customer refunds.
-- Versioned zip `release/seattruth-0.1.0.zip`. SHA-256 in `docs/CHECKSUMS.md`. CoS packet in `docs/POLAR_DELIVERABLES.md`.
-- Founder typed Polar go-live on 2026-09-26. CoS confirmed the Polar listing is listed. GitHub Release `v0.1.0` carries `seattruth-0.1.0.zip`. SeatTruth is for sale via Polar. This repository does not contain a buy link. The purchase path is https://www.yellowgram.dev or hello@yellowgram.dev.
+- Dual-rail compare of Stripe and Polar against product `is_pro` and seats. Two findings only: `paid_locked_out` and `canceled_still_entitled`. A match is silence. A dry run is not an all-clear.
+- No auto-fix, no writes to Stripe, Polar or the product database, no charges.
+- Release zip `seattruth-0.1.0.zip`, tag `v0.1.0`; SHA-256 in `docs/CHECKSUMS.md`.

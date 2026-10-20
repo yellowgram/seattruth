@@ -6,7 +6,7 @@ SeatTruth is MIT-licensed open source. There is no paid support, no support cont
 
 - How to run the documented dry-run and the documented live path.
 - How to read a finding, an ambiguous count, or a run error.
-- A defect where the kit breaks a rule in [docs/MVP_SCOPE.md](docs/MVP_SCOPE.md).
+- A defect where SeatTruth breaks a rule in [docs/RULES.md](docs/RULES.md).
 
 ## Out of bounds
 

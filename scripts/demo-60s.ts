@@ -1,5 +1,5 @@
 /**
- * Fixture-only 60-second dual-rail clip.
+ * Fixture-only demo: both findings and a match on invented rows, under 60 seconds.
  *
  * Invented rows go through classifyStatus, compareSnapshots, and buildSlackAlert.
  * Dry-run text comes from dryRunResult. No Stripe, Polar, Slack, or database call.

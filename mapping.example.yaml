@@ -3,7 +3,7 @@
 # Postgres relation. This file is column names, not a SQL script.
 # SeatTruth may read only these columns. It does not change rows.
 #
-# Canonical rules: docs/MVP_SCOPE.md
+# Rules: docs/RULES.md
 # Copy this file before a live run. The example itself is not your database.
 
 version: 1
@@ -12,7 +12,6 @@ product:
   engine: postgres
   # Required. One identifier. The SELECT is "schema"."relation" after validation.
   # Names are case-sensitive. id does not match Id. There is no search_path fallback.
-  # See docs/MVP_SCOPE.md rule P18.
   schema: billing
   # Table or view. The database role needs SELECT on this relation only.
   relation: billing_access

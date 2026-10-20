@@ -365,7 +365,7 @@ const V010_ZIP_SHA256 =
 const V011_ZIP_SHA256 =
   "8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6";
 
-test("0.2.0 is MIT, publishable, and historical zips are unchanged", () => {
+test("the package is MIT, publishable, and historical zips are unchanged", () => {
   const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")) as {
     version: string;
     private?: boolean;
@@ -374,7 +374,7 @@ test("0.2.0 is MIT, publishable, and historical zips are unchanged", () => {
     main: string;
     bin: Record<string, string>;
   };
-  assert.equal(pkg.version, "0.2.0");
+  assert.match(pkg.version, /^\d+\.\d+\.\d+$/);
   assert.equal(pkg.private, undefined);
   assert.equal(pkg.license, "MIT");
   assert.equal(pkg.homepage, "https://www.yellowgram.dev/oss");

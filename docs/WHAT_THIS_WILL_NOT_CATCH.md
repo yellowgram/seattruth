@@ -1,25 +1,28 @@
-# What this will not catch
+# What a clean run does not prove
 
-SeatTruth reports two disagreements. It is not a certificate that revenue and access match. You run this. yellowgram does not operate a hosted endpoint for it. The kit is read-only. It does not auto-fix, write `is_pro`, or charge.
-
-Rules: [MVP_SCOPE.md](MVP_SCOPE.md). A live proof, with boxes still open, is [LIVE_OPERATOR_LOOP.md](LIVE_OPERATOR_LOOP.md).
+SeatTruth reports two disagreements. Exit 0 means it found neither, not that revenue and access match. It is read-only and has no auto-fix. You run it; yellowgram does not operate a hosted endpoint for it. Rules: [RULES.md](RULES.md).
 
 ## Any active subscription counts as paid
 
-Status `active` is paid. Price, product, and quantity are not filters (P29). An add-on counts. Quantity `0` on an `active` subscription still counts as paid. A price allow-list is not in this kit.
+Status `active` is paid. Price, product and quantity are not filters. An add-on counts. Quantity `0` on an active subscription still counts as paid. If your product has several tiers behind `is_pro`, SeatTruth cannot tell which tier was paid for.
 
-## An empty product relation can all-clear
+## An empty relation can finish clean
 
-`allClear` can be true when the mapped relation was read and returned no rows (P30). That read does not prove the view is the population you meant. Check the relation before you trust the first green live run.
+A relation that was read successfully and returned no rows has nothing to disagree with. Check that the view is the population you meant before you trust the first clean run.
 
-## A Polar refund is not canceled
+## Refunds and disputes
 
-Case 2 is provider status `canceled` on every applicable rail, with `is_pro` true. A Polar refund returns money and does not end the subscription (P26). The kit does not read Polar order or refund objects. Stripe status `active` with any refund is ambiguous. It is not canceled, and it is not case 2.
+- Stripe: only the latest invoice of an active subscription is checked. A full refund or a dispute there makes the user ambiguous; a partial refund does not. A won dispute still counts until the next invoice replaces it. A full refund on an earlier invoice, for example just before a mid-period upgrade, is not seen.
+- Polar: refunds are not read. A refunded Polar subscription that is still `active` counts as paid.
 
-## Dry-run and a skipped schedule are not an all-clear
+## Dunning and pauses are skipped
 
-`--dry-run` exits 0 and sets `allClear` false. That exit is not a pass. The daily schedule exits 0 without comparing when `SEATTRUTH_MAPPING_YAML` is unset. That skip is not an all-clear. A green dry-run check is not an entitlement pass (P30).
+`past_due`, `unpaid` and `paused` are counted as skipped. If your product cuts access on `unpaid` and a user still has `is_pro = true`, SeatTruth does not report it.
 
-## Read-only, and not a hosted service
+## Dry runs and skipped schedules
 
-The kit does not charge, refund, open Checkout, write the product database, or auto-fix. There is no hosted compare endpoint. Uptime of the job you run is yours. Help via GitHub Issues or hello@yellowgram.dev is best-effort. There is no SLA.
+`--dry-run` exits 0 and is never an all-clear. The included workflow's daily schedule exits 0 without comparing until `SEATTRUTH_MAPPING_YAML` is set; that skip is not an all-clear either.
+
+## Scope
+
+One Postgres relation, one mapping file, Stripe and Polar only. No webhook receiver, no history between runs, no ignore list or snooze: a repeated finding stays visible every run.

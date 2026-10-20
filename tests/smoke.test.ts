@@ -1,6 +1,4 @@
 import assert from "node:assert/strict";
-import { execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -365,7 +363,7 @@ const V010_ZIP_SHA256 =
 const V011_ZIP_SHA256 =
   "8014dae2e692a727999c7b2f88aad15912503f5062f870741027a7b8e7b654f6";
 
-test("the package is MIT, publishable, and historical zips are unchanged", () => {
+test("the package is MIT and publishable, and the historical zip digests are kept", () => {
   const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")) as {
     version: string;
     private?: boolean;
@@ -400,13 +398,8 @@ test("the package is MIT, publishable, and historical zips are unchanged", () =>
   const changelog = readFileSync(path.join(root, "CHANGELOG.md"), "utf8");
   assert.match(changelog, /Relicensed to MIT; no longer sold/);
 
-  const priorZip = path.join(root, "release/seattruth-0.1.0.zip");
-  assert.equal(createHash("sha256").update(readFileSync(priorZip)).digest("hex"), V010_ZIP_SHA256);
-  const zipPath = path.join(root, "release/seattruth-0.1.1.zip");
-  assert.equal(createHash("sha256").update(readFileSync(zipPath)).digest("hex"), V011_ZIP_SHA256);
+  assert.equal(existsSync(path.join(root, "release")), false);
   const checksums = readFileSync(path.join(root, "docs/CHECKSUMS.md"), "utf8");
   assert.match(checksums, new RegExp(V010_ZIP_SHA256));
   assert.match(checksums, new RegExp(V011_ZIP_SHA256));
-  assert.match(execFileSync("unzip", ["-z", priorZip], { encoding: "utf8" }), /seattruth-0\.1\.0/);
-  assert.match(execFileSync("unzip", ["-z", zipPath], { encoding: "utf8" }), /seattruth-0\.1\.1/);
 });

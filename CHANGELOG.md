@@ -5,7 +5,9 @@
 - **`unpaid` counts as canceled.** Stripe's guidance is to revoke access when a subscription becomes `unpaid`, so a user still marked `is_pro` is reported as `canceled_still_entitled`. Set `statuses.unpaid: skip` in the mapping to keep the old behaviour.
 - An invoice paid outside Stripe (`paid_out_of_band`) is paid, not ambiguous.
 - Provider requests time out after 30 seconds (a failed read, exit 2) instead of hanging.
-- The product query runs in a `READ ONLY` transaction.
+- The product query runs in a `READ ONLY` transaction. A test proves Postgres refuses a mapped view whose column writes.
+- **Unknown mapping keys are refused** at every level (`mapping_unknown_key: <path>`, exit 1). A typo such as `statuses: { unpiad: skip }` used to be ignored silently.
+- The npm package no longer ships source maps that point at `src/` files it doesn't include.
 - `npm pack` builds `dist` first, so a fresh clone packs a working package.
 
 - **Stripe: one account-wide read.** Subscriptions are listed with `expand[]=data.latest_invoice.charge`, one call per 100 subscriptions. 0.2.0 listed every invoice of every active subscription (1 + N calls, plus one per unexpanded charge), which rate-limited large accounts.

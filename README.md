@@ -84,7 +84,7 @@ What a clean run does **not** prove: [docs/WHAT_THIS_WILL_NOT_CATCH.md](docs/WHA
 ## Threat model
 
 - **Keys.** Restricted, read-only keys only; `sk_` is refused. Keys, tokens, database URLs and webhook URLs are never logged or posted. Every provider call is a `GET` with redirects refused.
-- **Your database.** One `SELECT` of the mapped columns. Identifiers are validated against `^[A-Za-z_][A-Za-z0-9_]*$` and quoted; the mapping holds no SQL. Use a role that cannot write.
+- **Your database.** One `SELECT` of the mapped columns. Identifiers are validated against `^[A-Za-z_][A-Za-z0-9_]*$` and quoted; the mapping holds no SQL. The SELECT runs in a `READ ONLY` transaction, so even a mapped view that calls a writing function is refused by Postgres. Use a role that cannot write anyway. A mapping key SeatTruth doesn't know (a typo such as `statuses.unpiad`) is a run error (`mapping_unknown_key: statuses.unpiad`), never ignored.
 - **Slack.** Only an allow-listed set of fields (case, user id, provider, customer id, subscription id, `is_pro`, seats). No emails, names or card data.
 - **Not defended:** a compromised machine running SeatTruth (it holds your read keys), or a mapping that points at the wrong relation.
 

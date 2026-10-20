@@ -86,7 +86,7 @@ export async function runLiveCompare(input: LiveCompareInput): Promise<CompareRe
     mapping = loadMapping(input.mappingPath);
   } catch (error) {
     if (error instanceof MappingError) {
-      return fail(error.code);
+      return fail(error.detail ? `${error.code}: ${error.detail}` : error.code);
     }
     return fail("mapping_unreadable");
   }

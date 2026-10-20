@@ -4,6 +4,7 @@
 # SeatTruth may read only these columns. It does not change rows.
 #
 # Rules: docs/RULES.md
+# Unknown keys are an error (mapping_unknown_key), so a typo can't be silently ignored.
 # Copy this file before a live run. The example itself is not your database.
 
 version: 1

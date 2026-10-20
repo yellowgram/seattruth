@@ -8,11 +8,33 @@ const IDENT = /^[A-Za-z_][A-Za-z0-9_]*$/;
 
 export class MappingError extends Error {
   readonly code: string;
+  /** Where in the mapping, when that helps (e.g. the unknown key "statuses.unpiad"). */
+  readonly detail?: string;
 
-  constructor(code: string) {
-    super(code);
+  constructor(code: string, detail?: string) {
+    super(detail ? `${code}: ${detail}` : code);
     this.name = "MappingError";
     this.code = code;
+    this.detail = detail;
+  }
+}
+
+/** The mapping's keys, per object. Anything else is a typo or an unsupported option: refuse it. */
+const KNOWN_KEYS: Record<string, readonly string[]> = {
+  "": ["version", "product", "rails", "entitlement", "statuses"],
+  product: ["engine", "schema", "relation", "columns"],
+  "product.columns": ["user_id", "is_pro", "seats"],
+  rails: ["stripe", "polar"],
+  "rails.stripe": ["customer_id", "subscription_id"],
+  "rails.polar": ["customer_id", "subscription_id"],
+  entitlement: ["field"],
+  statuses: ["unpaid"],
+};
+
+function onlyKnownKeys(obj: Record<string, unknown>, path: string): void {
+  const known = KNOWN_KEYS[path]!;
+  for (const k of Object.keys(obj)) {
+    if (!known.includes(k)) throw new MappingError("mapping_unknown_key", path ? `${path}.${k}` : k);
   }
 }
 
@@ -55,11 +77,13 @@ export function parseMapping(raw: string): MappingDocument {
   if (root.version !== 1) {
     throw new MappingError("mapping_version");
   }
+  onlyKnownKeys(root, "");
   const product = root.product;
   if (product === null || typeof product !== "object" || Array.isArray(product)) {
     throw new MappingError("mapping_product");
   }
   const p = product as Record<string, unknown>;
+  onlyKnownKeys(p, "product");
   if (p.engine !== "postgres") {
     throw new MappingError("mapping_engine");
   }
@@ -71,11 +95,13 @@ export function parseMapping(raw: string): MappingDocument {
     throw new MappingError("mapping_columns");
   }
   const c = columns as Record<string, unknown>;
+  onlyKnownKeys(c, "product.columns");
   const rails = root.rails;
   if (rails === null || typeof rails !== "object" || Array.isArray(rails)) {
     throw new MappingError("mapping_rails");
   }
   const r = rails as Record<string, unknown>;
+  onlyKnownKeys(r, "rails");
   const stripe = r.stripe;
   const polar = r.polar;
   if (stripe === null || typeof stripe !== "object" || Array.isArray(stripe)) {
@@ -84,10 +110,13 @@ export function parseMapping(raw: string): MappingDocument {
   if (polar === null || typeof polar !== "object" || Array.isArray(polar)) {
     throw new MappingError("mapping_polar");
   }
+  onlyKnownKeys(stripe as Record<string, unknown>, "rails.stripe");
+  onlyKnownKeys(polar as Record<string, unknown>, "rails.polar");
   const entitlement = root.entitlement;
   if (entitlement === null || typeof entitlement !== "object" || Array.isArray(entitlement)) {
     throw new MappingError("mapping_entitlement");
   }
+  onlyKnownKeys(entitlement as Record<string, unknown>, "entitlement");
   const field = (entitlement as Record<string, unknown>).field;
   if (field !== "is_pro") {
     throw new MappingError("entitlement_field");
@@ -130,6 +159,7 @@ function unpaidPolicy(statuses: unknown): "canceled" | "skip" {
   if (typeof statuses !== "object" || Array.isArray(statuses)) {
     throw new MappingError("mapping_statuses");
   }
+  onlyKnownKeys(statuses as Record<string, unknown>, "statuses");
   const unpaid = (statuses as Record<string, unknown>).unpaid;
   if (unpaid === undefined) return "canceled";
   if (unpaid !== "canceled" && unpaid !== "skip") {

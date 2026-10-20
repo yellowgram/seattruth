@@ -123,6 +123,27 @@ export function normalizeProductRow(
   };
 }
 
+/** The part of a pg Client that selectReadOnly uses. */
+export type ReadOnlyQueryClient = {
+  query(text: string): Promise<{ rows: Record<string, unknown>[] }>;
+};
+
+/**
+ * Run one SELECT inside a READ ONLY transaction, so the database refuses a write even if the role
+ * allows one: for example a mapped view whose column calls a function that writes.
+ */
+export async function selectReadOnly(client: ReadOnlyQueryClient, text: string): Promise<Record<string, unknown>[]> {
+  await client.query("BEGIN READ ONLY");
+  try {
+    const result = await client.query(text);
+    await client.query("COMMIT");
+    return result.rows;
+  } catch (error) {
+    await client.query("ROLLBACK").catch(() => undefined);
+    throw error;
+  }
+}
+
 export async function readProductRows(input: ProductDbReadInput): Promise<readonly ProductRow[]> {
   if (input.connectionString.trim() === "" || input.mappingPath.trim() === "") {
     throw new Error("Missing product database settings. Refusing to query.");
@@ -147,13 +168,10 @@ export async function readProductRows(input: ProductDbReadInput): Promise<readon
   const client = new Client({ connectionString: input.connectionString });
   await client.connect();
   try {
-    // A read-only transaction, so the database refuses a write even if the role allows one.
-    await client.query("BEGIN READ ONLY");
-    const result = await client.query(select.text);
-    await client.query("COMMIT");
+    const rows = await selectReadOnly(client, select.text);
     const stripeEnabled = mapping.rails.stripe.customer_id !== null;
     const polarEnabled = mapping.rails.polar.customer_id !== null;
-    return result.rows.map((row: Record<string, unknown>) =>
+    return rows.map((row: Record<string, unknown>) =>
       normalizeProductRow(row, stripeEnabled, polarEnabled)
     );
   } finally {
